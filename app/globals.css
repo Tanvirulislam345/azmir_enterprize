@@ -1,26 +1,158 @@
 @import "tailwindcss";
 
+/* Enable `dark:` utilities driven by the data-theme attribute instead of the media query. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Semantic design tokens (single source of truth) ---------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #252a2d;
+  --primary-soft: #3e4549;
+  --accent: #e87932;
+  --accent-soft: #f2b17a;
+  --accent-foreground: #ffffff;
+  --background: #f7f5f0;
+  --surface: #ffffff;
+  --surface-muted: #eeeae3;
+  --foreground: #252a2d;
+  --muted: #667078;
+  --border: #dedad2;
+  --focus: #1d70a2;
+  /* Inverse surface used by hero overlays, CTA bands and footer */
+  --inverse: #252a2d;
+  --inverse-foreground: #f7f5f0;
+  --inverse-muted: #b6bcc0;
+  --shadow-color: 37 42 45;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --primary: #f2efea;
+  --primary-soft: #c9cdd0;
+  --accent: #e87932;
+  --accent-soft: #f2b17a;
+  --accent-foreground: #ffffff;
+  --background: #16191b;
+  --surface: #1f2427;
+  --surface-muted: #262c30;
+  --foreground: #f2efea;
+  --muted: #a3abb1;
+  --border: #343b40;
+  --focus: #5aa9d6;
+  --inverse: #0f1112;
+  --inverse-foreground: #f2efea;
+  --inverse-muted: #a3abb1;
+  --shadow-color: 0 0 0;
+
+  color-scheme: dark;
 }
 
 @theme inline {
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-focus: var(--focus);
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-inverse-muted: var(--inverse-muted);
+
+  --font-sans: var(--font-inter), var(--font-noto-bengali), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgb(var(--shadow-color) / 0.06), 0 8px 24px -12px rgb(var(--shadow-color) / 0.18);
+  --shadow-lift: 0 2px 4px rgb(var(--shadow-color) / 0.08), 0 24px 48px -20px rgb(var(--shadow-color) / 0.35);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), var(--font-noto-bengali), ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  /* Bengali glyphs take priority on Bengali pages */
+  html:lang(bn) body {
+    font-family: var(--font-noto-bengali), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  :lang(bn) :is(h1, h2, h3, h4) {
+    line-height: 1.35;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Subtle blueprint grid used by placeholder media and section backgrounds */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scroll-reveal fallbacks: show content immediately when motion is reduced */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-item] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }

@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "description": "M/S. AZMIR ENTERPRIZE — construction material supplier in Bangladesh. Explore our stone, sand and brick categories and request a quotation."
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "draft": "Draft",
+    "learnMore": "Learn more",
+    "viewDetails": "View details",
+    "viewAll": "View all products",
+    "home": "Home",
+    "backToTop": "Back to top",
+    "imagePlaceholder": "Product photo coming soon"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "about": "About Us",
+    "products": "Products",
+    "contact": "Contact",
+    "requestQuote": "Request a Quote",
+    "allProducts": "All products",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "productsMenu": "Products menu"
+  },
+  "theme": {
+    "label": "Colour theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "label": "Language",
+    "switchTo": "বাংলা",
+    "switchToLabel": "Switch to Bengali"
+  },
+  "hero": {
+    "eyebrow": "Construction material supplier",
+    "title": "Building materials you can plan around",
+    "description": "M/S. AZMIR ENTERPRIZE supplies construction materials for contractors, developers and builders. Explore our categories and talk to us about your requirement.",
+    "primaryCta": "Explore Products",
+    "secondaryCta": "Request a Quote",
+    "scrollHint": "Scroll to explore"
+  },
+  "intro": {
+    "eyebrow": "Who we are",
+    "title": "A focused supplier for construction materials",
+    "description": "We work with buyers who need dependable material sourcing for their projects. Our catalogue is organised by category so you can quickly find what your site needs and request a quotation.",
+    "cta": "About the company"
+  },
+  "categories": {
+    "eyebrow": "Our catalogue",
+    "title": "Product categories",
+    "description": "Browse the materials we supply, grouped by category.",
+    "variantsCount": "{count} products",
+    "variantsCountOne": "1 product",
+    "empty": "Our product catalogue is being finalised and will be published soon. Contact us for your current requirement."
+  },
+  "why": {
+    "eyebrow": "Why work with us",
+    "title": "How we work with our buyers",
+    "items": [
+      {
+        "title": "Clear product information",
+        "description": "Each product is presented with confirmed details so you can compare options with confidence."
+      },
+      {
+        "title": "Direct communication",
+        "description": "Talk to us directly about quantity, product choice and your project schedule."
+      },
+      {
+        "title": "Quotation on request",
+        "description": "Share your requirement and receive a quotation based on your order."
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "How it works",
+    "title": "From enquiry to supply",
+    "steps": [
+      {
+        "title": "Share your requirement",
+        "description": "Tell us the material, quantity and site location."
+      },
+      {
+        "title": "Receive a quotation",
+        "description": "We review your request and respond with a quotation."
+      },
+      {
+        "title": "Confirm the order",
+        "description": "Agree the details and schedule that suit your project."
+      },
+      {
+        "title": "Supply",
+        "description": "Materials are supplied according to the confirmed order."
+      }
+    ]
+  },
+  "featured": {
+    "eyebrow": "Featured",
+    "title": "Featured products"
+  },
+  "cta": {
+    "title": "Have a project coming up?",
+    "description": "Tell us what you need and we will get back to you with the details.",
+    "button": "Contact us"
+  },
+  "footer": {
+    "tagline": "Construction material supplier in Bangladesh.",
+    "quickLinks": "Quick links",
+    "products": "Products",
+    "contact": "Contact",
+    "contactPending": "Contact details will be published soon.",
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "metaTitle": "About Us",
+    "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a construction material supplier in Bangladesh.",
+    "eyebrow": "About us",
+    "title": "About M/S. AZMIR ENTERPRIZE",
+    "description": "We supply construction materials to buyers across their projects, with a catalogue focused on core building materials.",
+    "focusTitle": "Our business focus",
+    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
+    "pendingNote": "More about our company, history and team will be added soon."
+  },
+  "productsPage": {
+    "metaTitle": "Products",
+    "metaDescription": "Explore construction material categories from M/S. AZMIR ENTERPRIZE.",
+    "eyebrow": "Catalogue",
+    "title": "Our products",
+    "description": "Browse our construction material categories and their products."
+  },
+  "categoryPage": {
+    "productsTitle": "Products in this category",
+    "enquire": "Enquire about this category"
+  },
+  "productPage": {
+    "specifications": "Product details",
+    "detailsPending": "Detailed specifications for this product will be published after confirmation. Contact us for current information.",
+    "related": "Related products",
+    "enquire": "Enquire about this product",
+    "category": "Category"
+  },
+  "contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Contact M/S. AZMIR ENTERPRIZE for construction material enquiries and quotations.",
+    "eyebrow": "Get in touch",
+    "title": "Contact us",
+    "description": "Reach out for product enquiries and quotations.",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "address": "Address",
+    "pendingTitle": "Contact details coming soon",
+    "pendingDescription": "Our official contact details are being finalised and will be published here shortly."
+  }
+}
