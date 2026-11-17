@@ -23,12 +23,11 @@ export function ProductCard({ product, category, locale, dictionary }: ProductCa
       <ProductMedia
         src={product.image}
         alt={name}
-        seed={product.id}
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         className="aspect-[4/3]"
       />
       <div className="flex flex-1 flex-col gap-2 p-5">
-        <p className="text-xs font-semibold tracking-wider text-muted uppercase">{category.name[locale]}</p>
+        <p className="text-sm text-muted">{category.name[locale]}</p>
         <h3 className="text-lg font-semibold">{name}</h3>
         {product.shortDescription && <p className="text-sm text-muted">{product.shortDescription[locale]}</p>}
         <div className="mt-auto flex items-center justify-between gap-2 pt-3">

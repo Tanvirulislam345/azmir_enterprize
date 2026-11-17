@@ -7,6 +7,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { ProductCategorySection } from "@/components/home/product-category-section";
 import { PageHero } from "@/components/layout/page-hero";
+import { photos } from "@/data/photos";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/products">): Promise<Metadata> {
   const locale = await resolveLocale(params);
@@ -22,6 +23,7 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
   return (
     <>
       <PageHero
+        photo={photos.bholaganj}
         eyebrow={productsPage.eyebrow}
         title={productsPage.title}
         description={productsPage.description}

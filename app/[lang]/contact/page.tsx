@@ -7,6 +7,7 @@ import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { PageHero } from "@/components/layout/page-hero";
+import { photos } from "@/data/photos";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { PageContainer } from "@/components/ui/page-container";
 
@@ -41,6 +42,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
   return (
     <>
       <PageHero
+        photo={photos.brickKiln}
         eyebrow={contact.eyebrow}
         title={contact.title}
         description={contact.description}

@@ -1,4 +1,4 @@
-export type ThemePreference = "light" | "dark" | "system";
+export type Theme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "theme";
 
@@ -6,26 +6,31 @@ const DARK_QUERY = "(prefers-color-scheme: dark)";
 
 const listeners = new Set<() => void>();
 
-function readPreference(): ThemePreference {
+const hasSavedTheme = () => {
   try {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    return stored === "light" || stored === "dark" ? stored : "system";
+    return localStorage.getItem(THEME_STORAGE_KEY) !== null;
   } catch {
-    return "system";
+    return false;
   }
+};
+
+function applyTheme(theme: Theme) {
+  document.documentElement.dataset.theme = theme;
+  listeners.forEach((listener) => listener());
 }
 
-function applyTheme(preference: ThemePreference) {
-  const isDark = preference === "dark" || (preference === "system" && matchMedia(DARK_QUERY).matches);
-  document.documentElement.dataset.theme = isDark ? "dark" : "light";
-}
-
-/** External store consumed with `useSyncExternalStore` — no React state is needed for the theme. */
+/**
+ * External store consumed with `useSyncExternalStore`.
+ * The `data-theme` attribute (set before paint by the init script) is the single source of truth.
+ */
 export const themeStore = {
   subscribe(listener: () => void) {
     listeners.add(listener);
     const media = matchMedia(DARK_QUERY);
-    const onSystemChange = () => applyTheme(readPreference());
+    // Follow the OS setting only until the visitor picks a theme themselves.
+    const onSystemChange = (event: MediaQueryListEvent) => {
+      if (!hasSavedTheme()) applyTheme(event.matches ? "dark" : "light");
+    };
     media.addEventListener("change", onSystemChange);
 
     return () => {
@@ -33,19 +38,17 @@ export const themeStore = {
       media.removeEventListener("change", onSystemChange);
     };
   },
-  getSnapshot: readPreference,
-  getServerSnapshot: (): ThemePreference => "system",
-  set(preference: ThemePreference) {
+  getSnapshot: (): Theme => (document.documentElement.dataset.theme === "dark" ? "dark" : "light"),
+  getServerSnapshot: (): Theme => "light",
+  set(theme: Theme) {
     try {
-      if (preference === "system") localStorage.removeItem(THEME_STORAGE_KEY);
-      else localStorage.setItem(THEME_STORAGE_KEY, preference);
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
-      // Storage can be unavailable (private mode); the theme still applies for this page view.
+      // Storage can be unavailable (private mode); the theme still applies for this visit.
     }
-    applyTheme(preference);
-    listeners.forEach((listener) => listener());
+    applyTheme(theme);
   },
 };
 
-/** Runs before first paint (inlined in <head>) to prevent a flash of the wrong theme. */
+/** Runs before first paint to prevent a flash of the wrong theme. */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");var d=t==="dark"||(t!=="light"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})();`;

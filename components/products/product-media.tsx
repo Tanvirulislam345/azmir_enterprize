@@ -5,14 +5,13 @@ import { cn } from "@/lib/utils";
 type ProductMediaProps = {
   src?: string;
   alt: string;
-  seed: string;
   sizes: string;
   priority?: boolean;
   className?: string;
 };
 
 /** Approved photo when available, otherwise neutral placeholder artwork. Parent must size the box. */
-export function ProductMedia({ src, alt, seed, sizes, priority, className }: ProductMediaProps) {
+export function ProductMedia({ src, alt, sizes, priority, className }: ProductMediaProps) {
   return (
     <div className={cn("relative overflow-hidden", className)}>
       {src ? (
@@ -25,7 +24,7 @@ export function ProductMedia({ src, alt, seed, sizes, priority, className }: Pro
           className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
         />
       ) : (
-        <PlaceholderMedia seed={seed} className="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-105" />
+        <PlaceholderMedia monogram={alt} className="absolute inset-0" />
       )}
     </div>
   );

@@ -19,7 +19,7 @@ export function Parallax({ children, className, distance = 18 }: ParallaxProps) 
 
   return (
     <div ref={ref} className={className}>
-      <motion.div style={{ y }} className="h-full w-full">
+      <motion.div style={{ y }} className="relative h-full w-full">
         {children}
       </motion.div>
     </div>

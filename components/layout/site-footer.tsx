@@ -22,7 +22,6 @@ export async function SiteFooter({ locale, dictionary }: SiteFooterProps) {
 
   return (
     <footer className="relative overflow-hidden bg-inverse text-inverse-foreground">
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
       <PageContainer className="relative grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <Reveal className="space-y-4 lg:col-span-1">
           <Wordmark href={routes.home(locale)} />
@@ -93,7 +92,7 @@ async function getCurrentYear() {
 }
 
 function FooterHeading({ children }: { children: string }) {
-  return <h2 className="mb-4 text-sm font-semibold tracking-wider uppercase">{children}</h2>;
+  return <h2 className="mb-4 font-semibold">{children}</h2>;
 }
 
 function FooterLinks({ items }: { items: { href: string; label: string }[] }) {

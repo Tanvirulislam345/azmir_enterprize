@@ -7,10 +7,10 @@ import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { SupplyProcess } from "@/components/home/supply-process";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 import { PageHero } from "@/components/layout/page-hero";
-import { Parallax } from "@/components/motion/parallax";
+import { photos } from "@/data/photos";
 import { Reveal } from "@/components/motion/reveal";
 import { PageContainer } from "@/components/ui/page-container";
-import { PlaceholderMedia } from "@/components/ui/placeholder-media";
+import { CaptionedPhoto } from "@/components/ui/captioned-photo";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/about">): Promise<Metadata> {
@@ -27,6 +27,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
   return (
     <>
       <PageHero
+        photo={photos.brickMoulding}
         eyebrow={about.eyebrow}
         title={about.title}
         description={about.description}
@@ -45,9 +46,12 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             </Reveal>
           </div>
           <Reveal variant="right">
-            <Parallax className="aspect-[5/4] overflow-hidden rounded-[2rem]" distance={-8}>
-              <PlaceholderMedia seed="about" className="h-[110%]" />
-            </Parallax>
+            <CaptionedPhoto
+              photo={photos.jaflong}
+              locale={locale}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="aspect-[5/4] rounded-[2rem]"
+            />
           </Reveal>
         </PageContainer>
       </section>

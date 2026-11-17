@@ -7,6 +7,7 @@ import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { PageHero } from "@/components/layout/page-hero";
+import { photos } from "@/data/photos";
 import { ProductGrid } from "@/components/products/product-grid";
 import { PageContainer } from "@/components/ui/page-container";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -44,6 +45,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   return (
     <>
       <PageHero
+        photo={photos.bholaganj}
         title={name}
         description={category.description?.[locale]}
         breadcrumbs={[

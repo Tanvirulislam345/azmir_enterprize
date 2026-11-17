@@ -13,8 +13,8 @@ const DIRECTION_THRESHOLD = 6;
  */
 export function HeaderShell({ children }: { children: ReactNode }) {
   const headerRef = useRef<HTMLElement>(null);
-  const { dropdownOpen, mobileOpen } = useNavigationState();
-  const menuOpen = dropdownOpen || mobileOpen;
+  const { openMenu, mobileOpen } = useNavigationState();
+  const menuOpen = openMenu !== null || mobileOpen;
   const { scrollY } = useScroll();
   const y = useMotionValue(0);
 

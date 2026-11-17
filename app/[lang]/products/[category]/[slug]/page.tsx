@@ -7,6 +7,7 @@ import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { PageHero } from "@/components/layout/page-hero";
+import { photos } from "@/data/photos";
 import { Reveal } from "@/components/motion/reveal";
 import { ProductAttributes } from "@/components/products/product-attributes";
 import { ProductGallery } from "@/components/products/product-gallery";
@@ -53,6 +54,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <>
       <PageHero
+        photo={photos.jaflong}
         eyebrow={category.name[locale]}
         title={name}
         description={product.shortDescription?.[locale]}
@@ -70,7 +72,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {gallery.length > 0 ? (
               <ProductGallery images={gallery} alt={name} />
             ) : (
-              <ProductMedia seed={product.id} alt={name} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] rounded-2xl" />
+              <ProductMedia alt={name} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] rounded-2xl" />
             )}
           </Reveal>
           <Reveal variant="right" className="space-y-6">

@@ -9,7 +9,6 @@ export function SupplyProcess({ dictionary }: { dictionary: Dictionary }) {
 
   return (
     <section className="relative overflow-hidden bg-inverse py-20 text-inverse-foreground sm:py-28">
-      <div aria-hidden className="bg-grid absolute inset-0 opacity-30" />
       <PageContainer className="relative space-y-16">
         <SectionHeading eyebrow={process.eyebrow} title={process.title} inverse />
 

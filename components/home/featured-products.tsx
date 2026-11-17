@@ -23,7 +23,7 @@ export function FeaturedProducts({ items, locale, dictionary }: FeaturedProducts
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading eyebrow={dictionary.featured.eyebrow} title={dictionary.featured.title} />
           <Reveal variant="right">
-            <SecondaryButton href={routes.products(locale)} withArrow>
+            <SecondaryButton href={routes.products(locale)}>
               {dictionary.common.viewAll}
             </SecondaryButton>
           </Reveal>

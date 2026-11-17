@@ -5,12 +5,12 @@ import { locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { buildMetadata, getBaseUrl } from "@/lib/seo/metadata";
-import { themeInitScript } from "@/lib/theme/theme-store";
 import { BackToTop } from "@/components/layout/back-to-top";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { ThemeScript } from "@/components/theme/theme-script";
 import "../globals.css";
 
 const inter = Inter({
@@ -54,11 +54,14 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
 
   return (
     // The theme script sets data-theme before hydration, so the attribute mismatch is expected.
-    <html lang={locale} className={`${inter.variable} ${notoBengali.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${notoBengali.variable}`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-dvh flex-col">
+        <ThemeScript />
         <a
           href="#main"
           className="sr-only z-[70] rounded-full bg-accent px-4 py-2 font-semibold text-accent-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4"

@@ -18,7 +18,7 @@ type ProductsDropdownProps = {
 };
 
 export function ProductsDropdown({ categories, allProducts, labels, active }: ProductsDropdownProps) {
-  const { dropdownOpen } = useNavigationState();
+  const dropdownOpen = useNavigationState().openMenu === "products";
   const dispatch = useNavigationDispatch();
   const panelId = useId();
   const wrapperRef = useRef<HTMLLIElement>(null);
@@ -26,7 +26,7 @@ export function ProductsDropdown({ categories, allProducts, labels, active }: Pr
 
   const close = useCallback(() => {
     const focusWasInside = wrapperRef.current?.contains(document.activeElement);
-    dispatch({ type: "closeDropdown" });
+    dispatch({ type: "closeMenu", id: "products" });
     if (focusWasInside) buttonRef.current?.focus();
   }, [dispatch]);
 
@@ -39,15 +39,15 @@ export function ProductsDropdown({ categories, allProducts, labels, active }: Pr
       ref={wrapperRef}
       className="flex self-stretch"
       // Hover is an enhancement for mouse users only; click and keyboard always work.
-      onPointerEnter={(event) => event.pointerType === "mouse" && dispatch({ type: "openDropdown" })}
-      onPointerLeave={(event) => event.pointerType === "mouse" && dispatch({ type: "closeDropdown" })}
+      onPointerEnter={(event) => event.pointerType === "mouse" && dispatch({ type: "openMenu", id: "products" })}
+      onPointerLeave={(event) => event.pointerType === "mouse" && dispatch({ type: "closeMenu", id: "products" })}
     >
       <button
         ref={buttonRef}
         type="button"
         aria-expanded={dropdownOpen}
         aria-controls={panelId}
-        onClick={() => dispatch({ type: "toggleDropdown" })}
+        onClick={() => dispatch({ type: "toggleMenu", id: "products" })}
         className={cn(
           "relative flex items-center gap-1.5 px-3 text-sm font-medium transition-colors hover:text-accent",
           (active || dropdownOpen) && "text-accent",
@@ -110,7 +110,7 @@ const CategoryGroup = memo(function CategoryGroup({ category, index, onNavigate 
       <Link
         href={category.href}
         onClick={onNavigate}
-        className="mb-3 block border-b border-border pb-3 text-sm font-bold tracking-wide text-foreground uppercase transition-colors hover:text-accent"
+        className="mb-3 block border-b border-border pb-3 font-semibold text-foreground transition-colors hover:text-accent"
       >
         {category.label}
       </Link>

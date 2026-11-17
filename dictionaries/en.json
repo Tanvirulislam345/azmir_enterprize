@@ -27,13 +27,10 @@
   "theme": {
     "label": "Colour theme",
     "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "dark": "Dark"
   },
   "language": {
-    "label": "Language",
-    "switchTo": "বাংলা",
-    "switchToLabel": "Switch to Bengali"
+    "label": "Language"
   },
   "hero": {
     "eyebrow": "Construction material supplier",
@@ -41,7 +38,12 @@
     "description": "M/S. AZMIR ENTERPRIZE supplies construction materials for contractors, developers and builders. Explore our categories and talk to us about your requirement.",
     "primaryCta": "Explore Products",
     "secondaryCta": "Request a Quote",
-    "scrollHint": "Scroll to explore"
+    "prevSlide": "Previous photo",
+    "nextSlide": "Next photo",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow",
+    "slideOf": "Photo {n} of {total}",
+    "slideshowLabel": "Stone and brick work in Bangladesh"
   },
   "intro": {
     "eyebrow": "Who we are",

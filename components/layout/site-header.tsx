@@ -6,10 +6,10 @@ import { ButtonLink } from "@/components/ui/button";
 import { PageContainer } from "@/components/ui/page-container";
 import { DesktopNavigation } from "./desktop-navigation";
 import { HeaderShell } from "./header-shell";
-import { LanguageSwitcher } from "./language-switcher";
+import { LanguageMenu } from "./language-menu";
 import { MobileNavigation } from "./mobile-navigation";
 import { NavigationProvider } from "./navigation-context";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeMenu } from "./theme-menu";
 import { Wordmark } from "./wordmark";
 
 type SiteHeaderProps = {
@@ -27,18 +27,14 @@ export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
         <PageContainer className="relative flex h-18 items-center justify-between gap-4 lg:h-20">
           <Wordmark href={routes.home(locale)} />
           <DesktopNavigation links={links} categories={categories} labels={dictionary.nav} />
+          {/* Right side, read from the edge inwards: language, theme, quote request. */}
           <div className="flex items-center gap-2">
-            <LanguageSwitcher locale={locale} labels={dictionary.language} className="hidden sm:inline-flex" />
-            <ThemeToggle labels={dictionary.theme} />
-            <ButtonLink href={links.contact.href} withArrow className="hidden lg:inline-flex">
+            <ButtonLink href={links.contact.href} className="hidden lg:inline-flex">
               {dictionary.nav.requestQuote}
             </ButtonLink>
-            <MobileNavigation
-              links={links}
-              categories={categories}
-              labels={dictionary.nav}
-              footer={<LanguageSwitcher locale={locale} labels={dictionary.language} className="w-full justify-center sm:hidden" />}
-            />
+            <ThemeMenu labels={dictionary.theme} />
+            <LanguageMenu locale={locale} labels={dictionary.language} />
+            <MobileNavigation links={links} categories={categories} labels={dictionary.nav} />
           </div>
         </PageContainer>
       </HeaderShell>

@@ -2,35 +2,38 @@
 
 import { createContext, use, useReducer, type Dispatch, type ReactNode } from "react";
 
+/** Header pop-ups; only one can be open at a time. */
+export type MenuId = "products" | "theme" | "language";
+
 type NavigationState = {
-  dropdownOpen: boolean;
+  openMenu: MenuId | null;
   mobileOpen: boolean;
   /** Category id expanded in the mobile accordion. */
   expandedCategory: string | null;
 };
 
 type NavigationAction =
-  | { type: "toggleDropdown" }
-  | { type: "openDropdown" }
-  | { type: "closeDropdown" }
+  | { type: "toggleMenu"; id: MenuId }
+  | { type: "openMenu"; id: MenuId }
+  | { type: "closeMenu"; id: MenuId }
   | { type: "toggleMobile" }
   | { type: "toggleCategory"; id: string }
   | { type: "closeAll" };
 
 const initialState: NavigationState = {
-  dropdownOpen: false,
+  openMenu: null,
   mobileOpen: false,
   expandedCategory: null,
 };
 
 function navigationReducer(state: NavigationState, action: NavigationAction): NavigationState {
   switch (action.type) {
-    case "toggleDropdown":
-      return { ...state, dropdownOpen: !state.dropdownOpen };
-    case "openDropdown":
-      return state.dropdownOpen ? state : { ...state, dropdownOpen: true };
-    case "closeDropdown":
-      return state.dropdownOpen ? { ...state, dropdownOpen: false } : state;
+    case "toggleMenu":
+      return { ...state, mobileOpen: false, openMenu: state.openMenu === action.id ? null : action.id };
+    case "openMenu":
+      return state.openMenu === action.id ? state : { ...state, mobileOpen: false, openMenu: action.id };
+    case "closeMenu":
+      return state.openMenu === action.id ? { ...state, openMenu: null } : state;
     case "toggleMobile":
       return { ...initialState, mobileOpen: !state.mobileOpen };
     case "toggleCategory":

@@ -20,8 +20,6 @@ export function EnquiryCta({ locale, dictionary, title }: EnquiryCtaProps) {
       <PageContainer>
         <Reveal variant="scale">
           <div className="relative isolate overflow-hidden rounded-[2rem] bg-accent px-6 py-14 text-accent-foreground sm:px-12 sm:py-16">
-            <div aria-hidden className="bg-grid absolute inset-0 -z-10 opacity-40" />
-            <div aria-hidden className="absolute -top-20 -right-20 -z-10 size-72 rounded-full bg-white/15 blur-2xl" />
             <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
               <div className="max-w-2xl space-y-3">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{title ?? cta.title}</h2>

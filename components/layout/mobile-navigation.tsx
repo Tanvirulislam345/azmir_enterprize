@@ -18,13 +18,11 @@ type MobileNavigationProps = {
   links: { home: NavLink; about: NavLink; products: NavLink; contact: NavLink };
   categories: NavCategory[];
   labels: Dictionary["nav"];
-  /** Extra controls rendered at the bottom of the drawer (language switcher, etc.). */
-  footer?: ReactNode;
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-export function MobileNavigation({ links, categories, labels, footer }: MobileNavigationProps) {
+export function MobileNavigation({ links, categories, labels }: MobileNavigationProps) {
   const { mobileOpen, expandedCategory } = useNavigationState();
   const dispatch = useNavigationDispatch();
   const pathname = usePathname();
@@ -99,11 +97,10 @@ export function MobileNavigation({ links, categories, labels, footer }: MobileNa
                 <DrawerLink link={links.contact} active={isActivePath(pathname, links.contact.href)} onNavigate={closeAll} />
               </DrawerItem>
 
-              <DrawerItem className="mt-6 flex flex-col gap-4">
+              <DrawerItem className="mt-6">
                 <Link href={links.contact.href} onClick={closeAll} className={cn(buttonClassName("primary", "lg"), "w-full")}>
                   {labels.requestQuote}
                 </Link>
-                {footer}
               </DrawerItem>
             </motion.ul>
           </motion.nav>
