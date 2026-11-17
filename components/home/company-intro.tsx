@@ -8,7 +8,13 @@ import { PageContainer } from "@/components/ui/page-container";
 import { CaptionedPhoto } from "@/components/ui/captioned-photo";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-export function CompanyIntro({ locale, dictionary }: { locale: Locale; dictionary: Dictionary }) {
+export function CompanyIntro({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   const { intro } = dictionary;
 
   return (
@@ -19,11 +25,15 @@ export function CompanyIntro({ locale, dictionary }: { locale: Locale; dictionar
             photo={photos.brickMoulding}
             locale={locale}
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="aspect-[5/4] rounded-[2rem]"
+            className="aspect-5/4 rounded-2rem"
           />
         </Reveal>
         <div className="order-1 space-y-8 lg:order-2">
-          <SectionHeading eyebrow={intro.eyebrow} title={intro.title} description={intro.description} />
+          <SectionHeading
+            eyebrow={intro.eyebrow}
+            title={intro.title}
+            description={intro.description}
+          />
           <Reveal delay={0.15}>
             <SecondaryButton href={routes.about(locale)}>
               {intro.cta}

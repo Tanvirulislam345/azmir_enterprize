@@ -15,8 +15,8 @@
   "nav": {
     "label": "Main navigation",
     "home": "Home",
-    "about": "About Us",
     "products": "Products",
+    "about": "About Us",
     "contact": "Contact",
     "requestQuote": "Request a Quote",
     "allProducts": "All products",
@@ -116,16 +116,6 @@
     "contactPending": "Contact details will be published soon.",
     "rights": "All rights reserved."
   },
-  "about": {
-    "metaTitle": "About Us",
-    "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a construction material supplier in Bangladesh.",
-    "eyebrow": "About us",
-    "title": "About M/S. AZMIR ENTERPRIZE",
-    "description": "We supply construction materials to buyers across their projects, with a catalogue focused on core building materials.",
-    "focusTitle": "Our business focus",
-    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
-    "pendingNote": "More about our company, history and team will be added soon."
-  },
   "productsPage": {
     "metaTitle": "Products",
     "metaDescription": "Explore construction material categories from M/S. AZMIR ENTERPRIZE.",
@@ -133,6 +123,7 @@
     "title": "Our products",
     "description": "Browse our construction material categories and their products."
   },
+
   "categoryPage": {
     "productsTitle": "Products in this category",
     "enquire": "Enquire about this category"
@@ -143,6 +134,16 @@
     "related": "Related products",
     "enquire": "Enquire about this product",
     "category": "Category"
+  },
+  "about": {
+    "metaTitle": "About Us",
+    "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a construction material supplier in Bangladesh.",
+    "eyebrow": "About us",
+    "title": "About M/S. AZMIR ENTERPRIZE",
+    "description": "We supply construction materials to buyers across their projects, with a catalogue focused on core building materials.",
+    "focusTitle": "Our business focus",
+    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
+    "pendingNote": "More about our company, history and team will be added soon."
   },
   "contact": {
     "metaTitle": "Contact",

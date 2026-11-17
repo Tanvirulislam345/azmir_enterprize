@@ -9,14 +9,14 @@ import { ProductCategorySection } from "@/components/home/product-category-secti
 import { PageHero } from "@/components/layout/page-hero";
 import { photos } from "@/data/photos";
 
-export async function generateMetadata({ params }: PageProps<"/[lang]/products">): Promise<Metadata> {
-  const locale = await resolveLocale(params);
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await resolveLocale();
   const { productsPage } = await getDictionary(locale);
   return buildMetadata({ locale, title: productsPage.metaTitle, description: productsPage.metaDescription, path: "/products" });
 }
 
-export default async function ProductsPage({ params }: PageProps<"/[lang]/products">) {
-  const locale = await resolveLocale(params);
+export default async function ProductsPage() {
+  const locale = await resolveLocale();
   const [dictionary, categories] = await Promise.all([getDictionary(locale), productRepository.getPublishedCategories()]);
   const { productsPage } = dictionary;
 

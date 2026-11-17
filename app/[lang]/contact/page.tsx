@@ -11,8 +11,8 @@ import { photos } from "@/data/photos";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { PageContainer } from "@/components/ui/page-container";
 
-export async function generateMetadata({ params }: PageProps<"/[lang]/contact">): Promise<Metadata> {
-  const locale = await resolveLocale(params);
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await resolveLocale();
   const { contact } = await getDictionary(locale);
   return buildMetadata({ locale, title: contact.metaTitle, description: contact.metaDescription, path: "/contact" });
 }
@@ -33,8 +33,8 @@ function getContactChannels(copy: Dictionary["contact"]): ContactChannel[] {
   return channels;
 }
 
-export default async function ContactPage({ params }: PageProps<"/[lang]/contact">) {
-  const locale = await resolveLocale(params);
+export default async function ContactPage() {
+  const locale = await resolveLocale();
   const dictionary = await getDictionary(locale);
   const { contact } = dictionary;
   const channels = getContactChannels(contact);

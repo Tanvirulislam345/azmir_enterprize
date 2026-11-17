@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const locale = await resolveLocale(params);
+  const locale = await resolveLocale();
   const { category, slug } = await params;
   const result = await productRepository.getProductBySlug(category, slug);
   if (!result) return {};
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const locale = await resolveLocale(params);
+  const locale = await resolveLocale();
   const { category: categorySlug, slug } = await params;
   const [dictionary, result, related] = await Promise.all([
     getDictionary(locale),

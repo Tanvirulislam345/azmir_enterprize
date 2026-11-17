@@ -36,8 +36,8 @@ export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
-  const locale = await resolveLocale(params);
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await resolveLocale();
   const dictionary = await getDictionary(locale);
 
   return {
@@ -48,8 +48,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   };
 }
 
-export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
-  const locale = await resolveLocale(params);
+export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
+  const locale = await resolveLocale();
   const dictionary = await getDictionary(locale);
 
   return (
@@ -64,7 +64,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <ThemeScript />
         <a
           href="#main"
-          className="sr-only z-[70] rounded-full bg-accent px-4 py-2 font-semibold text-accent-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+          className="sr-only z-70 rounded-full bg-accent px-4 py-2 font-semibold text-accent-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
           {dictionary.common.skipToContent}
         </a>

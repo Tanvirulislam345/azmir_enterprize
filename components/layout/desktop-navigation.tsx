@@ -14,27 +14,49 @@ type DesktopNavigationProps = {
 };
 
 export const isActivePath = (pathname: string, href: string, exact = false) =>
-  exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+  exact
+    ? pathname === href
+    : pathname === href || pathname.startsWith(`${href}/`);
 
-export function DesktopNavigation({ links, categories, labels }: DesktopNavigationProps) {
+export function DesktopNavigation({
+  links,
+  categories,
+  labels,
+}: DesktopNavigationProps) {
   const pathname = usePathname();
 
   return (
     <nav aria-label={labels.label} className="hidden self-stretch lg:flex">
       <ul className="flex items-stretch">
-        <NavItem link={links.home} active={isActivePath(pathname, links.home.href, true)} />
-        <NavItem link={links.about} active={isActivePath(pathname, links.about.href)} />
+        <NavItem
+          link={links.home}
+          active={isActivePath(pathname, links.home.href, true)}
+        />
+
         {categories.length > 0 ? (
           <ProductsDropdown
             categories={categories}
-            allProducts={{ href: links.products.href, label: labels.allProducts }}
+            allProducts={{
+              href: links.products.href,
+              label: labels.allProducts,
+            }}
             labels={labels}
             active={isActivePath(pathname, links.products.href)}
           />
         ) : (
-          <NavItem link={links.products} active={isActivePath(pathname, links.products.href)} />
+          <NavItem
+            link={links.products}
+            active={isActivePath(pathname, links.products.href)}
+          />
         )}
-        <NavItem link={links.contact} active={isActivePath(pathname, links.contact.href)} />
+        <NavItem
+          link={links.about}
+          active={isActivePath(pathname, links.about.href)}
+        />
+        <NavItem
+          link={links.contact}
+          active={isActivePath(pathname, links.contact.href)}
+        />
       </ul>
     </nav>
   );

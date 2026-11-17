@@ -13,14 +13,14 @@ import { PageContainer } from "@/components/ui/page-container";
 import { CaptionedPhoto } from "@/components/ui/captioned-photo";
 import { SectionHeading } from "@/components/ui/section-heading";
 
-export async function generateMetadata({ params }: PageProps<"/[lang]/about">): Promise<Metadata> {
-  const locale = await resolveLocale(params);
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await resolveLocale();
   const { about } = await getDictionary(locale);
   return buildMetadata({ locale, title: about.metaTitle, description: about.metaDescription, path: "/about" });
 }
 
-export default async function AboutPage({ params }: PageProps<"/[lang]/about">) {
-  const locale = await resolveLocale(params);
+export default async function AboutPage() {
+  const locale = await resolveLocale();
   const dictionary = await getDictionary(locale);
   const { about } = dictionary;
 

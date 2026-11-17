@@ -8,8 +8,8 @@ import type { NavCategory } from "@/types/navigation";
 export function getPrimaryLinks(locale: Locale, labels: Dictionary["nav"]) {
   return {
     home: { href: routes.home(locale), label: labels.home },
-    about: { href: routes.about(locale), label: labels.about },
     products: { href: routes.products(locale), label: labels.products },
+    about: { href: routes.about(locale), label: labels.about },
     contact: { href: routes.contact(locale), label: labels.contact },
   };
 }
