@@ -28,6 +28,8 @@ export function HeaderShell({ children }: { children: ReactNode }) {
     if (Math.abs(delta) < DIRECTION_THRESHOLD) return;
 
     const hide = !menuOpen && delta > 0 && current > HIDE_AFTER;
+    // Lets sticky page elements (e.g. the catalogue jump bar) sit flush under the header or the viewport top.
+    document.documentElement.style.setProperty("--header-offset", hide ? "0px" : `${header.offsetHeight}px`);
     animate(y, hide ? -header.offsetHeight : 0, { duration: 0.35, ease: [0.16, 1, 0.3, 1] });
   });
 

@@ -121,7 +121,10 @@
     "metaDescription": "Explore construction material categories from M/S. AZMIR ENTERPRIZE.",
     "eyebrow": "Catalogue",
     "title": "Our products",
-    "description": "Browse our construction material categories and their products."
+    "description": "Browse our construction material categories and their products.",
+    "jumpLabel": "Browse by category",
+    "viewAll": "View all ({count})",
+    "featured": "Featured"
   },
 
   "categoryPage": {

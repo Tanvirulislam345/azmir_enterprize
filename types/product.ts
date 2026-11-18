@@ -23,6 +23,8 @@ export type ProductCategory = {
   id: string;
   slug: string;
   name: LocalizedText;
+  /** One-word label for tight spaces such as mobile tabs, e.g. "Stone". */
+  shortName?: LocalizedText;
   description?: LocalizedText;
   image?: string;
   isPublished: boolean;

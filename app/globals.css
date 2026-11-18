@@ -22,8 +22,16 @@
   --inverse-foreground: #f7f5f0;
   --inverse-muted: #b6bcc0;
   --shadow-color: 37 42 45;
+  /* Visible height of the fixed header; updated by HeaderShell as it hides and returns. */
+  --header-offset: 4.5rem;
 
   color-scheme: light;
+}
+
+@media (width >= 64rem) {
+  :root {
+    --header-offset: 5rem;
+  }
 }
 
 [data-theme="dark"] {

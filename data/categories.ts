@@ -11,6 +11,7 @@ export const categories: ProductCategory[] = [
     slug: "stone",
     image: "/images/stones/pakur-stone.jpg",
     name: { bn: "পাথর — চিপস ও অ্যাগ্রিগেট", en: "Stone — Chips & Aggregate" },
+    shortName: { bn: "পাথর", en: "Stone" },
     description: {
       bn: "নির্মাণ কাজে ব্যবহৃত বিভিন্ন ধরনের পাথরের চিপস ও অ্যাগ্রিগেট।",
       en: "Stone chips and aggregate for construction work.",
@@ -32,6 +33,7 @@ export const categories: ProductCategory[] = [
     slug: "sand",
     image: "/images/sands/fine-aggregate-sylhet-sand.jpg",
     name: { bn: "বালু", en: "Sand" },
+    shortName: { bn: "বালু", en: "Sand" },
     description: {
       bn: "নির্মাণ ও ভরাট কাজের জন্য বিভিন্ন ধরনের বালু।",
       en: "Sand for construction and filling work.",
@@ -50,6 +52,7 @@ export const categories: ProductCategory[] = [
     slug: "bricks",
     image: "/images/bricks/auto-bricks.jpg",
     name: { bn: "ইট", en: "Bricks" },
+    shortName: { bn: "ইট", en: "Bricks" },
     description: {
       bn: "নির্মাণ কাজের জন্য ইট।",
       en: "Bricks for construction work.",
