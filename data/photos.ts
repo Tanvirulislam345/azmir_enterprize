@@ -2,7 +2,7 @@ import type { Photo } from "@/types/photo";
 
 /**
  * TEMPORARY openly licensed photos from Wikimedia Commons (resized/cropped, WebP).
- * They show stone and brick work in Bangladesh in general — not AZMIR's own sites or products.
+ * They show stone and brick work in Bangladesh in general  not AZMIR's own sites or products.
  * Credits are intentionally not displayed (client decision), but CC BY-SA requires attribution:
  * before launch, replace these with client-owned photos or show `credit` again. (README §3)
  */
@@ -112,4 +112,5 @@ const categoryHeroPhotos: Record<string, Photo> = {
   iron: photos.tipperTruck,
 };
 
-export const getCategoryHeroPhoto = (categoryId: string): Photo => categoryHeroPhotos[categoryId] ?? photos.bholaganj;
+export const getCategoryHeroPhoto = (categoryId: string): Photo =>
+  categoryHeroPhotos[categoryId] ?? photos.bholaganj;

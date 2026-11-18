@@ -6,8 +6,8 @@ import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { ContinueReading } from "@/components/about/continue-reading";
-import { LeaderMessageView } from "@/components/about/leader-message";
-import { TeamView } from "@/components/about/team-page";
+import { LEADER_MESSAGE_LAST_TONE, LeaderMessageView } from "@/components/about/leader-message";
+import { TEAM_LAST_TONE, TeamView } from "@/components/about/team-page";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { formatIndex } from "@/components/products/catalogue/format";
 import { CategorySwitcher } from "@/components/products/category-switcher";
@@ -75,6 +75,8 @@ export default async function AboutSubPage({ params }: AboutSubPageProps) {
         previous={link(pages[index - 1])}
         next={link(pages[index + 1])}
         labels={{ previous: copy.previous, next: copy.next }}
+        // Never repeat the background of the view's last section.
+        tone={(page.kind === "message" ? LEADER_MESSAGE_LAST_TONE : TEAM_LAST_TONE) === "plain" ? "muted" : "plain"}
       />
 
       <EnquiryCta locale={locale} dictionary={dictionary} />

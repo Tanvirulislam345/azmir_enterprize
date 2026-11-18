@@ -22,7 +22,9 @@ export async function generateStaticParams() {
   return productRepository.getProductRouteParams();
 }
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
   const locale = await resolveLocale();
   const { category, slug } = await params;
   const result = await productRepository.getProductBySlug(category, slug);
@@ -32,7 +34,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return buildMetadata({
     locale,
     title: product.name[locale],
-    description: product.shortDescription?.[locale] ?? `${product.name[locale]} — ${result.category.name[locale]}`,
+    description:
+      product.shortDescription?.[locale] ??
+      `${product.name[locale]}  ${result.category.name[locale]}`,
     path: `/products/${category}/${slug}`,
   });
 }
@@ -61,8 +65,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
         breadcrumbs={[
           { href: routes.home(locale), label: dictionary.common.home },
           { href: routes.products(locale), label: dictionary.nav.products },
-          { href: routes.category(locale, category.slug), label: category.name[locale] },
-          { href: routes.product(locale, category.slug, product.slug), label: name },
+          {
+            href: routes.category(locale, category.slug),
+            label: category.name[locale],
+          },
+          {
+            href: routes.product(locale, category.slug, product.slug),
+            label: name,
+          },
         ]}
       />
 
@@ -72,12 +82,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {gallery.length > 0 ? (
               <ProductGallery images={gallery} alt={name} />
             ) : (
-              <ProductMedia alt={name} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/3] rounded-2xl" />
+              <ProductMedia
+                alt={name}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="aspect-[4/3] rounded-2xl"
+              />
             )}
           </Reveal>
           <Reveal variant="right" className="space-y-6">
             {!product.isPublished && <Badge>{dictionary.common.draft}</Badge>}
-            {product.description && <p className="text-lg text-muted">{product.description[locale]}</p>}
+            {product.description && (
+              <p className="text-lg text-muted">
+                {product.description[locale]}
+              </p>
+            )}
             <ProductAttributes
               attributes={product.attributes}
               locale={locale}
@@ -88,10 +106,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </PageContainer>
       </section>
 
-      <PageContainer>
-        <RelatedProducts items={related} locale={locale} dictionary={dictionary} />
-      </PageContainer>
-      <EnquiryCta locale={locale} dictionary={dictionary} title={dictionary.productPage.enquire} />
+      <RelatedProducts items={related} locale={locale} dictionary={dictionary} />
+      <EnquiryCta
+        locale={locale}
+        dictionary={dictionary}
+        title={dictionary.productPage.enquire}
+      />
     </>
   );
 }

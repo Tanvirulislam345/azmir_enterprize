@@ -1,3 +1,4 @@
+import type { PhoneNumber } from "./company";
 import type { LocalizedText } from "./i18n";
 
 export type AboutPageKind = "message" | "team";
@@ -36,8 +37,15 @@ export type LeaderMessage = {
   goals: { title: LocalizedText; text: LocalizedText }[];
 };
 
+type IconCard = { icon: string; title: LocalizedText; text: LocalizedText };
+
 export type Team = {
   intro: LocalizedText;
-  responsibilities: { icon: string; title: LocalizedText; text: LocalizedText }[];
+  /** Services the team provides ("What we handle"). */
+  responsibilities: IconCard[];
+  /** Kinds of projects the team builds ("What we build"). */
+  capabilities: IconCard[];
   members: Person[];
+  /** The team's own contact, separate from the company's sales numbers. */
+  contact: { phone: PhoneNumber; email: string };
 };

@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { directionsHref, formatPhone, getOfficePhone, mailtoHref, mapEmbedSrc, telHref, whatsappHref } from "@/lib/contact";
+import {
+  directionsHref,
+  formatPhone,
+  getOfficePhone,
+  mailtoHref,
+  mapEmbedSrc,
+  telHref,
+  whatsappHref,
+} from "@/lib/contact";
 import type { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resolveLocale } from "@/lib/i18n/resolve-locale";
@@ -16,7 +24,12 @@ import { photos } from "@/data/photos";
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveLocale();
   const { contact } = await getDictionary(locale);
-  return buildMetadata({ locale, title: contact.metaTitle, description: contact.metaDescription, path: "/contact" });
+  return buildMetadata({
+    locale,
+    title: contact.metaTitle,
+    description: contact.metaDescription,
+    path: "/contact",
+  });
 }
 
 /** Contact: both offices on a live map, each card carrying the numbers and email. No form; every action is a direct handoff. */
@@ -28,7 +41,12 @@ export default async function ContactPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd(locale)) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessJsonLd(locale)),
+        }}
+      />
 
       <PageHero
         photo={photos.tipperTruck}
@@ -43,7 +61,10 @@ export default async function ContactPage() {
 
       <section className="py-20 sm:py-28">
         <PageContainer className="space-y-12">
-          <SectionHeading title={copy.officesTitle} description={copy.officesDescription} />
+          <SectionHeading
+            title={copy.officesTitle}
+            description={copy.officesDescription}
+          />
           <Reveal>
             <OfficeSwitcher
               offices={offices.map((office) => ({
@@ -52,7 +73,10 @@ export default async function ContactPage() {
                 address: office.address[locale],
                 mapSrc: mapEmbedSrc(office),
                 directionsHref: directionsHref(office),
-                mapTitle: copy.mapTitle.replace("{office}", office.name[locale]),
+                mapTitle: copy.mapTitle.replace(
+                  "{office}",
+                  office.name[locale],
+                ),
                 phone: (() => {
                   const phone = getOfficePhone(office);
                   return {
@@ -90,7 +114,7 @@ function localBusinessJsonLd(locale: Locale) {
     "@graph": offices.map((office) => ({
       "@type": "LocalBusiness",
       "@id": `${url}/contact#${office.id}`,
-      name: `${siteConfig.name} — ${office.name.en}`,
+      name: `${siteConfig.name}  ${office.name.en}`,
       url,
       email,
       telephone: getOfficePhone(office).international,

@@ -28,7 +28,7 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
           >
             <Image
               src={images[activeIndex]}
-              alt={`${alt} — ${activeIndex + 1}`}
+              alt={`${alt}  ${activeIndex + 1}`}
               fill
               priority={activeIndex === 0}
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -43,15 +43,23 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
             <button
               key={src}
               type="button"
-              aria-label={`${alt} — ${index + 1}`}
+              aria-label={`${alt}  ${index + 1}`}
               aria-pressed={index === activeIndex}
               onClick={() => setActiveIndex(index)}
               className={cn(
                 "group relative aspect-square overflow-hidden rounded-lg border-2 transition-all",
-                index === activeIndex ? "border-accent" : "border-transparent opacity-70 hover:opacity-100",
+                index === activeIndex
+                  ? "border-accent"
+                  : "border-transparent opacity-70 hover:opacity-100",
               )}
             >
-              <Image src={src} alt="" fill sizes="120px" className="object-cover transition-transform duration-500 ease-out-expo motion-safe:group-hover:scale-110" />
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="120px"
+                className="object-cover transition-transform duration-500 ease-out-expo motion-safe:group-hover:scale-110"
+              />
             </button>
           ))}
         </div>

@@ -2,7 +2,7 @@ import type { ContactDetails, SocialLinks } from "@/types/company";
 
 /**
  * Central company configuration.
- * Empty social fields are intentional — fill them only with client-confirmed values.
+ * Empty social fields are intentional  fill them only with client-confirmed values.
  */
 export const siteConfig = {
   name: "M/S. AZMIR ENTERPRIZE",
@@ -12,15 +12,28 @@ export const siteConfig = {
   /** Client-confirmed contact details. Each office has its own number (calls, WhatsApp and imo); the email is shared. */
   contact: {
     phones: [
-      { id: "primary", number: "01761116614", international: "+8801761116614", channels: ["call", "whatsapp", "imo"] },
-      { id: "secondary", number: "01829577199", international: "+8801829577199", channels: ["call", "whatsapp", "imo"] },
+      {
+        id: "primary",
+        number: "01761116614",
+        international: "+8801761116614",
+        channels: ["call", "whatsapp", "imo"],
+      },
+      {
+        id: "secondary",
+        number: "01829577199",
+        international: "+8801829577199",
+        channels: ["call", "whatsapp", "imo"],
+      },
     ],
     email: "ajmirenterprise123@gmail.com",
     offices: [
       {
         id: "sylhet",
         name: { bn: "সিলেট অফিস", en: "Sylhet office" },
-        address: { bn: "ইদারা ভবন, সোবহানীঘাট, সিলেট-৩১০০", en: "Idara Bhaban, Sobhanighat, Sylhet-3100" },
+        address: {
+          bn: "ইদারা ভবন, সোবহানীঘাট, সিলেট-৩১০০",
+          en: "Idara Bhaban, Sobhanighat, Sylhet-3100",
+        },
         mapQuery: "Idara Bhaban, Sobhanighat, Sylhet 3100, Bangladesh",
         phoneId: "primary",
       },

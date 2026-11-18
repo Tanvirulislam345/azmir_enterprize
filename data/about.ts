@@ -3,14 +3,14 @@ import type { AboutPage, LeaderMessage, Team } from "@/types/about";
 /**
  * About section content.
  *
- * DRAFT — replace before launch:
+ * DRAFT  replace before launch:
  * - The Managing Director's message, vision, mission and goals are a professional draft written for review.
  *   They must be approved (or rewritten) by MD. Radowan Hossen.
  * - The Bangla spelling of his name ("মোঃ রাদোয়ান হোসেন") needs confirmation.
  * - No photo yet: add `photo: "/images/team/radowan-hossen.webp"` (portrait, about 4:5) when it arrives.
  *
- * PLACEHOLDER — replace before launch:
- * - IT Support Team member names are examples, not real staff.
+ * PLACEHOLDER  replace before launch:
+ * - IT Support Team member names are placeholders (the roles are confirmed).
  *
  * Adding an About page: add an entry to `aboutPages` (kind "message" or "team") and its content below;
  * the About menu, mobile drawer, about sub-nav, overview cards and sitemap pick it up automatically.
@@ -22,7 +22,10 @@ export const aboutPages: AboutPage[] = [
     kind: "message",
     icon: "user",
     title: { en: "Managing Director", bn: "ব্যবস্থাপনা পরিচালক" },
-    summary: { en: "A message from MD. Radowan Hossen", bn: "মোঃ রাদোয়ান হোসেনের বার্তা" },
+    summary: {
+      en: "A message from MD. Radowan Hossen",
+      bn: "মোঃ রাদোয়ান হোসেনের বার্তা",
+    },
     sortOrder: 1,
   },
   {
@@ -31,7 +34,10 @@ export const aboutPages: AboutPage[] = [
     kind: "team",
     icon: "headset",
     title: { en: "IT Support Team", bn: "আইটি সাপোর্ট টিম" },
-    summary: { en: "The people behind our digital services", bn: "আমাদের ডিজিটাল সেবার পেছনের মানুষেরা" },
+    summary: {
+      en: "The people behind our digital services",
+      bn: "আমাদের ডিজিটাল সেবার পেছনের মানুষেরা",
+    },
     sortOrder: 2,
   },
 ];
@@ -78,68 +84,144 @@ export const managingDirector: LeaderMessage = {
   goals: [
     {
       title: { en: "Consistent quality", bn: "ধারাবাহিক মান" },
-      text: { en: "Supply materials that meet what was agreed, order after order.", bn: "প্রতিটি অর্ডারে যা নির্ধারিত হয়েছে সেই অনুযায়ী পণ্য সরবরাহ করা।" },
+      text: {
+        en: "Supply materials that meet what was agreed, order after order.",
+        bn: "প্রতিটি অর্ডারে যা নির্ধারিত হয়েছে সেই অনুযায়ী পণ্য সরবরাহ করা।",
+      },
     },
     {
       title: { en: "Reliable delivery", bn: "নির্ভরযোগ্য ডেলিভারি" },
-      text: { en: "Arrange transport that gets materials to site when they are needed.", bn: "প্রয়োজনের সময় সাইটে পণ্য পৌঁছাতে পরিবহনের ব্যবস্থা করা।" },
+      text: {
+        en: "Arrange transport that gets materials to site when they are needed.",
+        bn: "প্রয়োজনের সময় সাইটে পণ্য পৌঁছাতে পরিবহনের ব্যবস্থা করা।",
+      },
     },
     {
       title: { en: "Honest dealing", bn: "সৎ লেনদেন" },
-      text: { en: "Give clear information and realistic commitments from the first enquiry.", bn: "প্রথম জিজ্ঞাসা থেকেই স্পষ্ট তথ্য ও বাস্তবসম্মত প্রতিশ্রুতি দেওয়া।" },
+      text: {
+        en: "Give clear information and realistic commitments from the first enquiry.",
+        bn: "প্রথম জিজ্ঞাসা থেকেই স্পষ্ট তথ্য ও বাস্তবসম্মত প্রতিশ্রুতি দেওয়া।",
+      },
     },
     {
       title: { en: "Growing together", bn: "একসাথে এগিয়ে চলা" },
-      text: { en: "Build long-term relationships and grow alongside our customers.", bn: "দীর্ঘমেয়াদি সম্পর্ক গড়ে তোলা এবং ক্রেতাদের সাথে একসাথে এগিয়ে যাওয়া।" },
+      text: {
+        en: "Build long-term relationships and grow alongside our customers.",
+        bn: "দীর্ঘমেয়াদি সম্পর্ক গড়ে তোলা এবং ক্রেতাদের সাথে একসাথে এগিয়ে যাওয়া।",
+      },
     },
   ],
 };
 
 export const itSupportTeam: Team = {
   intro: {
-    en: "Our IT Support Team keeps our website, digital communication and office systems running smoothly, so customer enquiries are answered quickly and orders move without delay.",
-    bn: "আমাদের আইটি সাপোর্ট টিম ওয়েবসাইট, ডিজিটাল যোগাযোগ ও অফিসের সিস্টেম সচল রাখে, যাতে ক্রেতাদের জিজ্ঞাসার দ্রুত উত্তর দেওয়া যায় এবং অর্ডার দেরি ছাড়াই এগিয়ে যায়।",
+    en: "Our IT Support Team builds and maintains our website and online catalogue, keeps our servers running and our data secure, and builds software projects of any kind  from SaaS products to HRM and ERP systems and AI integration.",
+    bn: "আমাদের আইটি সাপোর্ট টিম ওয়েবসাইট ও অনলাইন পণ্যতালিকা তৈরি ও রক্ষণাবেক্ষণ করে, সার্ভার সচল ও তথ্য সুরক্ষিত রাখে, এবং যেকোনো ধরনের সফটওয়্যার প্রকল্প তৈরি করে  সাস প্রোডাক্ট থেকে শুরু করে এইচআরএম, ইআরপি সিস্টেম ও এআই ইন্টিগ্রেশন পর্যন্ত।",
   },
   responsibilities: [
     {
       icon: "globe",
-      title: { en: "Website & online catalogue", bn: "ওয়েবসাইট ও অনলাইন পণ্যতালিকা" },
-      text: { en: "Keeping product information and pages up to date and available.", bn: "পণ্যের তথ্য ও পেজ হালনাগাদ এবং সবসময় সচল রাখা।" },
+      title: {
+        en: "Website & online catalogue",
+        bn: "ওয়েবসাইট ও অনলাইন পণ্যতালিকা",
+      },
+      text: {
+        en: "Building and updating our pages and product information.",
+        bn: "আমাদের পেজ ও পণ্যের তথ্য তৈরি ও হালনাগাদ করা।",
+      },
     },
     {
-      icon: "messages",
-      title: { en: "Enquiries & communication", bn: "জিজ্ঞাসা ও যোগাযোগ" },
-      text: { en: "Making sure calls, WhatsApp messages and emails reach the right people.", bn: "কল, হোয়াটসঅ্যাপ মেসেজ ও ইমেইল সঠিক মানুষের কাছে পৌঁছানো নিশ্চিত করা।" },
+      icon: "wrench",
+      title: { en: "Website maintenance", bn: "ওয়েবসাইট রক্ষণাবেক্ষণ" },
+      text: {
+        en: "Updates, fixes and performance, so the site stays fast and available.",
+        bn: "আপডেট, সমস্যা সমাধান ও পারফরম্যান্স, যাতে সাইট দ্রুত ও সবসময় সচল থাকে।",
+      },
     },
     {
-      icon: "devices",
-      title: { en: "Systems & devices", bn: "সিস্টেম ও ডিভাইস" },
-      text: { en: "Supporting the computers, phones and tools used in our offices.", bn: "অফিসে ব্যবহৃত কম্পিউটার, ফোন ও অন্যান্য সরঞ্জামের সহায়তা দেওয়া।" },
+      icon: "server",
+      title: { en: "Server maintenance", bn: "সার্ভার রক্ষণাবেক্ষণ" },
+      text: {
+        en: "Hosting, monitoring, backups and updates for our servers.",
+        bn: "সার্ভারের হোস্টিং, মনিটরিং, ব্যাকআপ ও আপডেট।",
+      },
     },
     {
       icon: "data",
       title: { en: "Data & security", bn: "তথ্য ও নিরাপত্তা" },
-      text: { en: "Protecting business records and customer information.", bn: "ব্যবসায়িক নথি ও ক্রেতার তথ্য সুরক্ষিত রাখা।" },
+      text: {
+        en: "Protecting business records and customer information.",
+        bn: "ব্যবসায়িক নথি ও ক্রেতার তথ্য সুরক্ষিত রাখা।",
+      },
+    },
+  ],
+  capabilities: [
+    {
+      icon: "cloud",
+      title: { en: "SaaS products", bn: "সাস প্রোডাক্ট" },
+      text: {
+        en: "Cloud software that businesses subscribe to and use from anywhere.",
+        bn: "ক্লাউড সফটওয়্যার, যা প্রতিষ্ঠানগুলো সাবস্ক্রাইব করে যেকোনো জায়গা থেকে ব্যবহার করে।",
+      },
+    },
+    {
+      icon: "boxes",
+      title: { en: "HRM & ERP systems", bn: "এইচআরএম ও ইআরপি সিস্টেম" },
+      text: {
+        en: "People, payroll, inventory, sales and accounts  managed in one system.",
+        bn: "কর্মী, বেতন, ইনভেন্টরি, বিক্রয় ও হিসাব  এক সিস্টেমে পরিচালনা।",
+      },
+    },
+    {
+      icon: "sparkles",
+      title: { en: "AI integration", bn: "এআই ইন্টিগ্রেশন" },
+      text: {
+        en: "Adding AI features such as assistants and automation to existing software.",
+        bn: "বিদ্যমান সফটওয়্যারে অ্যাসিস্ট্যান্ট ও অটোমেশনের মতো এআই সুবিধা যুক্ত করা।",
+      },
+    },
+    {
+      icon: "code",
+      title: { en: "Custom projects", bn: "কাস্টম প্রকল্প" },
+      text: {
+        en: "Any software your business needs, designed and built to fit how you work.",
+        bn: "আপনার প্রতিষ্ঠানের প্রয়োজনীয় যেকোনো সফটওয়্যার, আপনার কাজের ধরন অনুযায়ী ডিজাইন ও তৈরি।",
+      },
     },
   ],
   members: [
     {
-      id: "it-lead",
+      id: "lead-software-engineer",
       name: { en: "Team member name", bn: "সদস্যের নাম" },
-      role: { en: "IT Support Lead", bn: "আইটি সাপোর্ট লিড" },
-      initials: "IT",
+      role: { en: "Lead Software Engineer", bn: "লিড সফটওয়্যার ইঞ্জিনিয়ার" },
+      initials: "LS",
     },
     {
-      id: "web-developer",
+      id: "devops-engineer",
       name: { en: "Team member name", bn: "সদস্যের নাম" },
-      role: { en: "Web Developer", bn: "ওয়েব ডেভেলপার" },
-      initials: "WD",
+      role: { en: "DevOps Engineer", bn: "ডেভঅপস ইঞ্জিনিয়ার" },
+      initials: "DO",
     },
     {
-      id: "support-executive",
+      id: "software-engineer",
       name: { en: "Team member name", bn: "সদস্যের নাম" },
-      role: { en: "Support Executive", bn: "সাপোর্ট এক্সিকিউটিভ" },
+      role: { en: "Software Engineer", bn: "সফটওয়্যার ইঞ্জিনিয়ার" },
       initials: "SE",
     },
+    {
+      id: "sqa-engineer",
+      name: { en: "Team member name", bn: "সদস্যের নাম" },
+      role: { en: "SQA Engineer", bn: "এসকিউএ ইঞ্জিনিয়ার" },
+      initials: "QA",
+    },
   ],
+  contact: {
+    phone: {
+      id: "it-support",
+      number: "01647169052",
+      international: "+8801647169052",
+      channels: ["call", "whatsapp"],
+    },
+    email: "tanvirulislam122519@gmail.com",
+  },
 };

@@ -243,10 +243,17 @@
     "teamEyebrow": "Our team",
     "responsibilitiesTitle": "What we handle",
     "membersTitle": "Meet the team",
-    "needHelpTitle": "Need help with our website or an enquiry?",
-    "needHelpDescription": "Reach the team directly by email or phone.",
+    "needHelpTitle": "Need IT support or a website?",
+    "needHelpDescription": "For website, server or software project enquiries, contact the IT team directly.",
     "leadershipEyebrow": "Our people",
     "leadershipTitle": "Leadership & team",
-    "leadershipDescription": "Meet the people who lead the company and keep it running."
+    "leadershipDescription": "Meet the people who lead the company and keep it running.",
+    "capabilitiesEyebrow": "What we build",
+    "capabilitiesTitle": "Software for any kind of project",
+    "capabilitiesDescription": "Beyond our own systems, the team builds software for businesses."
+  },
+  "transportHighlight": {
+    "carryLabel": "Transport available for",
+    "learnMore": "Learn more"
   }
 }

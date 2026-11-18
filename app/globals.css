@@ -4,6 +4,11 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------- Semantic design tokens (single source of truth) ---------- */
+/*
+ * Section backgrounds use three tones only: plain (bg-background), muted (bg-surface-muted/60) and dark (bg-inverse).
+ * Body sections cycle through them so no two neighbouring sections share a background; every page opens with the
+ * dark hero and closes with the enquiry banner on plain and the dark footer.
+ */
 :root {
   --primary: #252a2d;
   --primary-soft: #3e4549;

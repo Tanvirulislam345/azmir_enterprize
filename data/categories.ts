@@ -8,7 +8,7 @@ import type { ProductCategory } from "@/types/product";
  * pick a `layout` and `icon`, and optionally a hero photo in `data/photos.ts` (`getCategoryHeroPhoto`).
  * Navigation, catalogue, home page, sitemap and the transportation page pick it up automatically.
  *
- * TEMPORARY stand-in images — replace with real product photos before launch:
+ * TEMPORARY stand-in images  replace with real product photos before launch:
  * - Deshi Bricks → brick-moulding.webp, Block Bricks → brick-kiln.webp
  * - Coal (category and every variant) → brick-kiln.webp
  * - Iron (category and every variant) → tipper-truck.webp

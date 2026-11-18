@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/home/hero/hero-section";
 import { ProductCategorySection } from "@/components/home/product-category-section";
 import { SelectedProjects } from "@/components/home/selected-projects";
 import { SupplyProcess } from "@/components/home/supply-process";
+import { TransportHighlight } from "@/components/home/transport-highlight";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 
 export default async function HomePage() {
@@ -22,6 +23,7 @@ export default async function HomePage() {
     <>
       <HeroSection locale={locale} dictionary={dictionary} />
       <CompanyIntro categories={categories} locale={locale} dictionary={dictionary} />
+      <TransportHighlight categories={categories} locale={locale} dictionary={dictionary} />
       <ProductCategorySection
         categories={categories}
         locale={locale}

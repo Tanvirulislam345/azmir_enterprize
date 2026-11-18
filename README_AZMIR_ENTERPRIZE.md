@@ -1,4 +1,4 @@
-# M/S. AZMIR ENTERPRIZE — Website Project Specification
+# M/S. AZMIR ENTERPRIZE Website Project Specification
 
 **Project status:** A fresh Next.js app has been initialized. No website pages, reusable components, layout, or product data have been implemented yet.
 
@@ -40,7 +40,7 @@ Categories appear in the table's order (`sortOrder`).
 
 **Transportation** is a service, not a product category. It has its own page at `/[lang]/transportation`, linked from the header, the products dropdown, the footer and its own card in the home "Who we are" section. It is never numbered among the product categories.
 
-Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only — no manufacturer logos.
+Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only no manufacturer logos.
 
 ### Temporary stand-in images
 
@@ -52,7 +52,7 @@ Until real product photos arrive, these reuse existing images (listed at the top
 
 ### Selected projects (placeholder)
 
-Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project beside a photo. The names there (e.g. "Mark Builders Limited") are **placeholders**, and each project's photo is a **temporary** generic site photo — replace both with client-confirmed names and real project photos before launch.
+Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project beside a photo. The names there (e.g. "Mark Builders Limited") are **placeholders**, and each project's photo is a **temporary** generic site photo replace both with client-confirmed names and real project photos before launch.
 
 ### Adding a category
 
@@ -106,7 +106,7 @@ Define semantic CSS variables in one place. If the initialized project already h
 
 Use client-approved photos of products, materials, loading, transport, worksite, office, and team only where those activities/facilities genuinely belong to AZMIR. Do not use Green Touch images. Temporary stock imagery must be replaceable and must not be presented as AZMIR's actual assets.
 
-## 4. Navbar and dropdown — first priority
+## 4. Navbar and dropdown first priority
 
 Build the shared layout before building individual pages.
 
@@ -123,9 +123,9 @@ Suggested structure:
 
 Create a wide, well-organized dropdown or mega-menu with three category groups:
 
-- Stone — variants listed beneath it.
-- Sand — variants listed beneath it.
-- Bricks — variants listed beneath it.
+- Stone variants listed beneath it.
+- Sand variants listed beneath it.
+- Bricks variants listed beneath it.
 
 The dropdown must be generated from the same product repository used by catalogue pages. Never maintain a second hardcoded list for navigation. Hide unpublished categories and variants.
 
@@ -179,14 +179,14 @@ Use Next.js App Router.
 
 Required phase-one routes:
 
-- `/` — Home
-- `/about` — About
-- `/products` — Product categories
-- `/products/stone` — Stone category
-- `/products/sand` — Sand category
-- `/products/bricks` — Bricks category
-- `/products/[slug]` — Product variant detail
-- `/contact` — Contact
+- `/` Home
+- `/about` About
+- `/products` Product categories
+- `/products/stone` Stone category
+- `/products/sand` Sand category
+- `/products/bricks` Bricks category
+- `/products/[slug]` Product variant detail
+- `/contact` Contact
 
 Optional only if client supplies approved content:
 
@@ -442,7 +442,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 
 ## 15. Claude Code implementation milestones
 
-### Milestone 0 — Inspect the initialized project
+### Milestone 0 Inspect the initialized project
 
 1. Inspect repository, `package.json`, lockfile, app directory, styling, and current files.
 2. Run the starter app and verify it works.
@@ -452,7 +452,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 
 **Acceptance:** Current app runs and an implementation plan is presented before large changes.
 
-### Milestone 1 — Foundation
+### Milestone 1 Foundation
 
 1. Configure Inter and Noto Sans Bengali.
 2. Add global theme tokens.
@@ -460,7 +460,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 4. Create PageContainer, buttons, and SectionHeading.
 5. Verify Bengali and English rendering.
 
-### Milestone 2 — Shared layout and navigation
+### Milestone 2 Shared layout and navigation
 
 1. Build SiteHeader and SiteFooter.
 2. Build desktop navigation and ProductsDropdown.
@@ -470,7 +470,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 
 **Acceptance:** Header/footer appear on every route; dropdown is accessible; adding a product in data updates the menu automatically.
 
-### Milestone 3 — Catalogue data and reusable product components
+### Milestone 3 Catalogue data and reusable product components
 
 1. Add product types and unpublished draft data.
 2. Add repository functions.
@@ -478,11 +478,11 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 4. Ensure unpublished items never appear publicly.
 5. Ensure navbar and catalogue use the same repository.
 
-### Milestone 4 — Pages
+### Milestone 4 Pages
 
 Build Home, About, Products, category, product detail, and Contact pages from reusable sections. Use placeholders only for missing client content and do not present placeholders as facts.
 
-### Milestone 5 — SEO and QA
+### Milestone 5 SEO and QA
 
 Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks, responsive tests, lint, type-check, and production build. Fix all errors before completion.
 
@@ -493,8 +493,8 @@ Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks
 - Confirm exact legal/display spelling.
 - Logo (SVG/PNG).
 - Approved company introduction and history.
-- ~~Phone, WhatsApp, email, address~~ — **confirmed** and stored in `config/site.ts` (two numbers for phone/WhatsApp/imo, one email, Sylhet and Dhaka offices).
-- Business hours — still pending (not shown until confirmed).
+- ~~Phone, WhatsApp, email, address~~ **confirmed** and stored in `config/site.ts` (two numbers for phone/WhatsApp/imo, one email, Sylhet and Dhaka offices).
+- Business hours still pending (not shown until confirmed).
 - Social links.
 
 ### Products

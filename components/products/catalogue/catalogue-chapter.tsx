@@ -21,8 +21,9 @@ type CatalogueChapterProps = {
 type Theme = { section: string; inverse?: boolean };
 
 /** Fixed backdrops for the bold layouts; the rest alternate by position so neighbouring chapters never blend. */
+// Three tones only (see globals.css): the spotlight layout is the dark band; every other chapter alternates
+// plain and muted by position, so neighbouring chapters never share a background.
 const LAYOUT_THEMES: Partial<Record<CategoryLayout, Theme>> = {
-  panels: { section: "bg-accent-soft/15" },
   spotlight: { section: "bg-inverse", inverse: true },
 };
 

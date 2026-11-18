@@ -13,12 +13,15 @@ type ContinueReadingProps = {
   previous?: PageLink;
   next?: PageLink;
   labels: { previous: string; next: string };
+  /** Background, chosen so it differs from the section above (see the tone rule in globals.css). */
+  tone?: "plain" | "muted";
 };
 
 /** End-of-page navigation between About pages: previous, all pages, and next (like "Next message"). */
-export function ContinueReading({ title, allLabel, allHref, previous, next, labels }: ContinueReadingProps) {
+export function ContinueReading({ title, allLabel, allHref, previous, next, labels, tone = "plain" }: ContinueReadingProps) {
   return (
-    <section className="border-t border-border py-16 sm:py-20">
+    // A tinted band needs room under its cards; a plain one flows straight into the enquiry banner below.
+    <section className={tone === "muted" ? "bg-surface-muted/60 py-16 sm:py-20" : "pt-16 sm:pt-20"}>
       <PageContainer className="space-y-8">
         <Reveal className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>

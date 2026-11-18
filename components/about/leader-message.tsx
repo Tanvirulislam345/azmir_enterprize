@@ -13,6 +13,9 @@ import { PageContainer } from "@/components/ui/page-container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Portrait } from "./portrait";
 
+/** Background of this view's last section, so the page can pick a different one for what follows. */
+export const LEADER_MESSAGE_LAST_TONE = "muted" as const;
+
 type LeaderMessageViewProps = {
   message: LeaderMessage;
   locale: Locale;
