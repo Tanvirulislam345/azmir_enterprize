@@ -13,6 +13,7 @@ Use the reference for layout inspiration, navigation patterns, catalogue groupin
 ## 1. Business and website goals
 
 The website should help contractors, developers, engineers, procurement teams, retailers, and other buyers:
+
 - Understand who M/S. AZMIR ENTERPRIZE is.
 - Explore construction-material categories and their variants.
 - Review product information and available images.
@@ -26,14 +27,14 @@ Do not invent the company's history, years in business, office address, contact 
 
 The client confirmed the following catalogue. Data lives in `data/categories.ts`; names must still come from data, never hardcoded in UI components.
 
-| Category | Products |
-|---|---|
-| Stone Chips & Aggregate | Pakur, Meghalaya, Dubai, Maddhapara, Bhutan Torsa stone chips; Boulder Stone; Singles Stone |
-| Sand | Fine Aggregate (Sylhet, Durgapur, Panchagarh sand); Filling Sand |
-| Bitumen (বিটুমিন) | Irani, Dubai, Basundhara, Bangla, Liquid |
-| Coal (কয়লা) | Bangla, Indonesian, Indian Super, High Super |
-| Iron (রড) | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur |
-| Bricks (ইট) | Auto Bricks, Deshi Bricks, Block Bricks |
+| Category          | Products                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------- |
+| Stone Chips       | Pakur, Meghalaya, Dubai, Maddhapara, Bhutan Torsa stone chips; Boulder Stone; Singles Stone |
+| Sand              | Fine Aggregate (Sylhet, Durgapur, Panchagarh sand); Filling Sand                            |
+| Bitumen (বিটুমিন) | Irani, Dubai, Basundhara, Bangla, Liquid                                                    |
+| Coal (কয়লা)      | Bangla, Indonesian, Indian Super, High Super                                                |
+| Iron (রড)         | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur                                               |
+| Bricks (ইট)       | Auto Bricks, Deshi Bricks, Block Bricks                                                     |
 
 Categories appear in the table's order (`sortOrder`).
 
@@ -42,16 +43,21 @@ Categories appear in the table's order (`sortOrder`).
 Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only — no manufacturer logos.
 
 ### Temporary stand-in images
+
 Until real product photos arrive, these reuse existing images (listed at the top of `data/categories.ts`):
+
 - Deshi Bricks → `hero/brick-moulding.webp`; Block Bricks → `hero/brick-kiln.webp`
 - Coal (category and all products) → `hero/brick-kiln.webp`
 - Iron and Bitumen (categories and all products) → `hero/tipper-truck.webp`
 
 ### Selected projects (placeholder)
+
 Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project beside a photo. The names there (e.g. "Mark Builders Limited") are **placeholders**, and each project's photo is a **temporary** generic site photo — replace both with client-confirmed names and real project photos before launch.
 
 ### Adding a category
+
 Adding a category is a data-only change:
+
 1. Add an entry to `data/categories.ts` with a unique `id`/`slug`, localized `name`, `shortName`, `description`, `image`, `sortOrder` and its `variants`.
 2. Choose a catalogue `layout`: `mosaic`, `panels`, `spotlight` or `showcase` (default).
 3. Choose an `icon` key from `lib/products/category-icons.ts` (add a new key there if none fits).
@@ -62,6 +68,7 @@ Navigation, the products catalogue, category pages, the home page, the transport
 ## 3. Design direction
 
 ### Visual style
+
 - Modern, elegant, confident, and professional.
 - Construction-material supplier identity, not an ecommerce storefront.
 - Strong typography, generous whitespace, clear content hierarchy, and large authentic photography.
@@ -69,24 +76,26 @@ Navigation, the products catalogue, category pages, the home page, the transport
 - Original AZMIR design inspired by the reference's clean corporate presentation.
 
 ### Colour tokens
+
 Use the existing project palette as a centralized theme:
 
-| Token | Value | Purpose |
-|---|---|---|
-| Primary | `#252A2D` | Main text, navigation, dark surfaces |
-| Primary soft | `#3E4549` | Secondary dark surfaces |
-| Accent | `#E87932` | Main CTA and active states |
-| Accent soft | `#F2B17A` | Soft accent |
-| Background | `#F7F5F0` | Page background |
-| Surface | `#FFFFFF` | Cards and panels |
-| Surface muted | `#EEEAE3` | Alternate sections |
-| Text muted | `#667078` | Supporting copy |
-| Border | `#DEDAD2` | Dividers and borders |
-| Focus | `#1D70A2` | Keyboard focus |
+| Token         | Value     | Purpose                              |
+| ------------- | --------- | ------------------------------------ |
+| Primary       | `#252A2D` | Main text, navigation, dark surfaces |
+| Primary soft  | `#3E4549` | Secondary dark surfaces              |
+| Accent        | `#E87932` | Main CTA and active states           |
+| Accent soft   | `#F2B17A` | Soft accent                          |
+| Background    | `#F7F5F0` | Page background                      |
+| Surface       | `#FFFFFF` | Cards and panels                     |
+| Surface muted | `#EEEAE3` | Alternate sections                   |
+| Text muted    | `#667078` | Supporting copy                      |
+| Border        | `#DEDAD2` | Dividers and borders                 |
+| Focus         | `#1D70A2` | Keyboard focus                       |
 
 Define semantic CSS variables in one place. If the initialized project already has a coherent theme, consolidate rather than layering conflicting styles.
 
 ### Typography
+
 - English: Inter.
 - Bengali: Noto Sans Bengali.
 - Prefer `next/font` and configure font variables in the root layout.
@@ -94,6 +103,7 @@ Define semantic CSS variables in one place. If the initialized project already h
 - Use comfortable line-height and readable body sizes.
 
 ### Photography
+
 Use client-approved photos of products, materials, loading, transport, worksite, office, and team only where those activities/facilities genuinely belong to AZMIR. Do not use Green Touch images. Temporary stock imagery must be replaceable and must not be presented as AZMIR's actual assets.
 
 ## 4. Navbar and dropdown — first priority
@@ -101,14 +111,18 @@ Use client-approved photos of products, materials, loading, transport, worksite,
 Build the shared layout before building individual pages.
 
 ### Desktop header
+
 Suggested structure:
+
 - Left: company logo/wordmark.
 - Main navigation: Home, About Us, Products, Projects/Capabilities (only if confirmed), Gallery (only if real images exist), Contact.
 - Right: clear Contact / Request a Quote CTA.
 - Optional phone/email utility row only when client details are confirmed.
 
 ### Products dropdown
+
 Create a wide, well-organized dropdown or mega-menu with three category groups:
+
 - Stone — variants listed beneath it.
 - Sand — variants listed beneath it.
 - Bricks — variants listed beneath it.
@@ -116,6 +130,7 @@ Create a wide, well-organized dropdown or mega-menu with three category groups:
 The dropdown must be generated from the same product repository used by catalogue pages. Never maintain a second hardcoded list for navigation. Hide unpublished categories and variants.
 
 ### Interaction requirements
+
 - Desktop dropdown opens on click. Hover can be an enhancement, never the only interaction.
 - Close on outside click, Escape, and navigation selection.
 - Keyboard accessible with visible focus.
@@ -124,6 +139,7 @@ The dropdown must be generated from the same product repository used by catalogu
 - Use subtle transitions and avoid layout shifts.
 
 ### Mobile navigation
+
 - Accessible menu button with `aria-expanded`.
 - Drawer or full-width panel.
 - Products expands as an accordion with category and variant links.
@@ -133,26 +149,27 @@ The dropdown must be generated from the same product repository used by catalogu
 - Do not depend on hover.
 
 ### Responsive header
+
 Test at 360px, 390px, 768px, 1024px, 1280px, and wide desktop. No horizontal overflow, logo/nav collision, or inaccessible controls.
 
 ## 5. Shared reusable layout components
 
 Create these before page-specific sections:
 
-| Component | Responsibility |
-|---|---|
-| `SiteHeader` | Shared responsive header |
-| `DesktopNavigation` | Desktop links |
-| `ProductsDropdown` | Data-driven category/variant menu |
-| `MobileNavigation` | Mobile drawer and product accordion |
-| `SiteFooter` | Company info, useful links, contact, copyright |
-| `PageContainer` | Consistent max-width and horizontal padding |
-| `SectionHeading` | Reusable eyebrow, heading, description |
-| `PrimaryButton` | Main CTA |
-| `SecondaryButton` | Secondary CTA |
-| `Breadcrumbs` | Page hierarchy |
-| `WhatsAppButton` | Optional, only after number is confirmed |
-| `BackToTop` | Optional utility |
+| Component           | Responsibility                                 |
+| ------------------- | ---------------------------------------------- |
+| `SiteHeader`        | Shared responsive header                       |
+| `DesktopNavigation` | Desktop links                                  |
+| `ProductsDropdown`  | Data-driven category/variant menu              |
+| `MobileNavigation`  | Mobile drawer and product accordion            |
+| `SiteFooter`        | Company info, useful links, contact, copyright |
+| `PageContainer`     | Consistent max-width and horizontal padding    |
+| `SectionHeading`    | Reusable eyebrow, heading, description         |
+| `PrimaryButton`     | Main CTA                                       |
+| `SecondaryButton`   | Secondary CTA                                  |
+| `Breadcrumbs`       | Page hierarchy                                 |
+| `WhatsAppButton`    | Optional, only after number is confirmed       |
+| `BackToTop`         | Optional utility                               |
 
 Use one root layout to provide fonts, global styles, header, footer, and metadata defaults on every page.
 
@@ -161,6 +178,7 @@ Use one root layout to provide fonts, global styles, header, footer, and metadat
 Use Next.js App Router.
 
 Required phase-one routes:
+
 - `/` — Home
 - `/about` — About
 - `/products` — Product categories
@@ -171,6 +189,7 @@ Required phase-one routes:
 - `/contact` — Contact
 
 Optional only if client supplies approved content:
+
 - `/projects`
 - `/gallery`
 - `/privacy-policy`
@@ -178,12 +197,15 @@ Optional only if client supplies approved content:
 Do not publish empty or fabricated projects/gallery pages.
 
 ### Language support
+
 Bengali-first, English-ready. Recommended route convention: `/bn/...` and `/en/...`, or a deliberate default-locale approach. Choose one strategy and apply it consistently. Keep translations in dictionaries/data, set the correct document `lang`, and provide localized metadata. If complete translations are not ready, launch one complete language rather than a partially translated interface.
 
 ## 7. Page requirements
 
 ### Home
+
 Suggested order:
+
 1. Shared header.
 2. Hero: verified business headline, concise supporting copy, Explore Products CTA, Contact/Request Quote CTA, relevant image.
 3. Company introduction.
@@ -196,18 +218,23 @@ Suggested order:
 10. Shared footer.
 
 ### About
+
 Company introduction, business focus, mission/values if supplied, sourcing/supply process if confirmed, real company photos, contact CTA. Do not invent company history or leadership details.
 
 ### Products overview
+
 Show published categories, relevant image, concise description, and category link. No cart or checkout.
 
 ### Category page
+
 Breadcrumbs, category title, introduction, category image if available, variant cards from data, and enquiry CTA.
 
 ### Product detail
+
 Product name, image/gallery, descriptions, confirmed attributes, related products, and enquiry CTA. Show only confirmed size, grade, origin, colour, application, packaging, etc. No price or stock unless client maintains accurate values.
 
 ### Contact
+
 Confirmed phone, WhatsApp, email, address, hours, and enquiry method. If there is no backend, use an honest WhatsApp/email handoff. Never display a fake “message sent” success state.
 
 ## 8. Suggested project structure
@@ -319,13 +346,20 @@ export type ProductCategory = {
 All example variants must initially use `isPublished: false`. A category should appear only when it is published and has at least one published variant. Product attributes are optional and must not be fabricated.
 
 ### Repository abstraction
+
 Pages/components must not import raw arrays directly. Use repository methods such as:
 
 ```ts
 export interface ProductRepository {
   getPublishedCategories(locale: "bn" | "en"): Promise<ProductCategory[]>;
-  getCategoryBySlug(slug: string, locale: "bn" | "en"): Promise<ProductCategory | null>;
-  getProductBySlug(slug: string, locale: "bn" | "en"): Promise<ProductVariant | null>;
+  getCategoryBySlug(
+    slug: string,
+    locale: "bn" | "en",
+  ): Promise<ProductCategory | null>;
+  getProductBySlug(
+    slug: string,
+    locale: "bn" | "en",
+  ): Promise<ProductVariant | null>;
   getFeaturedProducts(locale: "bn" | "en"): Promise<ProductVariant[]>;
 }
 ```
@@ -409,6 +443,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 ## 15. Claude Code implementation milestones
 
 ### Milestone 0 — Inspect the initialized project
+
 1. Inspect repository, `package.json`, lockfile, app directory, styling, and current files.
 2. Run the starter app and verify it works.
 3. Identify existing conventions and dependencies.
@@ -418,6 +453,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 **Acceptance:** Current app runs and an implementation plan is presented before large changes.
 
 ### Milestone 1 — Foundation
+
 1. Configure Inter and Noto Sans Bengali.
 2. Add global theme tokens.
 3. Configure root metadata.
@@ -425,6 +461,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 5. Verify Bengali and English rendering.
 
 ### Milestone 2 — Shared layout and navigation
+
 1. Build SiteHeader and SiteFooter.
 2. Build desktop navigation and ProductsDropdown.
 3. Build mobile navigation and product accordion.
@@ -434,6 +471,7 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 **Acceptance:** Header/footer appear on every route; dropdown is accessible; adding a product in data updates the menu automatically.
 
 ### Milestone 3 — Catalogue data and reusable product components
+
 1. Add product types and unpublished draft data.
 2. Add repository functions.
 3. Build category cards, product cards, product grid, category page, and detail page.
@@ -441,14 +479,17 @@ Empty contact fields are intentional placeholders. Never invent phone numbers, a
 5. Ensure navbar and catalogue use the same repository.
 
 ### Milestone 4 — Pages
+
 Build Home, About, Products, category, product detail, and Contact pages from reusable sections. Use placeholders only for missing client content and do not present placeholders as facts.
 
 ### Milestone 5 — SEO and QA
+
 Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks, responsive tests, lint, type-check, and production build. Fix all errors before completion.
 
 ## 16. Client information required before launch
 
 ### Company
+
 - Confirm exact legal/display spelling.
 - Logo (SVG/PNG).
 - Approved company introduction and history.
@@ -457,6 +498,7 @@ Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks
 - Social links.
 
 ### Products
+
 - Confirm which categories AZMIR actually supplies: Stone, Sand, Bricks.
 - Confirm exact variant names.
 - Confirm origin/source if it will be displayed.
@@ -466,6 +508,7 @@ Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks
 - Confirm whether prices should be displayed (default: no).
 
 ### Operations and credibility
+
 - Delivery areas.
 - Minimum order quantity, if applicable.
 - Transport/loading capability, if applicable.

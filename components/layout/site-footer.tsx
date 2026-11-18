@@ -23,10 +23,11 @@ export async function SiteFooter({ locale, dictionary }: SiteFooterProps) {
 
   return (
     <footer className="relative overflow-hidden bg-inverse text-inverse-foreground">
-      <PageContainer className="relative grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
-        <Reveal className="space-y-4 lg:col-span-1">
+      {/* Outer columns (brand, contact) carry more text than the two link lists, so they get the wider tracks. */}
+      <PageContainer className="relative grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.85fr_0.85fr_1.4fr] lg:gap-8 xl:gap-14">
+        <Reveal className="space-y-4">
           <Wordmark href={routes.home(locale)} />
-          <p className="max-w-xs text-sm text-inverse-muted">{dictionary.footer.tagline}</p>
+          <p className="max-w-sm text-sm text-inverse-muted">{dictionary.footer.tagline}</p>
         </Reveal>
 
         <Reveal delay={0.08}>
