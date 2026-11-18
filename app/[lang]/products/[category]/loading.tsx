@@ -11,10 +11,20 @@ export default function CatalogueLoading() {
           <div className="h-5 w-1/2 max-w-md rounded-full bg-inverse-foreground/10" />
         </PageContainer>
       </section>
-      <PageContainer className="grid gap-6 py-20 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }, (_, index) => (
-          <div key={index} className="aspect-[3/4] rounded-2xl bg-surface-muted" />
-        ))}
+      <div className="border-y border-border">
+        <PageContainer className="flex gap-2 py-3">
+          {Array.from({ length: 4 }, (_, index) => (
+            <div key={index} className="h-9 flex-1 rounded-full bg-surface-muted lg:w-36 lg:flex-none" />
+          ))}
+        </PageContainer>
+      </div>
+      <PageContainer className="space-y-6 py-20">
+        <div className="aspect-[4/5] rounded-[1.75rem] bg-surface-muted sm:aspect-[16/9] lg:aspect-[21/9]" />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
+            <div key={index} className="aspect-[3/4] rounded-[1.75rem] bg-surface-muted" />
+          ))}
+        </div>
       </PageContainer>
     </div>
   );

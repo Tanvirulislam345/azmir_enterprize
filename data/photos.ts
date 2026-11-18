@@ -83,3 +83,12 @@ export const heroSlides: Photo[] = [
   photos.jaflong,
   photos.brickMoulding,
 ];
+
+/** Hero backdrop for each category page; unknown categories fall back to the river stones. */
+const categoryHeroPhotos: Record<string, Photo> = {
+  stone: photos.bholaganj,
+  sand: photos.jaflong,
+  bricks: photos.brickKiln,
+};
+
+export const getCategoryHeroPhoto = (categoryId: string): Photo => categoryHeroPhotos[categoryId] ?? photos.bholaganj;

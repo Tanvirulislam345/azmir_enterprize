@@ -57,7 +57,9 @@
     "description": "Browse the materials we supply, grouped by category.",
     "variantsCount": "{count} products",
     "variantsCountOne": "1 product",
-    "empty": "Our product catalogue is being finalised and will be published soon. Contact us for your current requirement."
+    "empty": "Our product catalogue is being finalised and will be published soon. Contact us for your current requirement.",
+    "explore": "Explore category",
+    "viewAllProducts": "View all products"
   },
   "why": {
     "eyebrow": "Why work with us",
@@ -126,10 +128,14 @@
     "viewAll": "View all ({count})",
     "featured": "Featured"
   },
-
   "categoryPage": {
     "productsTitle": "Products in this category",
-    "enquire": "Enquire about this category"
+    "enquire": "Enquire about this category",
+    "eyebrow": "Category {n} / {total}",
+    "switcherLabel": "Browse categories",
+    "allProducts": "All products",
+    "otherCategories": "Explore other categories",
+    "otherCategoriesDescription": "Keep browsing the rest of our construction materials."
   },
   "productPage": {
     "specifications": "Product details",

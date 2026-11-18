@@ -5,10 +5,13 @@ import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { productRepository } from "@/lib/products/product-repository";
 import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { CategoryPanels } from "@/components/home/category-panels";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
 import { PageHero } from "@/components/layout/page-hero";
-import { photos } from "@/data/photos";
-import { ProductGrid } from "@/components/products/product-grid";
+import { getCategoryHeroPhoto } from "@/data/photos";
+import { formatIndex } from "@/components/products/catalogue/format";
+import { CategoryShowcase } from "@/components/products/category-showcase";
+import { CategorySwitcher } from "@/components/products/category-switcher";
 import { PageContainer } from "@/components/ui/page-container";
 import { SectionHeading } from "@/components/ui/section-heading";
 
@@ -33,19 +36,24 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const locale = await resolveLocale();
-  const [dictionary, category] = await Promise.all([
-    getDictionary(locale),
-    productRepository.getCategoryBySlug((await params).category),
-  ]);
+  const { category: slug } = await params;
+  const [dictionary, categories] = await Promise.all([getDictionary(locale), productRepository.getPublishedCategories()]);
+  const category = categories.find((item) => item.slug === slug);
   if (!category) notFound();
 
+  const copy = dictionary.categoryPage;
   const name = category.name[locale];
-  const items = category.variants.map((product) => ({ product, category }));
+  const position = categories.indexOf(category) + 1;
+  const numbers = Object.fromEntries(categories.map((item, index) => [item.id, index + 1]));
+  const others = categories.filter((item) => item.id !== category.id);
 
   return (
     <>
       <PageHero
-        photo={photos.bholaganj}
+        photo={getCategoryHeroPhoto(category.id)}
+        eyebrow={copy.eyebrow
+          .replace("{n}", formatIndex(position, locale))
+          .replace("{total}", formatIndex(categories.length, locale))}
         title={name}
         description={category.description?.[locale]}
         breadcrumbs={[
@@ -54,13 +62,44 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           { href: routes.category(locale, category.slug), label: name },
         ]}
       />
-      <section className="py-20 sm:py-24">
+
+      <CategorySwitcher
+        label={copy.switcherLabel}
+        allLabel={copy.allProducts}
+        allHref={routes.products(locale)}
+        activeId={category.id}
+        items={categories.map((item) => ({
+          id: item.id,
+          href: routes.category(locale, item.slug),
+          number: formatIndex(numbers[item.id], locale),
+          label: item.name[locale],
+          shortLabel: item.shortName?.[locale] ?? item.name[locale],
+        }))}
+      />
+
+      <section className="overflow-hidden py-20 sm:py-24">
         <PageContainer className="space-y-12">
-          <SectionHeading title={dictionary.categoryPage.productsTitle} />
-          <ProductGrid items={items} locale={locale} dictionary={dictionary} />
+          <SectionHeading title={copy.productsTitle} />
+          <CategoryShowcase category={category} locale={locale} dictionary={dictionary} />
         </PageContainer>
       </section>
-      <EnquiryCta locale={locale} dictionary={dictionary} title={dictionary.categoryPage.enquire} />
+
+      {others.length > 0 && (
+        <section className="overflow-hidden bg-surface-muted/60 py-20 sm:py-24">
+          <PageContainer className="space-y-12">
+            <SectionHeading title={copy.otherCategories} description={copy.otherCategoriesDescription} />
+            <CategoryPanels
+              categories={others}
+              numbers={numbers}
+              locale={locale}
+              dictionary={dictionary}
+              className="lg:h-[26rem]"
+            />
+          </PageContainer>
+        </section>
+      )}
+
+      <EnquiryCta locale={locale} dictionary={dictionary} title={copy.enquire} />
     </>
   );
 }
