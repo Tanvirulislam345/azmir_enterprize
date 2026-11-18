@@ -47,11 +47,11 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
               aria-pressed={index === activeIndex}
               onClick={() => setActiveIndex(index)}
               className={cn(
-                "relative aspect-square overflow-hidden rounded-lg border-2 transition-all",
+                "group relative aspect-square overflow-hidden rounded-lg border-2 transition-all",
                 index === activeIndex ? "border-accent" : "border-transparent opacity-70 hover:opacity-100",
               )}
             >
-              <Image src={src} alt="" fill sizes="120px" className="object-cover" />
+              <Image src={src} alt="" fill sizes="120px" className="object-cover transition-transform duration-500 ease-out-expo motion-safe:group-hover:scale-110" />
             </button>
           ))}
         </div>

@@ -2,6 +2,12 @@ export type Theme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "theme";
 
+/**
+ * While false the site is light-only: the header toggle is hidden and the init script
+ * ignores both the OS preference and any previously saved choice. Flip to re-enable dark mode.
+ */
+export const THEME_SWITCHING_ENABLED = false;
+
 const DARK_QUERY = "(prefers-color-scheme: dark)";
 
 const listeners = new Set<() => void>();
@@ -26,6 +32,12 @@ function applyTheme(theme: Theme) {
 export const themeStore = {
   subscribe(listener: () => void) {
     listeners.add(listener);
+    if (!THEME_SWITCHING_ENABLED) {
+      return () => {
+        listeners.delete(listener);
+      };
+    }
+
     const media = matchMedia(DARK_QUERY);
     // Follow the OS setting only until the visitor picks a theme themselves.
     const onSystemChange = (event: MediaQueryListEvent) => {
@@ -51,4 +63,6 @@ export const themeStore = {
 };
 
 /** Runs before first paint to prevent a flash of the wrong theme. */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");var d=t==="dark"||(t!=="light"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})();`;
+export const themeInitScript = THEME_SWITCHING_ENABLED
+  ? `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");var d=t==="dark"||(t!=="light"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})();`
+  : `document.documentElement.dataset.theme="light";`;

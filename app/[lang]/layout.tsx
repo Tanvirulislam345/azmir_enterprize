@@ -26,10 +26,12 @@ const notoBengali = Noto_Sans_Bengali({
 });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#16191b" },
-  ],
+  // Light-only while theme switching is disabled; restore the dark entry when re-enabling.
+  themeColor: "#f7f5f0",
+  // themeColor: [
+  //   { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
+  //   { media: "(prefers-color-scheme: dark)", color: "#16191b" },
+  // ],
 };
 
 export async function generateStaticParams() {

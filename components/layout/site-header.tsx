@@ -9,7 +9,8 @@ import { HeaderShell } from "./header-shell";
 import { LanguageMenu } from "./language-menu";
 import { MobileNavigation } from "./mobile-navigation";
 import { NavigationProvider } from "./navigation-context";
-import { ThemeMenu } from "./theme-menu";
+// Theme switching is disabled for now (see THEME_SWITCHING_ENABLED in lib/theme/theme-store.ts).
+// import { ThemeMenu } from "./theme-menu";
 import { Wordmark } from "./wordmark";
 
 type SiteHeaderProps = {
@@ -27,12 +28,12 @@ export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
         <PageContainer className="relative flex h-18 items-center justify-between gap-4 lg:h-20">
           <Wordmark href={routes.home(locale)} />
           <DesktopNavigation links={links} categories={categories} labels={dictionary.nav} />
-          {/* Right side, read from the edge inwards: language, theme, quote request. */}
+          {/* Right side, read from the edge inwards: language, quote request. */}
           <div className="flex items-center gap-2">
             <ButtonLink href={links.contact.href} className="hidden lg:inline-flex">
               {dictionary.nav.requestQuote}
             </ButtonLink>
-            <ThemeMenu labels={dictionary.theme} />
+            {/* <ThemeMenu labels={dictionary.theme} /> */}
             <LanguageMenu locale={locale} labels={dictionary.language} />
             <MobileNavigation links={links} categories={categories} labels={dictionary.nav} />
           </div>
