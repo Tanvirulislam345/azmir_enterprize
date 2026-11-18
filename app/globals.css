@@ -88,6 +88,8 @@
   }
 
   body {
+    /* Reveal offsets and decorative overhangs must never create a sideways scrollbar; `clip` keeps sticky working. */
+    overflow-x: clip;
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-inter), var(--font-noto-bengali), ui-sans-serif, system-ui, sans-serif;

@@ -74,8 +74,8 @@ function NavItem({ link, active }: { link: NavLink; active: boolean }) {
         href={link.href}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "relative flex items-center px-3 text-sm font-medium transition-colors hover:text-accent",
-          "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100",
+          "relative flex items-center px-2.5 text-sm font-medium whitespace-nowrap transition-colors hover:text-accent xl:px-3",
+          "after:absolute after:inset-x-2.5 xl:after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100",
           active && "text-accent after:scale-x-100",
         )}
       >

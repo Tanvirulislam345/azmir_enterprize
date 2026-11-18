@@ -8,5 +8,6 @@ export const routes = {
   category: (locale: Locale, category: string) => `/${locale}/products/${category}`,
   product: (locale: Locale, category: string, slug: string) => `/${locale}/products/${category}/${slug}`,
   transportation: (locale: Locale) => `/${locale}/transportation`,
+  projects: (locale: Locale) => `/${locale}/projects`,
   contact: (locale: Locale) => `/${locale}/contact`,
 } as const;

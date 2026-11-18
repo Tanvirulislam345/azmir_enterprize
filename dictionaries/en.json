@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod in Bangladesh, and arranges transportation to your site. Explore the catalogue and request a quotation."
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bitumen, coal, iron rod and bricks in Bangladesh, and arranges transportation to your site. Explore the catalogue and request a quotation."
   },
   "common": {
     "skipToContent": "Skip to content",
@@ -13,6 +13,7 @@
     "imagePlaceholder": "Product photo coming soon"
   },
   "nav": {
+    "projects": "Projects",
     "label": "Main navigation",
     "home": "Home",
     "products": "Products",
@@ -36,7 +37,7 @@
   "hero": {
     "eyebrow": "Construction material supplier",
     "title": "Building materials you can plan around",
-    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod for contractors, developers and builders, and arranges transportation to your site.",
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bitumen, coal, iron rod and bricks for contractors, developers and builders, and arranges transportation to your site.",
     "primaryCta": "Explore Products",
     "secondaryCta": "Request a Quote",
     "prevSlide": "Previous photo",
@@ -49,11 +50,8 @@
   "intro": {
     "eyebrow": "Who we are",
     "title": "Construction materials, supplied and delivered",
-    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod of different types and brands, and arranges the transportation that carries them to your site.",
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bitumen, coal, iron rod and bricks of different types and brands, and arranges the transportation that carries them to your site.",
     "servicesLabel": "What we supply",
-    "transport": "Transportation",
-    "transportDescription": "We arrange transport to carry your materials to the site.",
-    "badge": "Supply • Transport • Delivery • ",
     "cta": "About the company"
   },
   "categories": {
@@ -106,9 +104,22 @@
       }
     ]
   },
-  "featured": {
-    "eyebrow": "Featured",
-    "title": "Featured products"
+  "projects": {
+    "eyebrow": "Our clients",
+    "title": "Selected projects",
+    "description": "Builders, developers and contractors who have relied on us for their construction materials.",
+    "countLabel": "Selected projects and partners",
+    "listLabel": "Selected project names",
+    "seeAll": "See all projects"
+  },
+  "projectsPage": {
+    "metaTitle": "Selected projects",
+    "metaDescription": "Builders, developers and contractors supplied by M/S. AZMIR ENTERPRIZE with stone, sand, bitumen, coal, iron rod and bricks.",
+    "eyebrow": "Our clients",
+    "title": "Selected projects",
+    "description": "Builders, developers and contractors who have relied on us for their construction materials.",
+    "listLabel": "All selected projects",
+    "previewLabel": "Project photo"
   },
   "cta": {
     "title": "Have a project coming up?",
@@ -125,10 +136,10 @@
   },
   "productsPage": {
     "metaTitle": "Products",
-    "metaDescription": "Stone, sand, bricks, coal and iron rod from M/S. AZMIR ENTERPRIZE. Browse every category and its products.",
+    "metaDescription": "Stone, sand, bitumen, coal, iron rod and bricks from M/S. AZMIR ENTERPRIZE. Browse every category and its products.",
     "eyebrow": "Catalogue",
     "title": "Our products",
-    "description": "Stone, sand, bricks, coal and iron rod. Browse every category and its products.",
+    "description": "Stone, sand, bitumen, coal, iron rod and bricks. Browse every category and its products.",
     "jumpLabel": "Browse by category",
     "viewAll": "View all ({count})",
     "featured": "Featured"
@@ -154,7 +165,7 @@
     "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a supplier of construction materials and transportation in Bangladesh.",
     "eyebrow": "About us",
     "title": "About M/S. AZMIR ENTERPRIZE",
-    "description": "We supply stone, sand, bricks, coal and iron rod to buyers across their projects, and arrange transportation to the site.",
+    "description": "We supply stone, sand, bitumen, coal, iron rod and bricks to buyers across their projects, and arrange transportation to the site.",
     "focusTitle": "Our business focus",
     "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
     "pendingNote": "More about our company, history and team will be added soon."

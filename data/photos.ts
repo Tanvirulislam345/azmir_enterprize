@@ -106,9 +106,10 @@ const categoryHeroPhotos: Record<string, Photo> = {
   stone: photos.bholaganj,
   sand: photos.jaflong,
   bricks: photos.brickKiln,
-  // TEMPORARY stand-ins until real coal and iron rod photos arrive.
+  // TEMPORARY stand-ins until real bitumen, coal and iron photos arrive.
+  bitumen: photos.tipperTruck,
   coal: photos.brickKiln,
-  "iron-rod": photos.tipperTruck,
+  iron: photos.tipperTruck,
 };
 
 export const getCategoryHeroPhoto = (categoryId: string): Photo => categoryHeroPhotos[categoryId] ?? photos.bholaganj;

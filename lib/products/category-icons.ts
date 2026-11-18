@@ -1,4 +1,4 @@
-import { BrickWall, Construction, Flame, LayoutGrid, Mountain, Shovel, type LucideIcon } from "lucide-react";
+import { BrickWall, Construction, Droplets, Flame, LayoutGrid, Mountain, Shovel, type LucideIcon } from "lucide-react";
 import type { ProductCategory } from "@/types/product";
 
 /** Icon for each category `icon` key. Add a key here (and to `CategoryIconName`) for a new kind of material. */
@@ -8,6 +8,7 @@ const CATEGORY_ICONS = {
   bricks: BrickWall,
   coal: Flame,
   iron: Construction,
+  bitumen: Droplets,
 } satisfies Record<string, LucideIcon>;
 
 export type CategoryIconName = keyof typeof CATEGORY_ICONS;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Truck, type LucideIcon } from "lucide-react";
+import { ArrowRight, ArrowUpRight, type LucideIcon } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { getCategoryIcon } from "@/lib/products/category-icons";
@@ -44,60 +44,52 @@ function toColumns<T>(items: T[], count: number) {
   return columns;
 }
 
-/** Home "Who we are": a photo mosaic of everything we supply and carry, beside the story and a link to each. */
+/**
+ * Home "Who we are": the story across the top, then a photo mosaic of every product category beside the
+ * calls to action and a numbered link to each.
+ */
 export function CompanyIntro({ categories, locale, dictionary }: CompanyIntroProps) {
   const { intro } = dictionary;
 
-  const services: Service[] = [
-    ...categories.map((category) => ({
-      id: category.id,
-      href: routes.category(locale, category.slug),
-      label: category.shortName?.[locale] ?? category.name[locale],
-      title: category.name[locale],
-      description: category.description?.[locale],
-      icon: getCategoryIcon(category),
-      photo: TILE_PHOTOS[category.id] ?? getCategoryHeroPhoto(category.id),
-    })),
-    {
-      id: "transport",
-      href: routes.transportation(locale),
-      label: intro.transport,
-      title: intro.transport,
-      description: intro.transportDescription,
-      icon: Truck,
-      photo: photos.tipperTruck,
-    },
-  ];
+  const services: Service[] = categories.map((category) => ({
+    id: category.id,
+    href: routes.category(locale, category.slug),
+    label: category.shortName?.[locale] ?? category.name[locale],
+    title: category.name[locale],
+    description: category.description?.[locale],
+    icon: getCategoryIcon(category),
+    photo: TILE_PHOTOS[category.id] ?? getCategoryHeroPhoto(category.id),
+  }));
 
   return (
     <section id="intro" className="scroll-mt-24 overflow-hidden py-20 sm:py-28">
-      <PageContainer className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 xl:gap-20">
-        <div className="relative order-2 lg:order-1">
-          {/* Two columns on phones, three from `sm`; the hidden copy is display:none, so it is never read twice. */}
-          <Mosaic services={services} columns={2} locale={locale} className="h-[36rem] sm:hidden" />
-          <Mosaic services={services} columns={3} locale={locale} className="hidden h-[38rem] sm:flex lg:h-[40rem]" />
-          <RotatingBadge text={intro.badge} locale={locale} />
-        </div>
+      <PageContainer className="space-y-14 sm:space-y-16">
+        <SectionHeading eyebrow={intro.eyebrow} title={intro.title} description={intro.description} className="lg:max-w-[75%]" />
 
-        <div className="order-1 space-y-10 lg:order-2">
-          <SectionHeading eyebrow={intro.eyebrow} title={intro.title} description={intro.description} />
+        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 xl:gap-20">
+          <div className="order-2 lg:order-1">
+            {/* Two columns on phones, three from `sm`; the hidden copy is display:none, so it is never read twice. */}
+            <Mosaic services={services} columns={2} locale={locale} className="h-[36rem] sm:hidden" />
+            <Mosaic services={services} columns={3} locale={locale} className="hidden h-[38rem] sm:flex lg:h-[40rem]" />
+          </div>
 
-          <nav aria-label={intro.servicesLabel}>
-            <RevealGroup stagger={0.08} className="border-t border-border">
-              {services.map((service, index) => (
-                <RevealItem key={service.id}>
-                  <ServiceRow service={service} index={formatIndex(index + 1, locale)} />
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </nav>
-
-          <Reveal delay={0.1} className="flex flex-wrap gap-3">
-            <ButtonLink href={routes.contact(locale)} withArrow>
-              {dictionary.nav.requestQuote}
-            </ButtonLink>
-            <SecondaryButton href={routes.about(locale)}>{intro.cta}</SecondaryButton>
-          </Reveal>
+          <div className="order-1 space-y-8 lg:order-2">
+            <Reveal className="flex flex-wrap gap-3">
+              <ButtonLink href={routes.contact(locale)} withArrow>
+                {dictionary.nav.requestQuote}
+              </ButtonLink>
+              <SecondaryButton href={routes.about(locale)}>{intro.cta}</SecondaryButton>
+            </Reveal>
+            <nav aria-label={intro.servicesLabel}>
+              <RevealGroup stagger={0.08} className="border-t border-border">
+                {services.map((service, index) => (
+                  <RevealItem key={service.id}>
+                    <ServiceRow service={service} index={formatIndex(index + 1, locale)} />
+                  </RevealItem>
+                ))}
+              </RevealGroup>
+            </nav>
+          </div>
         </div>
       </PageContainer>
     </section>
@@ -190,36 +182,5 @@ function ServiceRow({ service, index }: { service: Service; index: string }) {
         className="size-5 shrink-0 text-muted transition-all duration-500 ease-out-expo group-hover:text-accent motion-safe:group-hover:translate-x-1"
       />
     </Link>
-  );
-}
-
-/**
- * Circular label spinning slowly around a truck, cut out of the mosaic by a background-coloured ring.
- * Overhangs the mosaic's top-right corner: indexes sit top-left and labels bottom-left on every tile, so it never hides them.
- */
-function RotatingBadge({ text, locale }: { text: string; locale: Locale }) {
-  // Letter-spacing and stretched glyph spacing break apart Bengali conjuncts, so only Latin text is tracked out.
-  const latin = locale === "en";
-
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute -top-10 -right-2 grid size-28 place-items-center sm:-top-12 sm:-right-6 rounded-full bg-background ring-8 ring-background sm:size-36"
-    >
-      <svg viewBox="0 0 100 100" className="absolute inset-0 size-full motion-safe:animate-[spin_22s_linear_infinite]">
-        <defs>
-          <path id="intro-badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
-        </defs>
-        <text className={cn("fill-foreground font-semibold", latin ? "text-[9.5px] tracking-[0.18em] uppercase" : "text-[8.4px]")}>
-          <textPath href="#intro-badge-circle" {...(latin && { textLength: 235, lengthAdjust: "spacing" })}>
-            {/* Untracked Bengali covers about 60% of the ring, so it goes round twice at a smaller size. */}
-            {latin ? text : text.repeat(2)}
-          </textPath>
-        </text>
-      </svg>
-      <span className="grid size-12 place-items-center rounded-full bg-accent text-accent-foreground shadow-lift sm:size-14">
-        <Truck className="size-5 sm:size-6" />
-      </span>
-    </div>
   );
 }

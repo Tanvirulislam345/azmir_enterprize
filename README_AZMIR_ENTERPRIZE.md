@@ -30,11 +30,14 @@ The client confirmed the following catalogue. Data lives in `data/categories.ts`
 |---|---|
 | Stone Chips & Aggregate | Pakur, Meghalaya, Dubai, Maddhapara, Bhutan Torsa stone chips; Boulder Stone; Singles Stone |
 | Sand | Fine Aggregate (Sylhet, Durgapur, Panchagarh sand); Filling Sand |
-| Bricks | Auto Bricks, Deshi Bricks, Block Bricks |
-| Coal | Bangla, Indonesian, Indian Super, High Super |
-| Iron Rod | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur |
+| Bitumen (বিটুমিন) | Irani, Dubai, Basundhara, Bangla, Liquid |
+| Coal (কয়লা) | Bangla, Indonesian, Indian Super, High Super |
+| Iron (রড) | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur |
+| Bricks (ইট) | Auto Bricks, Deshi Bricks, Block Bricks |
 
-**Transportation** is a service, not a product category. It has its own page at `/[lang]/transportation`, linked from the header, footer and the home "Who we are" section.
+Categories appear in the table's order (`sortOrder`).
+
+**Transportation** is a service, not a product category. It has its own page at `/[lang]/transportation`, linked from the header, the products dropdown, the footer and its own card in the home "Who we are" section. It is never numbered among the product categories.
 
 Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only — no manufacturer logos.
 
@@ -42,9 +45,12 @@ Product specifications, sizes, grades, prices and stock still need client confir
 Until real product photos arrive, these reuse existing images (listed at the top of `data/categories.ts`):
 - Deshi Bricks → `hero/brick-moulding.webp`; Block Bricks → `hero/brick-kiln.webp`
 - Coal (category and all products) → `hero/brick-kiln.webp`
-- Iron Rod (category and all products) → `hero/tipper-truck.webp`
+- Iron and Bitumen (categories and all products) → `hero/tipper-truck.webp`
 
-### Adding a category (e.g. bitumen)
+### Selected projects (placeholder)
+Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project beside a photo. The names there (e.g. "Mark Builders Limited") are **placeholders**, and each project's photo is a **temporary** generic site photo — replace both with client-confirmed names and real project photos before launch.
+
+### Adding a category
 Adding a category is a data-only change:
 1. Add an entry to `data/categories.ts` with a unique `id`/`slug`, localized `name`, `shortName`, `description`, `image`, `sortOrder` and its `variants`.
 2. Choose a catalogue `layout`: `mosaic`, `panels`, `spotlight` or `showcase` (default).
@@ -234,7 +240,7 @@ src/
       product-category-section.tsx
       why-choose-us.tsx
       supply-process.tsx
-      featured-products.tsx
+      selected-projects.tsx
       enquiry-cta.tsx
     products/
       product-category-card.tsx
