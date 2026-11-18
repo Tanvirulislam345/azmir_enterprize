@@ -15,7 +15,7 @@ import { isActivePath } from "./desktop-navigation";
 import { useNavigationDispatch, useNavigationState } from "./navigation-context";
 
 type MobileNavigationProps = {
-  links: { home: NavLink; about: NavLink; products: NavLink; contact: NavLink };
+  links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
   labels: Dictionary["nav"];
 };
@@ -39,7 +39,7 @@ export function MobileNavigation({ links, categories, labels }: MobileNavigation
   useDismiss(containerRef, mobileOpen, close);
   useScrollLock(mobileOpen);
 
-  const primaryLinks = [links.home, links.about];
+  const primaryLinks = [links.home];
 
   return (
     <div ref={containerRef} className="lg:hidden">
@@ -92,6 +92,12 @@ export function MobileNavigation({ links, categories, labels }: MobileNavigation
                   ))}
                 </ul>
               </DrawerItem>
+
+              {[links.transportation, links.about].map((link) => (
+                <DrawerItem key={link.href}>
+                  <DrawerLink link={link} active={isActivePath(pathname, link.href)} onNavigate={closeAll} />
+                </DrawerItem>
+              ))}
 
               <DrawerItem>
                 <DrawerLink link={links.contact} active={isActivePath(pathname, links.contact.href)} onNavigate={closeAll} />

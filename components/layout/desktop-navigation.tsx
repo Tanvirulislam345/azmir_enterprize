@@ -8,7 +8,7 @@ import type { NavCategory, NavLink } from "@/types/navigation";
 import { ProductsDropdown } from "./products-dropdown";
 
 type DesktopNavigationProps = {
-  links: { home: NavLink; about: NavLink; products: NavLink; contact: NavLink };
+  links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
   labels: Dictionary["nav"];
 };
@@ -40,6 +40,7 @@ export function DesktopNavigation({
               href: links.products.href,
               label: labels.allProducts,
             }}
+            transportation={links.transportation}
             labels={labels}
             active={isActivePath(pathname, links.products.href)}
           />
@@ -49,6 +50,10 @@ export function DesktopNavigation({
             active={isActivePath(pathname, links.products.href)}
           />
         )}
+        <NavItem
+          link={links.transportation}
+          active={isActivePath(pathname, links.transportation.href)}
+        />
         <NavItem
           link={links.about}
           active={isActivePath(pathname, links.about.href)}

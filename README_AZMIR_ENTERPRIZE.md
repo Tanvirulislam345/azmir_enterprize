@@ -22,34 +22,36 @@ Use the exact company display name **M/S. AZMIR ENTERPRIZE**. Confirm the spelli
 
 Do not invent the company's history, years in business, office address, contact details, delivery coverage, clients, projects, certifications, product specifications, prices, stock, or quality guarantees.
 
-## 2. Product catalogue: three categories
+## 2. Product catalogue (client-confirmed)
 
-The reference page groups its catalogue into three main categories. Use the following as a proposed data structure:
+The client confirmed the following catalogue. Data lives in `data/categories.ts`; names must still come from data, never hardcoded in UI components.
 
-### Stone — Chips & Aggregate
-Reference variants:
-- Pakur Stone Chips
-- Meghalaya Stone Chips
-- Dubai Stone Chips
-- Maddhapara Stone Chips
-- Bhutan Torsa Stone Chips
-- Boulder Stone
-- Singles Stone
+| Category | Products |
+|---|---|
+| Stone Chips & Aggregate | Pakur, Meghalaya, Dubai, Maddhapara, Bhutan Torsa stone chips; Boulder Stone; Singles Stone |
+| Sand | Fine Aggregate (Sylhet, Durgapur, Panchagarh sand); Filling Sand |
+| Bricks | Auto Bricks, Deshi Bricks, Block Bricks |
+| Coal | Bangla, Indonesian, Indian Super, High Super |
+| Iron Rod | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur |
 
-### Sand
-Reference variants:
-- Fine Aggregate (Sylhet Sand)
-- Fine Aggregate (Durgapur Sand)
-- Fine Aggregate (Panchagarh Sand)
-- Filling Sand
+**Transportation** is a service, not a product category. It has its own page at `/[lang]/transportation`, linked from the header, footer and the home "Who we are" section.
 
-### Bricks
-Reference variant:
-- Auto Bricks
+Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only — no manufacturer logos.
 
-**Critical:** These are reference-site examples, not confirmation that AZMIR supplies them. Keep all sample categories and variants unpublished (`isPublished: false`) until the client confirms the actual catalogue. If AZMIR supplies only stone, do not publish Sand or Bricks. Product names, origin, sizes, grades, availability, images, and descriptions must be verified before publication.
+### Temporary stand-in images
+Until real product photos arrive, these reuse existing images (listed at the top of `data/categories.ts`):
+- Deshi Bricks → `hero/brick-moulding.webp`; Block Bricks → `hero/brick-kiln.webp`
+- Coal (category and all products) → `hero/brick-kiln.webp`
+- Iron Rod (category and all products) → `hero/tipper-truck.webp`
 
-Use stable IDs such as `stone`, `sand`, `bricks`, `pakur-stone-chips`, and `sylhet-fine-aggregate`. Category and variant names must come from data, never hardcoded inside UI components.
+### Adding a category (e.g. bitumen)
+Adding a category is a data-only change:
+1. Add an entry to `data/categories.ts` with a unique `id`/`slug`, localized `name`, `shortName`, `description`, `image`, `sortOrder` and its `variants`.
+2. Choose a catalogue `layout`: `mosaic`, `panels`, `spotlight` or `showcase` (default).
+3. Choose an `icon` key from `lib/products/category-icons.ts` (add a new key there if none fits).
+4. Optionally map a hero photo in `data/photos.ts` → `getCategoryHeroPhoto`.
+
+Navigation, the products catalogue, category pages, the home page, the transportation page and the sitemap all pick it up automatically.
 
 ## 3. Design direction
 

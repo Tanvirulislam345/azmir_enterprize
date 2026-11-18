@@ -1,16 +1,31 @@
 import type { ProductCategory } from "@/types/product";
 
 /**
- * DRAFT catalogue — reference examples only (see README §2).
- * Every entry stays `isPublished: true` until the client confirms what AZMIR actually supplies.
- * Do not add specifications, origins or attributes without client confirmation.
+ * AZMIR's catalogue, as confirmed by the client (see README §2).
+ * Do not add specifications, origins, prices or attributes without client confirmation.
+ *
+ * Adding a category (e.g. bitumen) is a data-only change: add an entry here with a unique `id`/`slug`,
+ * pick a `layout` and `icon`, and optionally a hero photo in `data/photos.ts` (`getCategoryHeroPhoto`).
+ * Navigation, catalogue, home page, sitemap and the transportation page pick it up automatically.
+ *
+ * TEMPORARY stand-in images — replace with real product photos before launch:
+ * - Deshi Bricks → brick-moulding.webp, Block Bricks → brick-kiln.webp
+ * - Coal (category and every variant) → brick-kiln.webp
+ * - Iron Rod (category and every variant) → tipper-truck.webp
  */
+const STAND_IN = {
+  coal: "/images/hero/brick-kiln.webp",
+  ironRod: "/images/hero/tipper-truck.webp",
+} as const;
+
 export const categories: ProductCategory[] = [
   {
     id: "stone",
     slug: "stone",
+    layout: "mosaic",
+    icon: "stone",
     image: "/images/stones/pakur-stone.jpg",
-    name: { bn: "পাথর  চিপস ও অ্যাগ্রিগেট", en: "Stone Chips & Aggregate" },
+    name: { bn: "পাথর চিপস ও অ্যাগ্রিগেট", en: "Stone Chips & Aggregate" },
     shortName: { bn: "পাথর", en: "Stone" },
     description: {
       bn: "নির্মাণ কাজে ব্যবহৃত বিভিন্ন ধরনের পাথরের চিপস ও অ্যাগ্রিগেট।",
@@ -81,6 +96,8 @@ export const categories: ProductCategory[] = [
   {
     id: "sand",
     slug: "sand",
+    layout: "panels",
+    icon: "sand",
     image: "/images/sands/fine-aggregate-sylhet-sand.jpg",
     name: { bn: "বালু", en: "Sand" },
     shortName: { bn: "বালু", en: "Sand" },
@@ -138,12 +155,14 @@ export const categories: ProductCategory[] = [
   {
     id: "bricks",
     slug: "bricks",
+    layout: "spotlight",
+    icon: "bricks",
     image: "/images/bricks/auto-bricks.jpg",
     name: { bn: "ইট", en: "Bricks" },
     shortName: { bn: "ইট", en: "Bricks" },
     description: {
-      bn: "নির্মাণ কাজের জন্য ইট।",
-      en: "Bricks for construction work.",
+      bn: "নির্মাণ কাজের জন্য অটো, দেশি ও ব্লক ইট।",
+      en: "Auto, deshi and block bricks for construction work.",
     },
     isPublished: true,
     sortOrder: 3,
@@ -156,6 +175,146 @@ export const categories: ProductCategory[] = [
         isPublished: true,
         featured: true,
         sortOrder: 1,
+      },
+      {
+        id: "deshi-bricks",
+        slug: "deshi-bricks",
+        image: "/images/hero/brick-moulding.webp",
+        name: { bn: "দেশি ইট", en: "Deshi Bricks" },
+        isPublished: true,
+        sortOrder: 2,
+      },
+      {
+        id: "block-bricks",
+        slug: "block-bricks",
+        image: "/images/hero/brick-kiln.webp",
+        name: { bn: "ব্লক ইট", en: "Block Bricks" },
+        isPublished: true,
+        sortOrder: 3,
+      },
+    ],
+  },
+  {
+    id: "coal",
+    slug: "coal",
+    layout: "panels",
+    icon: "coal",
+    image: STAND_IN.coal,
+    name: { bn: "কয়লা", en: "Coal" },
+    shortName: { bn: "কয়লা", en: "Coal" },
+    description: {
+      bn: "বিভিন্ন উৎস ও মানের কয়লা।",
+      en: "Coal of different origins and grades.",
+    },
+    isPublished: true,
+    sortOrder: 4,
+    variants: [
+      {
+        id: "bangla-coal",
+        slug: "bangla-coal",
+        image: STAND_IN.coal,
+        name: { bn: "বাংলা কয়লা", en: "Bangla Coal" },
+        isPublished: true,
+        featured: true,
+        sortOrder: 1,
+      },
+      {
+        id: "indonesian-coal",
+        slug: "indonesian-coal",
+        image: STAND_IN.coal,
+        name: { bn: "ইন্দোনেশিয়ান কয়লা", en: "Indonesian Coal" },
+        isPublished: true,
+        sortOrder: 2,
+      },
+      {
+        id: "indian-super-coal",
+        slug: "indian-super-coal",
+        image: STAND_IN.coal,
+        name: { bn: "ইন্ডিয়ান সুপার কয়লা", en: "Indian Super Coal" },
+        isPublished: true,
+        sortOrder: 3,
+      },
+      {
+        id: "high-super-coal",
+        slug: "high-super-coal",
+        image: STAND_IN.coal,
+        name: { bn: "হাই সুপার কয়লা", en: "High Super Coal" },
+        isPublished: true,
+        sortOrder: 4,
+      },
+    ],
+  },
+  {
+    id: "iron-rod",
+    slug: "iron-rod",
+    layout: "showcase",
+    icon: "iron",
+    image: STAND_IN.ironRod,
+    name: { bn: "লোহার রড", en: "Iron Rod" },
+    shortName: { bn: "রড", en: "Rod" },
+    description: {
+      bn: "নির্মাণ কাজের জন্য বিভিন্ন প্রস্তুতকারকের লোহার রড।",
+      en: "Iron rods from different manufacturers for construction work.",
+    },
+    isPublished: true,
+    sortOrder: 5,
+    variants: [
+      {
+        id: "bsrm-rod",
+        slug: "bsrm-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "বিএসআরএম রড", en: "BSRM Rod" },
+        isPublished: true,
+        featured: true,
+        sortOrder: 1,
+      },
+      {
+        id: "csrm-rod",
+        slug: "csrm-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "সিএসআরএম রড", en: "CSRM Rod" },
+        isPublished: true,
+        sortOrder: 2,
+      },
+      {
+        id: "ksrm-rod",
+        slug: "ksrm-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "কেএসআরএম রড", en: "KSRM Rod" },
+        isPublished: true,
+        sortOrder: 3,
+      },
+      {
+        id: "aks-rod",
+        slug: "aks-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "একেএস রড", en: "AKS Rod" },
+        isPublished: true,
+        sortOrder: 4,
+      },
+      {
+        id: "gph-rod",
+        slug: "gph-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "জিপিএইচ রড", en: "GPH Rod" },
+        isPublished: true,
+        sortOrder: 5,
+      },
+      {
+        id: "bangla-rod",
+        slug: "bangla-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "বাংলা রড", en: "Bangla Rod" },
+        isPublished: true,
+        sortOrder: 6,
+      },
+      {
+        id: "bikrampur-rod",
+        slug: "bikrampur-rod",
+        image: STAND_IN.ironRod,
+        name: { bn: "বিক্রমপুর রড", en: "Bikrampur Rod" },
+        isPublished: true,
+        sortOrder: 7,
       },
     ],
   },

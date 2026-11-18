@@ -9,6 +9,7 @@ export function getPrimaryLinks(locale: Locale, labels: Dictionary["nav"]) {
   return {
     home: { href: routes.home(locale), label: labels.home },
     products: { href: routes.products(locale), label: labels.products },
+    transportation: { href: routes.transportation(locale), label: labels.transportation },
     about: { href: routes.about(locale), label: labels.about },
     contact: { href: routes.contact(locale), label: labels.contact },
   };

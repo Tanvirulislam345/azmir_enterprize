@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Truck } from "lucide-react";
 import { memo, useCallback, useId, useRef } from "react";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { useDismiss } from "@/lib/hooks/use-dismiss";
@@ -13,11 +13,13 @@ import { useNavigationDispatch, useNavigationState } from "./navigation-context"
 type ProductsDropdownProps = {
   categories: NavCategory[];
   allProducts: NavLink;
+  /** Service link shown beneath "All products", so buyers find delivery from the catalogue menu too. */
+  transportation: NavLink;
   labels: Dictionary["nav"];
   active: boolean;
 };
 
-export function ProductsDropdown({ categories, allProducts, labels, active }: ProductsDropdownProps) {
+export function ProductsDropdown({ categories, allProducts, transportation, labels, active }: ProductsDropdownProps) {
   const dropdownOpen = useNavigationState().openMenu === "products";
   const dispatch = useNavigationDispatch();
   const panelId = useId();
@@ -78,14 +80,27 @@ export function ProductsDropdown({ categories, allProducts, labels, active }: Pr
                   <CategoryGroup key={category.id} category={category} index={index} onNavigate={closeAll} />
                 ))}
               </div>
-              <Link
-                href={allProducts.href}
-                onClick={closeAll}
-                className="group flex flex-col justify-end rounded-xl bg-inverse p-6 text-inverse-foreground transition-transform duration-300 hover:-translate-y-1"
-              >
-                <span className="text-lg font-semibold">{allProducts.label}</span>
-                <ArrowRight aria-hidden className="mt-3 size-5 text-accent transition-transform group-hover:translate-x-1" />
-              </Link>
+              <div className="flex flex-col gap-3">
+                <Link
+                  href={allProducts.href}
+                  onClick={closeAll}
+                  className="group flex flex-1 flex-col justify-end rounded-xl bg-inverse p-6 text-inverse-foreground transition-transform duration-300 hover:-translate-y-1"
+                >
+                  <span className="text-lg font-semibold">{allProducts.label}</span>
+                  <ArrowRight aria-hidden className="mt-3 size-5 text-accent transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href={transportation.href}
+                  onClick={closeAll}
+                  className="group flex items-center justify-between gap-3 rounded-xl bg-accent p-5 text-accent-foreground transition-transform duration-300 hover:-translate-y-1"
+                >
+                  <span className="flex items-center gap-3 font-semibold">
+                    <Truck aria-hidden className="size-5" />
+                    {transportation.label}
+                  </span>
+                  <ArrowRight aria-hidden className="size-5 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

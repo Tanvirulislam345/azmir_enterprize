@@ -42,7 +42,7 @@ function tileSpans(count: number): string[] {
   return spans;
 }
 
-/** Stone chapter: a bento mosaic of full-bleed photo tiles, led by the featured product. */
+/** `mosaic` layout: a bento of full-bleed photo tiles, led by the featured product. */
 export function StoneMosaic({ category, locale, dictionary }: StoneMosaicProps) {
   // Featured product leads; the rest keep their catalogue order.
   const variants = [...category.variants].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));

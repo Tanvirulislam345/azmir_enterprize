@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BrickWall, LayoutGrid, Mountain, Shovel, Truck, type LucideIcon } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Truck, type LucideIcon } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
+import { getCategoryIcon } from "@/lib/products/category-icons";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import type { Photo } from "@/types/photo";
@@ -33,39 +34,33 @@ type Service = {
   photo: Photo;
 };
 
-const CATEGORY_ICONS: Record<string, LucideIcon> = { stone: Mountain, sand: Shovel, bricks: BrickWall };
-
 /** Tiles mostly reuse the category hero photos; bricks swaps the dark kiln scene for one where the bricks read clearly. */
 const TILE_PHOTOS: Record<string, Photo> = { bricks: photos.brickMoulding };
 
-/**
- * Mosaic placement: a tall lead tile and a short one in each column, offset so the gutters never line up.
- * Order matches the services: first category, second, third, then transport.
- */
-const TILE_PLACEMENT = [
-  "col-start-1 row-start-1 row-span-4",
-  "col-start-2 row-start-1 row-span-2",
-  "col-start-1 row-start-5 row-span-2",
-  "col-start-2 row-start-3 row-span-4",
-];
+/** Deals items round-robin into `count` columns, keeping each item's overall position for its number. */
+function toColumns<T>(items: T[], count: number) {
+  const columns: { item: T; position: number }[][] = Array.from({ length: count }, () => []);
+  items.forEach((item, position) => columns[position % count].push({ item, position }));
+  return columns;
+}
 
-/** Home "Who we are": a four-photo mosaic of what we supply and carry, beside the story and a link to each. */
+/** Home "Who we are": a photo mosaic of everything we supply and carry, beside the story and a link to each. */
 export function CompanyIntro({ categories, locale, dictionary }: CompanyIntroProps) {
   const { intro } = dictionary;
 
   const services: Service[] = [
-    ...categories.slice(0, 3).map((category) => ({
+    ...categories.map((category) => ({
       id: category.id,
       href: routes.category(locale, category.slug),
       label: category.shortName?.[locale] ?? category.name[locale],
       title: category.name[locale],
       description: category.description?.[locale],
-      icon: CATEGORY_ICONS[category.id] ?? LayoutGrid,
+      icon: getCategoryIcon(category),
       photo: TILE_PHOTOS[category.id] ?? getCategoryHeroPhoto(category.id),
     })),
     {
       id: "transport",
-      href: routes.contact(locale),
+      href: routes.transportation(locale),
       label: intro.transport,
       title: intro.transport,
       description: intro.transportDescription,
@@ -78,15 +73,9 @@ export function CompanyIntro({ categories, locale, dictionary }: CompanyIntroPro
     <section id="intro" className="scroll-mt-24 overflow-hidden py-20 sm:py-28">
       <PageContainer className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 xl:gap-20">
         <div className="relative order-2 lg:order-1">
-          <div className="grid h-[30rem] grid-cols-2 grid-rows-6 gap-3 sm:h-[38rem] sm:gap-4 lg:h-[40rem]">
-            {services.map((service, index) => (
-              <div key={service.id} className={cn("min-h-0", TILE_PLACEMENT[index])}>
-                <ClipReveal delay={index * 0.12}>
-                  <MosaicTile service={service} index={formatIndex(index + 1, locale)} />
-                </ClipReveal>
-              </div>
-            ))}
-          </div>
+          {/* Two columns on phones, three from `sm`; the hidden copy is display:none, so it is never read twice. */}
+          <Mosaic services={services} columns={2} locale={locale} className="h-[36rem] sm:hidden" />
+          <Mosaic services={services} columns={3} locale={locale} className="hidden h-[38rem] sm:flex lg:h-[40rem]" />
           <RotatingBadge text={intro.badge} locale={locale} />
         </div>
 
@@ -112,6 +101,30 @@ export function CompanyIntro({ categories, locale, dictionary }: CompanyIntroPro
         </div>
       </PageContainer>
     </section>
+  );
+}
+
+type MosaicProps = { services: Service[]; columns: number; locale: Locale; className?: string };
+
+/**
+ * Masonry of photo tiles for any number of services. Each column is a fixed-height stack whose tiles
+ * alternate tall and short (offset per column), so the gutters never line up but the bottoms always do.
+ */
+function Mosaic({ services, columns, locale, className }: MosaicProps) {
+  return (
+    <div className={cn("flex gap-3 sm:gap-4", className)}>
+      {toColumns(services, columns).map((column, columnIndex) => (
+        <div key={columnIndex} className="flex min-w-0 flex-1 flex-col gap-3 sm:gap-4">
+          {column.map(({ item, position }, rowIndex) => (
+            <div key={item.id} className={cn("min-h-0 basis-0", (rowIndex + columnIndex) % 2 === 0 ? "grow-[1.7]" : "grow")}>
+              <ClipReveal delay={position * 0.08}>
+                <MosaicTile service={item} index={formatIndex(position + 1, locale)} />
+              </ClipReveal>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -158,7 +171,7 @@ function ServiceRow({ service, index }: { service: Service; index: string }) {
   return (
     <Link
       href={service.href}
-      className="group relative flex items-center gap-4 border-b border-border py-4 outline-none transition-colors duration-300 focus-visible:bg-surface sm:gap-5 sm:py-5"
+      className="group relative flex items-center gap-4 border-b border-border py-3.5 outline-none transition-colors duration-300 focus-visible:bg-surface sm:gap-5 sm:py-4"
     >
       {/* Accent rule that grows along the left edge on hover. */}
       <span aria-hidden className="absolute inset-y-3 left-0 w-0.5 origin-center scale-y-0 rounded-full bg-accent transition-transform duration-500 ease-out-expo group-hover:scale-y-100 group-focus-visible:scale-y-100" />
@@ -182,7 +195,7 @@ function ServiceRow({ service, index }: { service: Service; index: string }) {
 
 /**
  * Circular label spinning slowly around a truck, cut out of the mosaic by a background-coloured ring.
- * Sits on the centre gutter where the lead tiles' rows meet, clear of every tile's index and label.
+ * Overhangs the mosaic's top-right corner: indexes sit top-left and labels bottom-left on every tile, so it never hides them.
  */
 function RotatingBadge({ text, locale }: { text: string; locale: Locale }) {
   // Letter-spacing and stretched glyph spacing break apart Bengali conjuncts, so only Latin text is tracked out.
@@ -191,7 +204,7 @@ function RotatingBadge({ text, locale }: { text: string; locale: Locale }) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute top-2/3 left-1/2 grid size-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-background ring-8 ring-background sm:size-36"
+      className="pointer-events-none absolute -top-10 -right-2 grid size-28 place-items-center sm:-top-12 sm:-right-6 rounded-full bg-background ring-8 ring-background sm:size-36"
     >
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full motion-safe:animate-[spin_22s_linear_infinite]">
         <defs>

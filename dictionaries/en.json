@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "M/S. AZMIR ENTERPRIZE — construction material supplier in Bangladesh. Explore our stone, sand and brick categories and request a quotation."
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod in Bangladesh, and arranges transportation to your site. Explore the catalogue and request a quotation."
   },
   "common": {
     "skipToContent": "Skip to content",
@@ -16,6 +16,7 @@
     "label": "Main navigation",
     "home": "Home",
     "products": "Products",
+    "transportation": "Transportation",
     "about": "About Us",
     "contact": "Contact",
     "requestQuote": "Request a Quote",
@@ -35,7 +36,7 @@
   "hero": {
     "eyebrow": "Construction material supplier",
     "title": "Building materials you can plan around",
-    "description": "M/S. AZMIR ENTERPRIZE supplies construction materials for contractors, developers and builders. Explore our categories and talk to us about your requirement.",
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod for contractors, developers and builders, and arranges transportation to your site.",
     "primaryCta": "Explore Products",
     "secondaryCta": "Request a Quote",
     "prevSlide": "Previous photo",
@@ -47,8 +48,8 @@
   },
   "intro": {
     "eyebrow": "Who we are",
-    "title": "Stone, sand and bricks, supplied and delivered",
-    "description": "M/S. AZMIR ENTERPRIZE supplies different types of stone, sand and bricks for construction work, and arranges the transportation that carries them to your site.",
+    "title": "Construction materials, supplied and delivered",
+    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bricks, coal and iron rod of different types and brands, and arranges the transportation that carries them to your site.",
     "servicesLabel": "What we supply",
     "transport": "Transportation",
     "transportDescription": "We arrange transport to carry your materials to the site.",
@@ -115,7 +116,7 @@
     "button": "Contact us"
   },
   "footer": {
-    "tagline": "Construction material supplier in Bangladesh.",
+    "tagline": "Construction materials and transportation in Bangladesh.",
     "quickLinks": "Quick links",
     "products": "Products",
     "contact": "Contact",
@@ -124,10 +125,10 @@
   },
   "productsPage": {
     "metaTitle": "Products",
-    "metaDescription": "Explore construction material categories from M/S. AZMIR ENTERPRIZE.",
+    "metaDescription": "Stone, sand, bricks, coal and iron rod from M/S. AZMIR ENTERPRIZE. Browse every category and its products.",
     "eyebrow": "Catalogue",
     "title": "Our products",
-    "description": "Browse our construction material categories and their products.",
+    "description": "Stone, sand, bricks, coal and iron rod. Browse every category and its products.",
     "jumpLabel": "Browse by category",
     "viewAll": "View all ({count})",
     "featured": "Featured"
@@ -150,10 +151,10 @@
   },
   "about": {
     "metaTitle": "About Us",
-    "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a construction material supplier in Bangladesh.",
+    "metaDescription": "Learn about M/S. AZMIR ENTERPRIZE, a supplier of construction materials and transportation in Bangladesh.",
     "eyebrow": "About us",
     "title": "About M/S. AZMIR ENTERPRIZE",
-    "description": "We supply construction materials to buyers across their projects, with a catalogue focused on core building materials.",
+    "description": "We supply stone, sand, bricks, coal and iron rod to buyers across their projects, and arrange transportation to the site.",
     "focusTitle": "Our business focus",
     "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
     "pendingNote": "More about our company, history and team will be added soon."
@@ -170,5 +171,36 @@
     "address": "Address",
     "pendingTitle": "Contact details coming soon",
     "pendingDescription": "Our official contact details are being finalised and will be published here shortly."
+  },
+  "transportation": {
+    "metaTitle": "Transportation",
+    "metaDescription": "M/S. AZMIR ENTERPRIZE arranges transportation to carry your construction materials to the site.",
+    "eyebrow": "Our service",
+    "title": "Transportation to your site",
+    "description": "Along with supplying materials, we arrange the transport that carries your order to the site.",
+    "introTitle": "Supply and transport in one order",
+    "introDescription": "Tell us what you need and where it should go. We supply the materials and arrange the transport, so you deal with one supplier from enquiry to delivery.",
+    "carryEyebrow": "What we carry",
+    "carryTitle": "Every material in our catalogue",
+    "carryDescription": "Transport can be arranged with any product we supply.",
+    "process": {
+      "eyebrow": "How it works",
+      "title": "From order to your site",
+      "steps": [
+        {
+          "title": "Share your requirement",
+          "description": "Tell us the material, quantity and site location."
+        },
+        {
+          "title": "We arrange transport",
+          "description": "Transport is planned for your confirmed order."
+        },
+        {
+          "title": "Delivered to your site",
+          "description": "Your materials are carried to the site you specified."
+        }
+      ]
+    },
+    "ctaTitle": "Need materials delivered to your site?"
   }
 }

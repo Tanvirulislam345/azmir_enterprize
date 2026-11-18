@@ -16,8 +16,8 @@ type BrickSpotlightProps = {
 };
 
 /**
- * Bricks chapter: a split spotlight on a dark band. The lead product gets a large parallax photo
- * set against an offset accent frame; any further brick products follow as compact rows.
+ * `spotlight` layout: a split spotlight on a dark band. The lead product gets a large parallax photo
+ * set against an offset accent frame; any further products follow as compact rows.
  */
 export function BrickSpotlight({ category, locale, dictionary }: BrickSpotlightProps) {
   const [lead, ...others] = category.variants;

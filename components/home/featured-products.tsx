@@ -18,7 +18,19 @@ type FeaturedProductsProps = {
   dictionary: Dictionary;
 };
 
-/** Featured products as tall tilt cards; on desktop every middle column drops lower for a staggered rhythm. */
+/**
+ * Desktop placement on the six-track grid (three cards per row): the middle card of each full row drops
+ * lower for a staggered rhythm, and a shorter last row is centred instead of hugging the left edge.
+ */
+function featuredPlacement(index: number, count: number) {
+  const remainder = count % 3;
+  const lastRowStart = count - remainder;
+  if (index < lastRowStart) return index % 3 === 1 && "lg:translate-y-16";
+  if (index !== lastRowStart) return undefined;
+  return remainder === 2 ? "lg:col-start-2" : "lg:col-start-3";
+}
+
+/** Featured products as tall tilt cards, one per category. */
 export function FeaturedProducts({ items, locale, dictionary }: FeaturedProductsProps) {
   if (items.length === 0) return null;
 
@@ -34,15 +46,16 @@ export function FeaturedProducts({ items, locale, dictionary }: FeaturedProducts
           </Reveal>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        {/* Extra row gap on desktop leaves room for the lowered middle card. */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6 lg:gap-x-8 lg:gap-y-24">
           {items.map(({ product, category }, index) => (
             <div
               key={product.id}
               className={cn(
-                "aspect-[4/5] sm:aspect-[3/4]",
-                index % 3 === 1 && "lg:translate-y-16",
+                "aspect-[4/5] sm:aspect-[3/4] lg:col-span-2",
+                featuredPlacement(index, items.length),
                 // A lone last card on the two-column layout spans the row.
-                index === items.length - 1 && items.length % 2 === 1 && "sm:col-span-2 sm:aspect-[16/9] lg:col-span-1 lg:aspect-[3/4]",
+                index === items.length - 1 && items.length % 2 === 1 && "sm:col-span-2 sm:aspect-[16/9] lg:aspect-[3/4]",
               )}
             >
               <ClipReveal delay={(index % 3) * 0.15}>

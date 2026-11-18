@@ -1,4 +1,12 @@
+import type { CategoryIconName } from "@/lib/products/category-icons";
 import type { LocalizedText } from "./i18n";
+
+/**
+ * Catalogue chapter design for a category on the products page:
+ * `mosaic` bento tiles, `panels` expanding photo panels, `spotlight` dark split feature,
+ * `showcase` lead banner with portrait cards (the default).
+ */
+export type CategoryLayout = "mosaic" | "panels" | "spotlight" | "showcase";
 
 export type ProductAttribute = {
   label: LocalizedText;
@@ -22,6 +30,8 @@ export type ProductVariant = {
 export type ProductCategory = {
   id: string;
   slug: string;
+  layout?: CategoryLayout;
+  icon?: CategoryIconName;
   name: LocalizedText;
   /** One-word label for tight spaces such as mobile tabs, e.g. "Stone". */
   shortName?: LocalizedText;
