@@ -20,7 +20,7 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection locale={locale} dictionary={dictionary} />
-      <CompanyIntro locale={locale} dictionary={dictionary} />
+      <CompanyIntro categories={categories} locale={locale} dictionary={dictionary} />
       <ProductCategorySection
         categories={categories}
         locale={locale}

@@ -75,6 +75,23 @@ export const photos = {
         "https://commons.wikimedia.org/wiki/File:Brick_Kiln_Workers_11.jpg",
     },
   },
+  tipperTruck: {
+    id: "tipper-truck",
+    src: "/images/hero/tipper-truck.webp",
+    width: 2000,
+    height: 1333,
+    alt: {
+      bn: "বাংলাদেশের মহাসড়কে চলমান একটি সাদা টিপার ট্রাক",
+      en: "A white tipper truck on a highway in Bangladesh",
+    },
+    caption: { bn: "টিপার ট্রাক, বাংলাদেশ", en: "Tipper truck, Bangladesh" },
+    credit: {
+      author: "Shadman Samee",
+      license: "CC BY-SA 2.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Hino_700_tipper,_Bangladesh._(33218725853).jpg",
+    },
+  },
 } satisfies Record<string, Photo>;
 
 export const heroSlides: Photo[] = [

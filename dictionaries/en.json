@@ -47,8 +47,12 @@
   },
   "intro": {
     "eyebrow": "Who we are",
-    "title": "A focused supplier for construction materials",
-    "description": "We work with buyers who need dependable material sourcing for their projects. Our catalogue is organised by category so you can quickly find what your site needs and request a quotation.",
+    "title": "Stone, sand and bricks, supplied and delivered",
+    "description": "M/S. AZMIR ENTERPRIZE supplies different types of stone, sand and bricks for construction work, and arranges the transportation that carries them to your site.",
+    "servicesLabel": "What we supply",
+    "transport": "Transportation",
+    "transportDescription": "We arrange transport to carry your materials to the site.",
+    "badge": "Supply • Transport • Delivery • ",
     "cta": "About the company"
   },
   "categories": {
