@@ -88,7 +88,8 @@
   }
 
   body {
-    /* Reveal offsets and decorative overhangs must never create a sideways scrollbar; `clip` keeps sticky working. */
+    /* Safety net only: browsers hand body overflow to the viewport (where clip acts as hidden), so the real guard is
+       `overflow-x-clip` on <main> in the locale layout. */
     overflow-x: clip;
     background-color: var(--background);
     color: var(--foreground);

@@ -2,13 +2,13 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, LayoutGrid, Truck, type LucideIcon } from "lucide-react";
-import { memo, useCallback, useEffect, useId, useRef } from "react";
+import { ArrowRight, LayoutGrid, Truck, type LucideIcon } from "lucide-react";
+import { memo } from "react";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
-import { useDismiss } from "@/lib/hooks/use-dismiss";
+import { useHoverMenu } from "@/lib/hooks/use-hover-menu";
 import { cn } from "@/lib/utils";
 import type { NavCategory, NavLink } from "@/types/navigation";
-import { useNavigationDispatch, useNavigationState } from "./navigation-context";
+import { DropdownTrigger } from "./dropdown-trigger";
 
 type ProductsDropdownProps = {
   categories: NavCategory[];
@@ -20,79 +20,19 @@ type ProductsDropdownProps = {
 };
 
 export function ProductsDropdown({ categories, allProducts, transportation, labels, active }: ProductsDropdownProps) {
-  const dropdownOpen = useNavigationState().openMenu === "products";
-  const dispatch = useNavigationDispatch();
-  const panelId = useId();
-  const wrapperRef = useRef<HTMLLIElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const close = useCallback(() => {
-    const focusWasInside = wrapperRef.current?.contains(document.activeElement);
-    dispatch({ type: "closeMenu", id: "products" });
-    if (focusWasInside) buttonRef.current?.focus();
-  }, [dispatch]);
-
-  const closeAll = useCallback(() => dispatch({ type: "closeAll" }), [dispatch]);
-
-  useDismiss(wrapperRef, dropdownOpen, close);
-
-  // Hover opens the menu only from the "Products" label itself; leaving the label and panel closes it after a
-  // short grace period, so the pointer can cross the gap between them without the menu flickering shut.
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const openedByHover = useRef(false);
-  const cancelClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = null;
-  };
-  useEffect(() => cancelClose, []);
-  // However the menu closed (Escape, outside click, navigation), the next click should simply toggle it.
-  useEffect(() => {
-    if (!dropdownOpen) openedByHover.current = false;
-  }, [dropdownOpen]);
+  const { open: dropdownOpen, panelId, wrapperRef, buttonRef, labelProps, wrapperProps, onButtonClick, closeAll } = useHoverMenu("products");
 
   return (
-    <li
-      ref={wrapperRef}
-      className="flex items-center self-stretch"
-      onPointerEnter={(event) => event.pointerType === "mouse" && cancelClose()}
-      onPointerLeave={(event) => {
-        if (event.pointerType !== "mouse") return;
-        cancelClose();
-        closeTimer.current = setTimeout(() => {
-          openedByHover.current = false;
-          dispatch({ type: "closeMenu", id: "products" });
-        }, 150);
-      }}
-    >
-      <button
-        ref={buttonRef}
-        type="button"
-        aria-expanded={dropdownOpen}
-        aria-controls={panelId}
-        onPointerEnter={(event) => {
-          if (event.pointerType !== "mouse" || dropdownOpen) return;
-          openedByHover.current = true;
-          dispatch({ type: "openMenu", id: "products" });
-        }}
-        onClick={() => {
-          // A click right after hovering open confirms the menu instead of snapping it shut.
-          if (openedByHover.current) {
-            openedByHover.current = false;
-            return;
-          }
-          dispatch({ type: "toggleMenu", id: "products" });
-        }}
-        className={cn(
-          "relative flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:text-accent xl:px-3",
-          (active || dropdownOpen) && "text-accent",
-        )}
-      >
-        {labels.products}
-        <ChevronDown
-          aria-hidden
-          className={cn("size-4 transition-transform duration-300", dropdownOpen && "rotate-180")}
-        />
-      </button>
+    <li ref={wrapperRef} className="flex items-center self-stretch" {...wrapperProps}>
+      <DropdownTrigger
+        label={labels.products}
+        active={active}
+        open={dropdownOpen}
+        panelId={panelId}
+        buttonRef={buttonRef}
+        labelProps={labelProps}
+        onClick={onButtonClick}
+      />
 
       <AnimatePresence>
         {dropdownOpen && (

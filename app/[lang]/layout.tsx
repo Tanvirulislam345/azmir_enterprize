@@ -75,7 +75,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
         <MotionProvider>
           <ScrollProgress />
           <SiteHeader locale={locale} dictionary={dictionary} />
-          <main id="main" className="flex-1 pt-18 lg:pt-20">
+          <main id="main" className="flex-1 overflow-x-clip pt-18 lg:pt-20">
             {children}
           </main>
           <SiteFooter locale={locale} dictionary={dictionary} />

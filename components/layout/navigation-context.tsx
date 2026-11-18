@@ -3,7 +3,7 @@
 import { createContext, use, useReducer, type Dispatch, type ReactNode } from "react";
 
 /** Header pop-ups; only one can be open at a time. */
-export type MenuId = "products" | "theme" | "language";
+export type MenuId = "products" | "about" | "theme" | "language";
 
 type NavigationState = {
   openMenu: MenuId | null;

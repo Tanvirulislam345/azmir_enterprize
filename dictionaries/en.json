@@ -24,7 +24,10 @@
     "allProducts": "All products",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "productsMenu": "Products menu"
+    "productsMenu": "Products menu",
+    "aboutMenu": "About menu",
+    "overview": "Overview",
+    "aboutSummary": "Who we are, what we supply and how we work."
   },
   "theme": {
     "label": "Colour theme",
@@ -166,8 +169,7 @@
     "title": "About M/S. AZMIR ENTERPRIZE",
     "description": "We supply stone, sand, bitumen, coal, iron rod and bricks to buyers across their projects, and arrange transportation to the site.",
     "focusTitle": "Our business focus",
-    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
-    "pendingNote": "More about our company, history and team will be added soon."
+    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication."
   },
   "contact": {
     "metaTitle": "Contact",
@@ -224,5 +226,27 @@
       ]
     },
     "ctaTitle": "Need materials delivered to your site?"
+  },
+  "aboutSection": {
+    "switcherLabel": "Browse about pages",
+    "messageEyebrow": "Message from the Managing Director",
+    "photoComingSoon": "Photo coming soon",
+    "letterLabel": "The message",
+    "vision": "Our vision",
+    "mission": "Our mission",
+    "goalsEyebrow": "What we work towards",
+    "goalsTitle": "Our goals",
+    "continueReading": "Continue reading",
+    "allAboutPages": "All about pages",
+    "next": "Next",
+    "previous": "Previous",
+    "teamEyebrow": "Our team",
+    "responsibilitiesTitle": "What we handle",
+    "membersTitle": "Meet the team",
+    "needHelpTitle": "Need help with our website or an enquiry?",
+    "needHelpDescription": "Reach the team directly by email or phone.",
+    "leadershipEyebrow": "Our people",
+    "leadershipTitle": "Leadership & team",
+    "leadershipDescription": "Meet the people who lead the company and keep it running."
   }
 }

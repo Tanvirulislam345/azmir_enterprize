@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
-import { getNavCategories, getPrimaryLinks } from "@/lib/navigation";
+import { getNavAboutPages, getNavCategories, getPrimaryLinks } from "@/lib/navigation";
 import { routes } from "@/lib/routes";
 import { ButtonLink } from "@/components/ui/button";
 import { PageContainer } from "@/components/ui/page-container";
@@ -19,7 +19,7 @@ type SiteHeaderProps = {
 };
 
 export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
-  const categories = await getNavCategories(locale);
+  const [categories, aboutPages] = await Promise.all([getNavCategories(locale), getNavAboutPages(locale)]);
   const links = getPrimaryLinks(locale, dictionary.nav);
 
   return (
@@ -27,7 +27,7 @@ export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
       <HeaderShell>
         <PageContainer className="relative flex h-18 items-center justify-between gap-4 lg:h-20">
           <Wordmark href={routes.home(locale)} />
-          <DesktopNavigation links={links} categories={categories} labels={dictionary.nav} />
+          <DesktopNavigation links={links} categories={categories} aboutPages={aboutPages} labels={dictionary.nav} />
           {/* Right side, read from the edge inwards: language, quote request. */}
           <div className="flex items-center gap-2">
             <ButtonLink href={links.contact.href} className="hidden lg:inline-flex">
@@ -35,7 +35,7 @@ export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
             </ButtonLink>
             {/* <ThemeMenu labels={dictionary.theme} /> */}
             <LanguageMenu locale={locale} labels={dictionary.language} />
-            <MobileNavigation links={links} categories={categories} labels={dictionary.nav} />
+            <MobileNavigation links={links} categories={categories} aboutPages={aboutPages} labels={dictionary.nav} />
           </div>
         </PageContainer>
       </HeaderShell>

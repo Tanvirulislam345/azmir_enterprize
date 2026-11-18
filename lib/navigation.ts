@@ -1,8 +1,9 @@
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
+import { aboutRepository } from "@/lib/about/about-repository";
 import { productRepository } from "@/lib/products/product-repository";
 import { routes } from "@/lib/routes";
-import type { NavCategory } from "@/types/navigation";
+import type { NavAboutPage, NavCategory } from "@/types/navigation";
 
 /** Primary site links, shared by header and footer. */
 export function getPrimaryLinks(locale: Locale, labels: Dictionary["nav"]) {
@@ -27,5 +28,17 @@ export async function getNavCategories(locale: Locale): Promise<NavCategory[]> {
       href: routes.product(locale, category.slug, variant.slug),
       label: variant.name[locale],
     })),
+  }));
+}
+
+/** About sub-pages (Managing Director, IT Support Team, …) for the About menu and mobile drawer. */
+export async function getNavAboutPages(locale: Locale): Promise<NavAboutPage[]> {
+  const pages = await aboutRepository.getAboutPages();
+  return pages.map((page) => ({
+    id: page.id,
+    href: routes.aboutPage(locale, page.slug),
+    label: page.title[locale],
+    summary: page.summary[locale],
+    icon: page.icon,
   }));
 }

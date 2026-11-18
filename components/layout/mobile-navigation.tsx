@@ -9,7 +9,7 @@ import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { useDismiss } from "@/lib/hooks/use-dismiss";
 import { useScrollLock } from "@/lib/hooks/use-scroll-lock";
 import { cn } from "@/lib/utils";
-import type { NavCategory, NavLink } from "@/types/navigation";
+import type { NavAboutPage, NavCategory, NavLink } from "@/types/navigation";
 import { buttonClassName } from "@/components/ui/button";
 import { isActivePath } from "./desktop-navigation";
 import { useNavigationDispatch, useNavigationState } from "./navigation-context";
@@ -17,12 +17,13 @@ import { useNavigationDispatch, useNavigationState } from "./navigation-context"
 type MobileNavigationProps = {
   links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
+  aboutPages: NavAboutPage[];
   labels: Dictionary["nav"];
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-export function MobileNavigation({ links, categories, labels }: MobileNavigationProps) {
+export function MobileNavigation({ links, categories, aboutPages, labels }: MobileNavigationProps) {
   const { mobileOpen, expandedCategory } = useNavigationState();
   const dispatch = useNavigationDispatch();
   const pathname = usePathname();
@@ -93,11 +94,32 @@ export function MobileNavigation({ links, categories, labels }: MobileNavigation
                 </ul>
               </DrawerItem>
 
-              {[links.transportation, links.about].map((link) => (
-                <DrawerItem key={link.href}>
-                  <DrawerLink link={link} active={isActivePath(pathname, link.href)} onNavigate={closeAll} />
-                </DrawerItem>
-              ))}
+              <DrawerItem>
+                <DrawerLink link={links.transportation} active={isActivePath(pathname, links.transportation.href)} onNavigate={closeAll} />
+              </DrawerItem>
+
+              <DrawerItem>
+                {aboutPages.length > 0 ? (
+                  // Same accordion as a product category: the overview first, then each About page.
+                  <ul>
+                    <CategoryAccordion
+                      category={{
+                        id: "about",
+                        href: links.about.href,
+                        label: links.about.label,
+                        variants: aboutPages.map(({ href, label }) => ({ href, label })),
+                      }}
+                      expanded={expandedCategory === "about"}
+                      onToggle={() => dispatch({ type: "toggleCategory", id: "about" })}
+                      onNavigate={closeAll}
+                      firstLabel={labels.overview}
+                      size="lg"
+                    />
+                  </ul>
+                ) : (
+                  <DrawerLink link={links.about} active={isActivePath(pathname, links.about.href)} onNavigate={closeAll} />
+                )}
+              </DrawerItem>
 
               <DrawerItem>
                 <DrawerLink link={links.contact} active={isActivePath(pathname, links.contact.href)} onNavigate={closeAll} />
@@ -149,9 +171,13 @@ type CategoryAccordionProps = {
   expanded: boolean;
   onToggle: () => void;
   onNavigate: () => void;
+  /** Label for the first link (the group's own page); defaults to the group label. */
+  firstLabel?: string;
+  /** `lg` matches the drawer's top-level links (used for About). */
+  size?: "md" | "lg";
 };
 
-function CategoryAccordion({ category, expanded, onToggle, onNavigate }: CategoryAccordionProps) {
+function CategoryAccordion({ category, expanded, onToggle, onNavigate, firstLabel, size = "md" }: CategoryAccordionProps) {
   const regionId = useId();
 
   return (
@@ -161,7 +187,10 @@ function CategoryAccordion({ category, expanded, onToggle, onNavigate }: Categor
         aria-expanded={expanded}
         aria-controls={regionId}
         onClick={onToggle}
-        className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg px-3 text-left font-medium transition-colors hover:bg-surface-muted"
+        className={cn(
+          "flex w-full items-center justify-between gap-3 rounded-lg px-3 text-left transition-colors hover:bg-surface-muted",
+          size === "lg" ? "min-h-12 text-lg font-semibold" : "min-h-11 font-medium",
+        )}
       >
         {category.label}
         <ChevronDown aria-hidden className={cn("size-4 shrink-0 transition-transform duration-300", expanded && "rotate-180")} />
@@ -176,7 +205,7 @@ function CategoryAccordion({ category, expanded, onToggle, onNavigate }: Categor
             transition={{ duration: 0.3, ease: EASE }}
             className="overflow-hidden pl-3"
           >
-            {[{ href: category.href, label: category.label }, ...category.variants].map((link, index) => (
+            {[{ href: category.href, label: firstLabel ?? category.label }, ...category.variants].map((link, index) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

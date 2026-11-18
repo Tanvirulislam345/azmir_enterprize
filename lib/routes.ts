@@ -4,6 +4,7 @@ import type { Locale } from "@/types/i18n";
 export const routes = {
   home: (locale: Locale) => `/${locale}`,
   about: (locale: Locale) => `/${locale}/about`,
+  aboutPage: (locale: Locale, slug: string) => `/${locale}/about/${slug}`,
   products: (locale: Locale) => `/${locale}/products`,
   category: (locale: Locale, category: string) => `/${locale}/products/${category}`,
   product: (locale: Locale, category: string, slug: string) => `/${locale}/products/${category}/${slug}`,

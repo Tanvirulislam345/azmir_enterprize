@@ -1,16 +1,18 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/lib/i18n/config";
+import { aboutRepository } from "@/lib/about/about-repository";
 import { productRepository } from "@/lib/products/product-repository";
 import { getBaseUrl } from "@/lib/seo/metadata";
 
 /** Lists only publicly visible routes, in every locale. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getBaseUrl();
-  const categories = await productRepository.getPublishedCategories();
+  const [categories, aboutPages] = await Promise.all([productRepository.getPublishedCategories(), aboutRepository.getAboutPages()]);
 
   const paths = [
     "",
     "/about",
+    ...aboutPages.map((page) => `/about/${page.slug}`),
     "/products",
     "/transportation",
     "/projects",

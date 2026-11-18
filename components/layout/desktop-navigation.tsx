@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { cn } from "@/lib/utils";
-import type { NavCategory, NavLink } from "@/types/navigation";
+import type { NavAboutPage, NavCategory, NavLink } from "@/types/navigation";
+import { AboutDropdown } from "./about-dropdown";
 import { ProductsDropdown } from "./products-dropdown";
 
 type DesktopNavigationProps = {
   links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
+  aboutPages: NavAboutPage[];
   labels: Dictionary["nav"];
 };
 
@@ -21,6 +23,7 @@ export const isActivePath = (pathname: string, href: string, exact = false) =>
 export function DesktopNavigation({
   links,
   categories,
+  aboutPages,
   labels,
 }: DesktopNavigationProps) {
   const pathname = usePathname();
@@ -54,10 +57,19 @@ export function DesktopNavigation({
           link={links.transportation}
           active={isActivePath(pathname, links.transportation.href)}
         />
-        <NavItem
-          link={links.about}
-          active={isActivePath(pathname, links.about.href)}
-        />
+        {aboutPages.length > 0 ? (
+          <AboutDropdown
+            overview={links.about}
+            pages={aboutPages}
+            labels={labels}
+            active={isActivePath(pathname, links.about.href)}
+          />
+        ) : (
+          <NavItem
+            link={links.about}
+            active={isActivePath(pathname, links.about.href)}
+          />
+        )}
         <NavItem
           link={links.contact}
           active={isActivePath(pathname, links.contact.href)}
