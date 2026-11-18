@@ -3,14 +3,16 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowUp } from "lucide-react";
 
-const SHOW_FROM = 480;
+/** Scroll position (px) where the button is fully shown; it fades in over the 120px before. Shared with `FloatingContact`. */
+export const SHOW_FROM = 480;
+export const FADE_START = SHOW_FROM - 120;
 
 /** Fades in after scrolling; driven entirely by motion values so it never re-renders on scroll. */
 export function BackToTop({ label }: { label: string }) {
   const { scrollY, scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollY, [SHOW_FROM - 120, SHOW_FROM], [0, 1]);
-  const y = useTransform(scrollY, [SHOW_FROM - 120, SHOW_FROM], [16, 0]);
-  const visibility = useTransform(scrollY, (value) => (value > SHOW_FROM - 120 ? "visible" : "hidden"));
+  const opacity = useTransform(scrollY, [FADE_START, SHOW_FROM], [0, 1]);
+  const y = useTransform(scrollY, [FADE_START, SHOW_FROM], [16, 0]);
+  const visibility = useTransform(scrollY, (value) => (value > FADE_START ? "visible" : "hidden"));
   const ring = useTransform(scrollYProgress, (value) => `conic-gradient(var(--accent) ${value * 360}deg, transparent 0deg)`);
 
   return (

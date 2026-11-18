@@ -5,7 +5,9 @@ import { locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { buildMetadata, getBaseUrl } from "@/lib/seo/metadata";
+import { formatPhone, getOfficePhone, telHref, whatsappHref } from "@/lib/contact";
 import { BackToTop } from "@/components/layout/back-to-top";
+import { FloatingContact } from "@/components/layout/floating-contact";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion/motion-provider";
@@ -77,6 +79,24 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             {children}
           </main>
           <SiteFooter locale={locale} dictionary={dictionary} />
+          <FloatingContact
+            numbers={siteConfig.contact.offices.map((office) => {
+              const phone = getOfficePhone(office);
+              return {
+                id: office.id,
+                office: office.name[locale],
+                display: formatPhone(phone, locale),
+                telHref: telHref(phone),
+                whatsappHref: whatsappHref(phone, dictionary.contact.whatsappGreeting),
+              };
+            })}
+            labels={{
+              open: dictionary.contact.floatingLabel,
+              close: dictionary.contact.floatingClose,
+              call: dictionary.contact.call,
+              whatsapp: dictionary.contact.whatsappAction,
+            }}
+          />
           <BackToTop label={dictionary.common.backToTop} />
         </MotionProvider>
       </body>

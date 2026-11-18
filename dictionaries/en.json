@@ -131,7 +131,6 @@
     "quickLinks": "Quick links",
     "products": "Products",
     "contact": "Contact",
-    "contactPending": "Contact details will be published soon.",
     "rights": "All rights reserved."
   },
   "productsPage": {
@@ -172,16 +171,28 @@
   },
   "contact": {
     "metaTitle": "Contact",
-    "metaDescription": "Contact M/S. AZMIR ENTERPRIZE for construction material enquiries and quotations.",
+    "metaDescription": "Contact M/S. AZMIR ENTERPRIZE by phone, WhatsApp, imo or email, or visit our Sylhet and Dhaka offices, for construction material enquiries and quotations.",
     "eyebrow": "Get in touch",
     "title": "Contact us",
-    "description": "Reach out for product enquiries and quotations.",
-    "phone": "Phone",
+    "description": "Call, message or visit us for product enquiries and quotations.",
+    "call": "Call",
     "whatsapp": "WhatsApp",
+    "imo": "imo",
+    "whatsappAction": "WhatsApp",
+    "whatsappGreeting": "Hello M/S. AZMIR ENTERPRIZE, I would like to enquire about construction materials.",
     "email": "Email",
-    "address": "Address",
-    "pendingTitle": "Contact details coming soon",
-    "pendingDescription": "Our official contact details are being finalised and will be published here shortly."
+    "copied": "Copied",
+    "officesTitle": "Our offices",
+    "officesDescription": "Visit, call or message our Sylhet or Dhaka office.",
+    "officesLabel": "Choose an office",
+    "directions": "Get directions",
+    "mapTitle": "Map of {office}",
+    "floatingLabel": "Contact us",
+    "floatingClose": "Close contact options",
+    "copyValue": "Copy {value}",
+    "callValue": "Call {value}",
+    "whatsappValue": "WhatsApp {value}",
+    "emailValue": "Email {value}"
   },
   "transportation": {
     "metaTitle": "Transportation",

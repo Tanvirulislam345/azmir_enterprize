@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { Mail, MapPin, Phone, type LucideIcon } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { formatPhone, getOfficePhone, mailtoHref, telHref } from "@/lib/contact";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { getNavCategories, getPrimaryLinks } from "@/lib/navigation";
@@ -18,7 +19,7 @@ type SiteFooterProps = {
 export async function SiteFooter({ locale, dictionary }: SiteFooterProps) {
   const categories = await getNavCategories(locale);
   const links = Object.values(getPrimaryLinks(locale, dictionary.nav));
-  const contactItems = getContactItems();
+  const contactItems = getContactItems(locale);
 
   return (
     <footer className="relative overflow-hidden bg-inverse text-inverse-foreground">
@@ -42,24 +43,23 @@ export async function SiteFooter({ locale, dictionary }: SiteFooterProps) {
 
         <Reveal delay={0.24}>
           <FooterHeading>{dictionary.footer.contact}</FooterHeading>
-          {contactItems.length > 0 ? (
-            <ul className="space-y-3 text-sm">
-              {contactItems.map(({ icon: Icon, label, href }) => (
-                <li key={label} className="flex items-start gap-3 text-inverse-muted">
-                  <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
-                  {href ? (
-                    <a href={href} className="transition-colors hover:text-accent">
-                      {label}
-                    </a>
-                  ) : (
-                    <span>{label}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-inverse-muted">{dictionary.footer.contactPending}</p>
-          )}
+          <ul className="space-y-3 text-sm">
+            {contactItems.map(({ icon: Icon, label, detail, href }) => (
+              <li key={href ?? label} className="flex items-start gap-3 text-inverse-muted">
+                <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
+                {href ? (
+                  <a href={href} className="break-all transition-colors hover:text-accent">
+                    {label}
+                  </a>
+                ) : (
+                  <span>
+                    <span className="block font-medium text-inverse-foreground">{label}</span>
+                    {detail}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </PageContainer>
 
@@ -72,17 +72,22 @@ export async function SiteFooter({ locale, dictionary }: SiteFooterProps) {
   );
 }
 
-type ContactItem = { icon: LucideIcon; label: string; href?: string };
+type ContactItem = { icon: LucideIcon; label: string; detail?: string; href?: string };
 
-/** Only confirmed (non-empty) contact fields are shown. */
-function getContactItems(): ContactItem[] {
-  const { phone, email, address } = siteConfig.contact;
-  const items: ContactItem[] = [];
-
-  if (phone) items.push({ icon: Phone, label: phone, href: `tel:${phone}` });
-  if (email) items.push({ icon: Mail, label: email, href: `mailto:${email}` });
-  if (address) items.push({ icon: MapPin, label: address });
-  return items;
+/** Each office with its number, then the shared email, from the client-confirmed config. */
+function getContactItems(locale: Locale): ContactItem[] {
+  const { email, offices } = siteConfig.contact;
+  return [
+    // Each office, followed by its own number.
+    ...offices.flatMap((office) => {
+      const phone = getOfficePhone(office);
+      return [
+        { icon: MapPin, label: office.name[locale], detail: office.address[locale] },
+        { icon: Phone, label: formatPhone(phone, locale), href: telHref(phone) },
+      ];
+    }),
+    { icon: Mail, label: email, href: mailtoHref(email) },
+  ];
 }
 
 async function getCurrentYear() {

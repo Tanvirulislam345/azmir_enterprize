@@ -452,7 +452,8 @@ Add metadata, sitemap, robots, alt text, accessibility checks, route/link checks
 - Confirm exact legal/display spelling.
 - Logo (SVG/PNG).
 - Approved company introduction and history.
-- Phone, WhatsApp, email, address, business hours.
+- ~~Phone, WhatsApp, email, address~~ — **confirmed** and stored in `config/site.ts` (two numbers for phone/WhatsApp/imo, one email, Sylhet and Dhaka offices).
+- Business hours — still pending (not shown until confirmed).
 - Social links.
 
 ### Products
