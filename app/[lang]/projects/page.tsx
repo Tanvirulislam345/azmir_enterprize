@@ -27,7 +27,10 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Every selected project: a numbered list beside a photo of the one in focus. */
 export default async function ProjectsPage() {
   const locale = await resolveLocale();
-  const [dictionary, projects] = await Promise.all([getDictionary(locale), projectRepository.getSelectedProjects()]);
+  const [dictionary, projects] = await Promise.all([
+    getDictionary(locale),
+    projectRepository.getSelectedProjects(),
+  ]);
   const { projectsPage: copy } = dictionary;
 
   return (
@@ -46,18 +49,23 @@ export default async function ProjectsPage() {
       {/* 56px above and below the list on desktop; the enquiry banner follows with no extra gap. */}
       <section className="py-10 lg:py-14">
         <PageContainer className="space-y-8 sm:space-y-10">
-          <ProjectsHeading total={projects.length} locale={locale} dictionary={dictionary} />
+          <ProjectsHeading
+            total={projects.length}
+            locale={locale}
+            dictionary={dictionary}
+          />
           <ProjectShowcase
             items={toShowcaseItems(projects, locale)}
             total={`${formatNumber(projects.length, locale)}+`}
             nextLabel={copy.scrollHint}
+            prevLabel={copy.scrollHintUp}
             listLabel={copy.listLabel}
             previewLabel={copy.previewLabel}
           />
         </PageContainer>
       </section>
 
-      <EnquiryCta locale={locale} dictionary={dictionary} className="pt-0 sm:pt-0" />
+      <EnquiryCta locale={locale} dictionary={dictionary} className="" />
     </>
   );
 }

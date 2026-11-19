@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProjectMonogram } from "./project-monogram";
 
@@ -23,8 +23,9 @@ type ProjectShowcaseProps = {
   total: string;
   listLabel: string;
   previewLabel: string;
-  /** Label for the "next project" cue on the window variant. */
+  /** Labels for the window variant's arrow cue, which points the way the visitor is scrolling. */
   nextLabel?: string;
+  prevLabel?: string;
   /**
    * `window` (default) shows six rows at a time in a list that scrolls one project at a time, for any number of
    * projects. `compact` is for a handful: every row in the page flow beside a photo of the same height.
@@ -56,9 +57,12 @@ const WHEEL_LOCK_MS = 260;
  * is never taller than what it shows. Touch scrolls the window natively (snapping by row) and carries the active
  * row along. The active project's photo sits beside the list at the same height.
  */
-function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, className }: ShowcaseProps) {
+function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, prevLabel, className }: ShowcaseProps) {
   const count = items.length;
   const [activeIndex, setActiveIndex] = useState(0);
+  /** Which way the visitor last moved through the list; the arrow cue points this way. */
+  const [direction, setDirection] = useState<"down" | "up">("down");
+  const rootRef = useRef<HTMLDivElement>(null);
   const [rowHeight, setRowHeight] = useState(0);
   const [edges, setEdges] = useState({ atTop: true, atBottom: count <= WINDOW });
   const listRef = useRef<HTMLDivElement>(null);
@@ -86,8 +90,11 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
     const list = listRef.current;
     if (!list) return;
     let frame = 0;
+    let lastTop = list.scrollTop;
     const update = () => {
       frame = 0;
+      if (list.scrollTop !== lastTop) setDirection(list.scrollTop > lastTop ? "down" : "up");
+      lastTop = list.scrollTop;
       const max = list.scrollHeight - list.clientHeight;
       setEdges({ atTop: list.scrollTop <= 1, atBottom: list.scrollTop >= max - 1 });
       const row = firstRowRef.current?.offsetHeight;
@@ -113,6 +120,7 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
   /** Make `next` active and slide the window so it rides in the third slot (flush at both ends of the list). */
   const moveTo = useCallback(
     (next: number) => {
+      if (next !== activeRef.current) setDirection(next > activeRef.current ? "down" : "up");
       activeRef.current = next;
       setActiveIndex(next);
       const list = listRef.current;
@@ -123,14 +131,27 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
     [count, visible, reduceMotion],
   );
 
-  // Wheel: one project per step while there is a next one that way; at the first or last the page takes over.
+  // Wheel anywhere in the enclosing section (heading, list or photo): one project per step while there is a next one
+  // that way; at the first or last the page takes over. It only steps while the whole list window is on screen, so the
+  // page first scrolls the section fully into view instead of getting stuck with it half visible.
   useEffect(() => {
+    const root = rootRef.current;
     const list = listRef.current;
-    if (!list) return;
+    if (!root || !list) return;
+    const scope = root.closest("section") ?? root;
     let travel = 0;
     let lockedUntil = 0;
+    const listFullyVisible = () => {
+      const rect = list.getBoundingClientRect();
+      const headerBottom = Math.max(0, document.querySelector("header")?.getBoundingClientRect().bottom ?? 0);
+      return rect.top >= headerBottom - 1 && rect.bottom <= window.innerHeight + 1;
+    };
     const onWheel = (event: WheelEvent) => {
       if (event.ctrlKey || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+      if (!listFullyVisible()) {
+        travel = 0;
+        return;
+      }
       const down = event.deltaY > 0;
       const current = activeRef.current;
       const next = down ? current + 1 : current - 1;
@@ -146,8 +167,8 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
       lockedUntil = performance.now() + WHEEL_LOCK_MS;
       moveTo(next);
     };
-    list.addEventListener("wheel", onWheel, { passive: false });
-    return () => list.removeEventListener("wheel", onWheel);
+    scope.addEventListener("wheel", onWheel, { passive: false });
+    return () => scope.removeEventListener("wheel", onWheel);
   }, [count, moveTo]);
 
   const active = items[Math.min(activeIndex, count - 1)];
@@ -155,9 +176,14 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
   const windowHeight = rowHeight ? { height: visible * rowHeight } : undefined;
   const progress = count > 1 ? activeIndex / (count - 1) : 1;
   const preview = <Preview item={active} total={total} progress={progress} label={previewLabel} />;
+  // The cue follows the visitor's direction, flipping at either end so it always points somewhere to go.
+  const cue: "down" | "up" =
+    direction === "down" ? (activeIndex < count - 1 ? "down" : "up") : activeIndex > 0 ? "up" : "down";
+  const cueLabel = cue === "down" ? nextLabel : prevLabel;
+  const CueIcon = cue === "down" ? ChevronDown : ChevronUp;
 
   return (
-    <div className={cn("grid gap-5 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-16 xl:gap-24", className)}>
+    <div ref={rootRef} className={cn("grid gap-5 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-16 xl:gap-24", className)}>
       {/* Phones and tablets: the photo sits above the list. */}
       <div className="relative h-[38svh] min-h-56 lg:hidden">{preview}</div>
 
@@ -210,21 +236,34 @@ function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, clas
             edges.atBottom ? "opacity-0" : "opacity-100",
           )}
         />
-        {/* "More below" cue sitting on the window's bottom edge, so it takes no space. It steps to the next project
-            and disappears at the last one, which is when the page starts scrolling again. */}
+        {/* Arrow cue just below the window, inside the section's bottom padding so it takes no space. It points the
+            way the visitor is scrolling (flipping at either end) and moves one project that way when clicked. */}
         {count > WINDOW && (
           <button
             type="button"
-            onClick={() => moveTo(Math.min(activeRef.current + 1, count - 1))}
-            aria-label={nextLabel}
-            title={nextLabel}
-            tabIndex={activeIndex < count - 1 ? 0 : -1}
-            className={cn(
-              "absolute -bottom-[1.125rem] left-1/2 z-10 grid size-9 -translate-x-1/2 place-items-center rounded-full bg-accent text-accent-foreground shadow-lift ring-4 ring-background transition-all duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-accent/40",
-              activeIndex < count - 1 ? "opacity-100" : "pointer-events-none scale-75 opacity-0",
-            )}
+            onClick={() => moveTo(cue === "down" ? activeRef.current + 1 : activeRef.current - 1)}
+            aria-label={cueLabel}
+            title={cueLabel}
+            className="absolute top-full left-1/2 z-10 mt-1.5 grid size-8 -translate-x-1/2 place-items-center overflow-hidden rounded-full bg-accent text-accent-foreground shadow-lift transition-transform duration-300 hover:scale-110 focus-visible:ring-4 focus-visible:ring-accent/30 focus-visible:outline-none lg:mt-3 lg:size-9"
           >
-            <ChevronDown aria-hidden className="size-5 motion-safe:animate-[bounce_1.6s_ease-in-out_infinite]" />
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={cue}
+                initial={{ opacity: 0, rotate: cue === "down" ? -90 : 90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: cue === "down" ? 90 : -90 }}
+                transition={{ duration: 0.2, ease: EASE }}
+                className="grid place-items-center"
+              >
+                <motion.span
+                  className="grid place-items-center"
+                  animate={reduceMotion ? undefined : { y: cue === "down" ? [0, 3, 0] : [0, -3, 0] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <CueIcon aria-hidden className="size-5" />
+                </motion.span>
+              </motion.span>
+            </AnimatePresence>
           </button>
         )}
       </div>

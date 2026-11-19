@@ -126,7 +126,8 @@
     "description": "Builders, developers and contractors who have relied on us for their construction materials.",
     "listLabel": "All selected projects",
     "previewLabel": "Project photo",
-    "scrollHint": "Next project"
+    "scrollHint": "Next project",
+    "scrollHintUp": "Previous project"
   },
   "cta": {
     "title": "Have a project coming up?",
