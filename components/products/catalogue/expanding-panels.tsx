@@ -23,12 +23,19 @@ export type ExpandingPanelItem = {
 type ExpandingPanelsProps = {
   items: ExpandingPanelItem[];
   ctaLabel: string;
-  /** "lg" adds the outlined index and description for richer category panels. */
-  size?: "md" | "lg";
+  /** "lg" adds the outlined index and description for richer category panels; "sm" is the compact catalogue row. */
+  size?: "sm" | "md" | "lg";
   className?: string;
 };
 
 const ENTRANCE_STAGGER = 0.12;
+
+/** Row height on desktop, and each panel's height when stacked on smaller screens. */
+const PANEL_HEIGHTS = {
+  sm: { row: "lg:h-[18rem]", panel: "h-32 sm:h-40" },
+  md: { row: "lg:h-[24rem]", panel: "h-40 sm:h-48" },
+  lg: { row: "lg:h-[34rem]", panel: "h-64 sm:h-80" },
+} as const;
 
 const panelVariants: Variants = {
   hidden: { x: 120, opacity: 0 },
@@ -53,7 +60,7 @@ export function ExpandingPanels({ items, ctaLabel, size = "md", className }: Exp
   return (
     <div
       ref={rowRef}
-      className={cn("flex flex-col gap-3 sm:gap-4 lg:flex-row", rich ? "lg:h-[34rem]" : "lg:h-[30rem]", className)}
+      className={cn("flex flex-col gap-3 sm:gap-4 lg:flex-row", PANEL_HEIGHTS[size].row, className)}
     >
       {items.map((item, index) => {
         const isActive = index === active;
@@ -91,7 +98,7 @@ export function ExpandingPanels({ items, ctaLabel, size = "md", className }: Exp
               onFocus={() => setActive(index)}
               className={cn(
                 "group relative isolate block overflow-hidden rounded-[1.75rem] bg-surface-muted shadow-soft outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background lg:h-full",
-                rich ? "h-64 sm:h-80" : "h-44 sm:h-56",
+                PANEL_HEIGHTS[size].panel,
               )}
             >
               <ProductMedia

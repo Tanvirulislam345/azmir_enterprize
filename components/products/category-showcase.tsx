@@ -17,29 +17,54 @@ type CategoryShowcaseProps = {
   category: ProductCategory;
   locale: Locale;
   dictionary: Dictionary;
+  /** No lead banner: every product as a small landscape card, four to a row. */
+  compact?: boolean;
 };
 
 /**
  * Product layout for a category page. A single product gets a split feature; larger ranges open
  * with the featured product as a wide banner, followed by staggered portrait cards.
  */
-export function CategoryShowcase({ category, locale, dictionary }: CategoryShowcaseProps) {
+export function CategoryShowcase({ category, locale, dictionary, compact = false }: CategoryShowcaseProps) {
   // Featured product leads; the rest keep their catalogue order.
   const variants = [...category.variants].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
   const [lead, ...rest] = variants;
   if (!lead) return null;
 
-  if (rest.length === 0) {
-    return <SingleFeature variant={lead} category={category} locale={locale} dictionary={dictionary} />;
-  }
-
   const total = formatIndex(variants.length, locale);
   const label = (index: number) => `${formatIndex(index + 1, locale)} / ${total}`;
   const href = (variant: ProductVariant) => routes.product(locale, category.slug, variant.slug);
 
+  if (compact) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {variants.map((variant, index) => (
+          <div key={variant.id} className="aspect-[4/3]">
+            <ClipReveal delay={(index % 4) * 0.08}>
+              <Tilt>
+                <ShowcaseCard
+                  href={href(variant)}
+                  name={variant.name[locale]}
+                  image={variant.image}
+                  index={label(index)}
+                  ctaLabel={dictionary.common.viewDetails}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                />
+              </Tilt>
+            </ClipReveal>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (rest.length === 0) {
+    return <SingleFeature variant={lead} category={category} locale={locale} dictionary={dictionary} />;
+  }
+
   return (
-    <div className="space-y-6 lg:space-y-8">
-      <div className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]">
+    <div className="space-y-6">
+      <div className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[3/1]">
         <ClipReveal>
           <Tilt max={2.5}>
             <ShowcaseCard
@@ -57,18 +82,17 @@ export function CategoryShowcase({ category, locale, dictionary }: CategoryShowc
         </ClipReveal>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:pb-16">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {rest.map((variant, index) => (
           <div
             key={variant.id}
             className={cn(
-              "aspect-[4/5] sm:aspect-[3/4]",
-              index % 3 === 1 && "lg:translate-y-16",
+              "aspect-[4/5]",
               // A lone last card on the two-column layout spans the row.
-              index === rest.length - 1 && rest.length % 2 === 1 && "sm:col-span-2 sm:aspect-[16/9] lg:col-span-1 lg:aspect-[3/4]",
+              index === rest.length - 1 && rest.length % 2 === 1 && "sm:col-span-2 sm:aspect-[16/9] lg:col-span-1 lg:aspect-[4/5]",
             )}
           >
-            <ClipReveal delay={(index % 3) * 0.12}>
+            <ClipReveal delay={(index % 4) * 0.1}>
               <Tilt>
                 <ShowcaseCard
                   href={href(variant)}
@@ -77,7 +101,7 @@ export function CategoryShowcase({ category, locale, dictionary }: CategoryShowc
                   index={label(index + 1)}
                   description={variant.shortDescription?.[locale]}
                   ctaLabel={dictionary.common.viewDetails}
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 />
               </Tilt>
             </ClipReveal>

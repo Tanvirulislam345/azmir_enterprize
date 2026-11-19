@@ -646,6 +646,7 @@ export const categories: ProductCategory[] = [
   {
     id: "coal",
     slug: "coal",
+    compact: true,
     layout: "panels",
     icon: "coal",
     image: STAND_IN.coal,
@@ -696,6 +697,7 @@ export const categories: ProductCategory[] = [
   {
     id: "iron",
     slug: "iron",
+    compact: true,
     layout: "showcase",
     icon: "iron",
     image: STAND_IN.iron,
@@ -770,6 +772,7 @@ export const categories: ProductCategory[] = [
   {
     id: "bricks",
     slug: "bricks",
+    compact: true,
     layout: "spotlight",
     icon: "bricks",
     image: "/images/bricks/auto-bricks.jpg",

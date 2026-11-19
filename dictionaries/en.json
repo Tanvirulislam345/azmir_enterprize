@@ -27,7 +27,10 @@
     "productsMenu": "Products menu",
     "aboutMenu": "About menu",
     "overview": "Overview",
-    "aboutSummary": "Who we are, what we supply and how we work."
+    "aboutSummary": "Who we are, what we supply and how we work.",
+    "viewSection": "View section",
+    "productCount": "{count} products",
+    "productCountOne": "1 product"
   },
   "theme": {
     "label": "Colour theme",
@@ -143,17 +146,11 @@
     "title": "Our products",
     "description": "Stone, sand, bitumen, coal, iron rod and bricks. Browse every category and its products.",
     "jumpLabel": "Browse by category",
-    "viewAll": "View all ({count})",
-    "featured": "Featured"
-  },
-  "categoryPage": {
-    "productsTitle": "Products in this category",
-    "enquire": "Enquire about this category",
-    "eyebrow": "Category {n} / {total}",
-    "switcherLabel": "Browse categories",
-    "allProducts": "All products",
-    "otherCategories": "Explore other categories",
-    "otherCategoriesDescription": "Keep browsing the rest of our construction materials."
+    "viewAll": "At a glance ({count})",
+    "featured": "Featured",
+    "summaryTitle": "At a glance",
+    "summaryDescription": "Every product in this category, side by side. Open one for full details.",
+    "summaryProduct": "Product"
   },
   "productPage": {
     "specifications": "Product details",

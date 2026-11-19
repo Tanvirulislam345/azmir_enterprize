@@ -51,7 +51,7 @@ export function StoneMosaic({ category, locale, dictionary }: StoneMosaicProps) 
   return (
     <RevealGroup
       stagger={0.07}
-      className="grid auto-rows-[10.5rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:gap-4 lg:grid-cols-4 lg:auto-rows-[14rem]"
+      className="grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[10.5rem] sm:gap-4 lg:grid-cols-4 lg:auto-rows-[11.5rem]"
     >
       {variants.map((variant, index) => (
         <RevealItem key={variant.id} className={spans[index]}>

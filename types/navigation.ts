@@ -7,6 +7,8 @@ export type NavLink = {
 export type NavCategory = NavLink & {
   id: string;
   variants: NavLink[];
+  /** Key in `lib/products/category-icons.ts`. */
+  icon?: string;
 };
 
 export type NavAboutPage = NavLink & {

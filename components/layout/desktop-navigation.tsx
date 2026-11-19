@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { cn } from "@/lib/utils";
 import type { NavAboutPage, NavCategory, NavLink } from "@/types/navigation";
@@ -13,6 +14,7 @@ type DesktopNavigationProps = {
   categories: NavCategory[];
   aboutPages: NavAboutPage[];
   labels: Dictionary["nav"];
+  locale: Locale;
 };
 
 export const isActivePath = (pathname: string, href: string, exact = false) =>
@@ -25,6 +27,7 @@ export function DesktopNavigation({
   categories,
   aboutPages,
   labels,
+  locale,
 }: DesktopNavigationProps) {
   const pathname = usePathname();
 
@@ -45,6 +48,7 @@ export function DesktopNavigation({
             }}
             transportation={links.transportation}
             labels={labels}
+            locale={locale}
             active={isActivePath(pathname, links.products.href)}
           />
         ) : (

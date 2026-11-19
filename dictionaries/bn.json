@@ -27,7 +27,10 @@
     "productsMenu": "পণ্যের মেনু",
     "aboutMenu": "আমাদের সম্পর্কে মেনু",
     "overview": "সংক্ষিপ্ত পরিচিতি",
-    "aboutSummary": "আমরা কারা, কী সরবরাহ করি এবং কীভাবে কাজ করি।"
+    "aboutSummary": "আমরা কারা, কী সরবরাহ করি এবং কীভাবে কাজ করি।",
+    "viewSection": "সেকশন দেখুন",
+    "productCount": "{count}টি পণ্য",
+    "productCountOne": "১টি পণ্য"
   },
   "theme": {
     "label": "রঙের থিম",
@@ -175,17 +178,11 @@
     "title": "আমাদের পণ্যসমূহ",
     "description": "পাথর, বালু, বিটুমিন, কয়লা, রড ও ইট। সব ক্যাটাগরি ও পণ্য দেখুন।",
     "jumpLabel": "ক্যাটাগরি অনুযায়ী দেখুন",
-    "viewAll": "সব দেখুন ({count})",
-    "featured": "বিশেষ পণ্য"
-  },
-  "categoryPage": {
-    "productsTitle": "এই ক্যাটাগরির পণ্যসমূহ",
-    "enquire": "এই ক্যাটাগরি সম্পর্কে জানতে চান",
-    "eyebrow": "ক্যাটাগরি {n} / {total}",
-    "switcherLabel": "ক্যাটাগরি অনুযায়ী দেখুন",
-    "allProducts": "সব পণ্য",
-    "otherCategories": "অন্যান্য ক্যাটাগরি",
-    "otherCategoriesDescription": "আমাদের অন্যান্য নির্মাণ সামগ্রী দেখুন।"
+    "viewAll": "এক নজরে ({count})",
+    "featured": "বিশেষ পণ্য",
+    "summaryTitle": "এক নজরে",
+    "summaryDescription": "এই ক্যাটাগরির সব পণ্য পাশাপাশি। বিস্তারিত জানতে যেকোনো পণ্য খুলুন।",
+    "summaryProduct": "পণ্য"
   },
   "productPage": {
     "specifications": "পণ্যের বিবরণ",

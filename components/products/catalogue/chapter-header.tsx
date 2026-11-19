@@ -1,8 +1,6 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
-import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import type { ProductCategory } from "@/types/product";
 import { Reveal } from "@/components/motion/reveal";
@@ -14,10 +12,12 @@ type ChapterHeaderProps = {
   locale: Locale;
   dictionary: Dictionary;
   inverse?: boolean;
+  /** Show the "At a glance (n)" link; off when the chapter has no summary. */
+  summaryLink?: boolean;
 };
 
-/** Opening of a catalogue chapter: outlined number, name, description and a "View all (n)" category link. */
-export function ChapterHeader({ category, number, locale, dictionary, inverse = false }: ChapterHeaderProps) {
+/** Opening of a catalogue chapter: outlined number, name, description and an "At a glance (n)" link to its summary. */
+export function ChapterHeader({ category, number, locale, dictionary, inverse = false, summaryLink = true }: ChapterHeaderProps) {
   const headingId = `${category.slug}-heading`;
 
   return (
@@ -45,20 +45,22 @@ export function ChapterHeader({ category, number, locale, dictionary, inverse = 
         )}
       </Reveal>
 
-      <Reveal delay={0.16} variant="right">
-        <Link
-          href={routes.category(locale, category.slug)}
-          className={cn(
-            "group inline-flex items-center gap-2 border-b pb-1 text-sm font-semibold transition-colors",
-            inverse
-              ? "border-inverse-foreground/30 text-inverse-foreground hover:border-accent hover:text-accent-soft"
-              : "border-border text-foreground hover:border-accent hover:text-accent",
-          )}
-        >
-          {dictionary.productsPage.viewAll.replace("{count}", formatNumber(category.variants.length, locale))}
-          <ArrowRight aria-hidden className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
-      </Reveal>
+      {summaryLink && (
+        <Reveal delay={0.16} variant="right">
+          <a
+            href={`#${category.slug}-summary`}
+            className={cn(
+              "group inline-flex items-center gap-2 border-b pb-1 text-sm font-semibold transition-colors",
+              inverse
+                ? "border-inverse-foreground/30 text-inverse-foreground hover:border-accent hover:text-accent-soft"
+                : "border-border text-foreground hover:border-accent hover:text-accent",
+            )}
+          >
+            {dictionary.productsPage.viewAll.replace("{count}", formatNumber(category.variants.length, locale))}
+            <ArrowDown aria-hidden className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+          </a>
+        </Reveal>
+      )}
     </div>
   );
 }

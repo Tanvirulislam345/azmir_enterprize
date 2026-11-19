@@ -89,6 +89,7 @@ export function MobileNavigation({ links, categories, aboutPages, labels }: Mobi
                       expanded={expandedCategory === category.id}
                       onToggle={() => dispatch({ type: "toggleCategory", id: category.id })}
                       onNavigate={closeAll}
+                      firstLabel={labels.viewSection}
                     />
                   ))}
                 </ul>

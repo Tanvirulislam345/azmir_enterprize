@@ -17,10 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/transportation",
     "/projects",
     "/contact",
-    ...categories.flatMap((category) => [
-      `/products/${category.slug}`,
-      ...category.variants.map((variant) => `/products/${category.slug}/${variant.slug}`),
-    ]),
+    // Categories are sections of /products, so only product details pages are listed.
+    ...categories.flatMap((category) => category.variants.map((variant) => `/products/${category.slug}/${variant.slug}`)),
   ];
 
   return paths.flatMap((path) =>

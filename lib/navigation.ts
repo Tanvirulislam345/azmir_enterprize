@@ -22,8 +22,10 @@ export async function getNavCategories(locale: Locale): Promise<NavCategory[]> {
 
   return categories.map((category) => ({
     id: category.id,
+    // A category is a section of the products page.
     href: routes.category(locale, category.slug),
     label: category.name[locale],
+    icon: category.icon,
     variants: category.variants.map((variant) => ({
       href: routes.product(locale, category.slug, variant.slug),
       label: variant.name[locale],

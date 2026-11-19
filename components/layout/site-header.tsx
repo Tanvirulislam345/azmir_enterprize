@@ -27,7 +27,13 @@ export async function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
       <HeaderShell>
         <PageContainer className="relative flex h-18 items-center justify-between gap-4 lg:h-20">
           <Wordmark href={routes.home(locale)} />
-          <DesktopNavigation links={links} categories={categories} aboutPages={aboutPages} labels={dictionary.nav} />
+          <DesktopNavigation
+            links={links}
+            categories={categories}
+            aboutPages={aboutPages}
+            labels={dictionary.nav}
+            locale={locale}
+          />
           {/* Right side, read from the edge inwards: language, quote request. */}
           <div className="flex items-center gap-2">
             <ButtonLink href={links.contact.href} className="hidden lg:inline-flex">

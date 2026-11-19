@@ -6,6 +6,7 @@ import type { CategoryLayout, ProductCategory } from "@/types/product";
 import { CategoryShowcase } from "@/components/products/category-showcase";
 import { PageContainer } from "@/components/ui/page-container";
 import { BrickSpotlight } from "./brick-spotlight";
+import { CategorySummary, hasSummaryColumns } from "./category-summary";
 import { ChapterHeader } from "./chapter-header";
 import { formatIndex } from "./format";
 import { SandPanels } from "./sand-panels";
@@ -40,6 +41,7 @@ function ChapterBody({ category, locale, dictionary }: Omit<CatalogueChapterProp
       return (
         <SandPanels
           viewDetails={dictionary.common.viewDetails}
+          compact={category.compact}
           items={category.variants.map((variant, index) => ({
             id: variant.id,
             href: routes.product(locale, category.slug, variant.slug),
@@ -52,12 +54,13 @@ function ChapterBody({ category, locale, dictionary }: Omit<CatalogueChapterProp
     case "spotlight":
       return <BrickSpotlight category={category} locale={locale} dictionary={dictionary} />;
     case "showcase":
-      return <CategoryShowcase category={category} locale={locale} dictionary={dictionary} />;
+      return <CategoryShowcase category={category} locale={locale} dictionary={dictionary} compact={category.compact} />;
   }
 }
 
 export function CatalogueChapter({ category, number, locale, dictionary }: CatalogueChapterProps) {
   const theme = chapterTheme(category.layout ?? "showcase", number);
+  const hasSummary = !category.compact && hasSummaryColumns(category);
 
   return (
     <section
@@ -67,8 +70,16 @@ export function CatalogueChapter({ category, number, locale, dictionary }: Catal
       className={cn("scroll-mt-[calc(var(--header-offset)+4rem)] overflow-hidden py-20 sm:py-28", theme.section)}
     >
       <PageContainer className="space-y-12 sm:space-y-16">
-        <ChapterHeader category={category} number={number} locale={locale} dictionary={dictionary} inverse={theme.inverse} />
+        <ChapterHeader
+          category={category}
+          number={number}
+          locale={locale}
+          dictionary={dictionary}
+          inverse={theme.inverse}
+          summaryLink={hasSummary}
+        />
         <ChapterBody category={category} locale={locale} dictionary={dictionary} />
+        {hasSummary && <CategorySummary category={category} locale={locale} dictionary={dictionary} inverse={theme.inverse} />}
       </PageContainer>
     </section>
   );

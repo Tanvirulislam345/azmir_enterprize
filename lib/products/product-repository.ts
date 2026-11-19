@@ -17,7 +17,6 @@ export interface ProductRepository {
    * Every known route param, including drafts. Cache Components requires non-empty static params,
    * and hidden items still resolve to a 404 because pages read through the visibility-aware methods.
    */
-  getCategoryRouteParams(): Promise<{ category: string }[]>;
   getProductRouteParams(): Promise<{ category: string; slug: string }[]>;
 }
 
@@ -55,10 +54,6 @@ export const productRepository: ProductRepository = {
     return toProductWithCategory(category)
       .filter(({ product }) => product.slug !== productSlug)
       .slice(0, limit);
-  },
-
-  async getCategoryRouteParams() {
-    return categories.map((category) => ({ category: category.slug }));
   },
 
   async getProductRouteParams() {

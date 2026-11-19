@@ -45,6 +45,11 @@ export type ProductCategory = {
   shortName?: LocalizedText;
   description?: LocalizedText;
   image?: string;
+  /**
+   * Smaller photos and no "At a glance" table on the products page, for categories whose product details
+   * aren't confirmed yet.
+   */
+  compact?: boolean;
   isPublished: boolean;
   sortOrder: number;
   variants: ProductVariant[];
