@@ -42,8 +42,8 @@
   },
   "hero": {
     "eyebrow": "Construction material supplier",
-    "title": "Building materials you can plan around",
-    "description": "M/S. AZMIR ENTERPRIZE supplies stone, sand, bitumen, coal, iron rod and bricks for contractors, developers and builders, and arranges transportation to your site.",
+    "title": "Quality construction materials, a promise of worry-free building.",
+    "description": "M/S. AZMIR ENTERPRIZE is a reliable supply partner for your construction project. We supply every kind of construction material, including stone, sand, bitumen, coal, iron rod and bricks, to a consistent standard, and deliver it straight to your project site with our own transport.",
     "primaryCta": "Explore Products",
     "secondaryCta": "Request a Quote",
     "prevSlide": "Previous photo",
@@ -125,7 +125,8 @@
     "title": "Selected projects",
     "description": "Builders, developers and contractors who have relied on us for their construction materials.",
     "listLabel": "All selected projects",
-    "previewLabel": "Project photo"
+    "previewLabel": "Project photo",
+    "scrollHint": "Next project"
   },
   "cta": {
     "title": "Have a project coming up?",

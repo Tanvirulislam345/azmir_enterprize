@@ -34,6 +34,7 @@ export const photos = {
       en: "A worker among coal heaps and stacked bricks at a brick kiln",
     },
     caption: { bn: "ইটভাটা, বাংলাদেশ", en: "Brick kiln, Bangladesh" },
+    dark: true,
     credit: {
       author: "Kalbondi2k22",
       license: "CC BY-SA 4.0",

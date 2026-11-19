@@ -10,7 +10,7 @@ import { AboutDropdown } from "./about-dropdown";
 import { ProductsDropdown } from "./products-dropdown";
 
 type DesktopNavigationProps = {
-  links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
+  links: { home: NavLink; products: NavLink; transportation: NavLink; projects: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
   aboutPages: NavAboutPage[];
   labels: Dictionary["nav"];
@@ -57,9 +57,10 @@ export function DesktopNavigation({
             active={isActivePath(pathname, links.products.href)}
           />
         )}
+        {/* Transportation lives in the Products menu, so the bar links Projects instead. */}
         <NavItem
-          link={links.transportation}
-          active={isActivePath(pathname, links.transportation.href)}
+          link={links.projects}
+          active={isActivePath(pathname, links.projects.href)}
         />
         {aboutPages.length > 0 ? (
           <AboutDropdown

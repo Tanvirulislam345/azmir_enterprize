@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProjectMonogram } from "./project-monogram";
 
@@ -22,67 +23,56 @@ type ProjectShowcaseProps = {
   total: string;
   listLabel: string;
   previewLabel: string;
+  /** Label for the "next project" cue on the window variant. */
+  nextLabel?: string;
   /**
-   * `pinned` (default) keeps a viewport-tall photo pinned beside a list of any length.
-   * `compact` is for a handful of projects: roomier rows and a photo that matches the list's height.
+   * `window` (default) shows six rows at a time in a list that scrolls one project at a time, for any number of
+   * projects. `compact` is for a handful: every row in the page flow beside a photo of the same height.
    */
-  variant?: "pinned" | "compact";
+  variant?: "window" | "compact";
   className?: string;
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Projects beside a photo of the one in focus; see `PinnedShowcase` and `CompactShowcase`. */
-export function ProjectShowcase({ variant = "pinned", ...props }: ProjectShowcaseProps) {
-  return variant === "pinned" ? <PinnedShowcase {...props} /> : <CompactShowcase {...props} />;
+/** Projects beside a photo of the one in focus; see `WindowShowcase` and `CompactShowcase`. */
+export function ProjectShowcase({ variant = "window", ...props }: ProjectShowcaseProps) {
+  return variant === "window" ? <WindowShowcase {...props} /> : <CompactShowcase {...props} />;
 }
 
 type ShowcaseProps = Omit<ProjectShowcaseProps, "variant">;
 
-/** Scroll distance (px) that advances the pinned showcase by one project. */
-const STEP = 110;
-/** Rows visible at once in the pinned showcase's list window. */
+/** Rows visible at once in the window showcase. */
 const WINDOW = 6;
+/** Wheel travel (px) that counts as one step, so trackpads don't skip several rows at once. */
+const WHEEL_THRESHOLD = 40;
+/** Pause after a step before the wheel can move again (ms). */
+const WHEEL_LOCK_MS = 260;
 
 /**
- * Viewport-pinned showcase for any number of projects. A tall track gives the page scroll distance while the stage
- * inside it stays stuck to the screen; every `STEP` pixels of scroll advances one project, gliding the six-row list
- * window along and wiping in that project's photo. After the last project the stage releases and the page scrolls
- * on. Rows are buttons that scroll straight to their project.
+ * Six rows at a time, for lists of any length. Each wheel step moves the active project by exactly one; the list
+ * window slides only when the active row would leave it, keeping it in the third slot. The rest of the list stays
+ * hidden until reached, and once the first or last project is active the page scrolls on as usual, so the section
+ * is never taller than what it shows. Touch scrolls the window natively (snapping by row) and carries the active
+ * row along. The active project's photo sits beside the list at the same height.
  */
-function PinnedShowcase({ items, total, listLabel, previewLabel, className }: ShowcaseProps) {
+function WindowShowcase({ items, total, listLabel, previewLabel, nextLabel, className }: ShowcaseProps) {
   const count = items.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [rowHeight, setRowHeight] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const [edges, setEdges] = useState({ atTop: true, atBottom: count <= WINDOW });
+  const listRef = useRef<HTMLDivElement>(null);
   const firstRowRef = useRef<HTMLLIElement>(null);
+  const activeRef = useRef(0);
   const reduceMotion = useReducedMotion();
+  const visible = Math.min(WINDOW, count);
 
-  // How far the track's top has scrolled above the viewport top (px). Measured from the track rather than the
-  // sticky stage, so the header sliding in or out (which moves the stage) never shifts which project is active.
-  const scrolledDistance = useCallback(() => -(trackRef.current?.getBoundingClientRect().top ?? 0), []);
+  const activate = (index: number) => {
+    activeRef.current = index;
+    setActiveIndex(index);
+  };
 
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const step = Math.round(scrolledDistance() / STEP);
-      setActiveIndex(Math.min(count - 1, Math.max(0, step)));
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [count, scrolledDistance]);
-
-  // Row height changes with the breakpoint; the list window and its offset are measured from it.
+  // Row height changes with the breakpoint; the window and the photo beside it are sized from it.
   useEffect(() => {
     const row = firstRowRef.current;
     if (!row) return;
@@ -91,44 +81,111 @@ function PinnedShowcase({ items, total, listLabel, previewLabel, className }: Sh
     return () => observer.disconnect();
   }, []);
 
-  const goTo = (index: number, behavior: ScrollBehavior) => {
-    window.scrollTo({ top: window.scrollY + index * STEP - scrolledDistance(), behavior: reduceMotion ? "auto" : behavior });
-  };
+  // Native scrolling (touch, keyboard): update the edge fades and keep the active row inside the window.
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = list.scrollHeight - list.clientHeight;
+      setEdges({ atTop: list.scrollTop <= 1, atBottom: list.scrollTop >= max - 1 });
+      const row = firstRowRef.current?.offsetHeight;
+      if (!row) return;
+      const top = Math.round(list.scrollTop / row);
+      const clamped = Math.min(Math.max(activeRef.current, top), top + visible - 1);
+      if (clamped !== activeRef.current) {
+        activeRef.current = clamped;
+        setActiveIndex(clamped);
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    list.addEventListener("scroll", schedule, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      list.removeEventListener("scroll", schedule);
+    };
+  }, [visible]);
 
-  const active = items[activeIndex];
+  /** Make `next` active and slide the window so it rides in the third slot (flush at both ends of the list). */
+  const moveTo = useCallback(
+    (next: number) => {
+      activeRef.current = next;
+      setActiveIndex(next);
+      const list = listRef.current;
+      const row = firstRowRef.current?.offsetHeight ?? 0;
+      const offset = Math.min(Math.max(next - 2, 0), count - visible);
+      list?.scrollTo({ top: offset * row, behavior: reduceMotion ? "auto" : "smooth" });
+    },
+    [count, visible, reduceMotion],
+  );
+
+  // Wheel: one project per step while there is a next one that way; at the first or last the page takes over.
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    let travel = 0;
+    let lockedUntil = 0;
+    const onWheel = (event: WheelEvent) => {
+      if (event.ctrlKey || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+      const down = event.deltaY > 0;
+      const current = activeRef.current;
+      const next = down ? current + 1 : current - 1;
+      if (next < 0 || next > count - 1) {
+        travel = 0;
+        return;
+      }
+      event.preventDefault();
+      if (performance.now() < lockedUntil) return;
+      travel += event.deltaY;
+      if (Math.abs(travel) < WHEEL_THRESHOLD) return;
+      travel = 0;
+      lockedUntil = performance.now() + WHEEL_LOCK_MS;
+      moveTo(next);
+    };
+    list.addEventListener("wheel", onWheel, { passive: false });
+    return () => list.removeEventListener("wheel", onWheel);
+  }, [count, moveTo]);
+
+  const active = items[Math.min(activeIndex, count - 1)];
   if (!active) return null;
-  const visible = Math.min(WINDOW, count);
-  // The active row rides in the third slot, and the window settles flush at both ends of the list.
-  const offset = Math.min(Math.max(activeIndex - 2, 0), count - visible);
+  const windowHeight = rowHeight ? { height: visible * rowHeight } : undefined;
   const progress = count > 1 ? activeIndex / (count - 1) : 1;
   const preview = <Preview item={active} total={total} progress={progress} label={previewLabel} />;
 
   return (
-    <div ref={trackRef} className={cn("relative", className)} style={{ height: `calc(100svh + ${(count - 1) * STEP}px)` }}>
-      <div
-        className="sticky top-(--header-offset) flex h-[calc(100svh-var(--header-offset))] flex-col gap-5 py-5 transition-[top] duration-300 ease-out-expo lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16 lg:py-8 xl:gap-24"
-      >
-        {/* Phones and tablets: the photo fills the space above the list window. */}
-        <div className="relative min-h-40 flex-1 lg:hidden">{preview}</div>
+    <div className={cn("grid gap-5 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-16 xl:gap-24", className)}>
+      {/* Phones and tablets: the photo sits above the list. */}
+      <div className="relative h-[38svh] min-h-56 lg:hidden">{preview}</div>
 
-        <div className="relative shrink-0 overflow-hidden border-y border-border" style={rowHeight ? { height: visible * rowHeight } : undefined}>
-          <motion.ol
-            aria-label={listLabel}
-            animate={{ y: -offset * rowHeight }}
-            transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 34 }}
-          >
+      <div className="relative border-y border-border">
+        <div
+          ref={listRef}
+          className="h-72 snap-y snap-mandatory overflow-y-auto overscroll-y-auto [scrollbar-width:none] sm:h-84 lg:h-96 [&::-webkit-scrollbar]:hidden"
+          style={windowHeight}
+        >
+          <ol aria-label={listLabel}>
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               return (
-                <li key={item.id} ref={index === 0 ? firstRowRef : undefined} className="h-14 border-b border-border sm:h-16 lg:h-20">
+                <li key={item.id} ref={index === 0 ? firstRowRef : undefined} className="h-12 snap-start border-b border-border last:border-b-0 sm:h-14 lg:h-16">
                   <button
                     type="button"
                     aria-current={isActive ? "true" : undefined}
-                    onClick={() => goTo(index, "smooth")}
-                    onFocus={(event) => event.currentTarget.matches(":focus-visible") && goTo(index, "auto")}
+                    // Real pointer movement only: rows sliding under a still pointer while the list scrolls don't count.
+                    onPointerMove={(event) => event.pointerType === "mouse" && activeRef.current !== index && activate(index)}
+                    onClick={() => activate(index)}
+                    onFocus={(event) => {
+                      if (!event.currentTarget.matches(":focus-visible")) return;
+                      activate(index);
+                      event.currentTarget.scrollIntoView({ block: "nearest" });
+                    }}
                     className={cn(
-                      "relative flex h-full w-full items-center gap-4 text-left outline-none transition-opacity duration-500 focus-visible:bg-surface sm:gap-6",
-                      !isActive && "opacity-45 hover:opacity-80",
+                      "group relative flex h-full w-full items-center gap-4 px-2 text-left outline-none transition-colors duration-300 focus-visible:bg-surface-muted/70 sm:gap-5",
+                      isActive ? "bg-surface-muted/50" : "hover:bg-surface-muted/70",
                     )}
                   >
                     <RowContent item={item} isActive={isActive} />
@@ -136,46 +193,63 @@ function PinnedShowcase({ items, total, listLabel, previewLabel, className }: Sh
                 </li>
               );
             })}
-          </motion.ol>
-          {/* Fades hint at rows beyond the window. */}
-          <span
-            aria-hidden
-            className={cn(
-              "pointer-events-none absolute inset-x-0 top-0 h-10 bg-linear-to-b from-background to-transparent transition-opacity duration-300",
-              offset > 0 ? "opacity-100" : "opacity-0",
-            )}
-          />
-          <span
-            aria-hidden
-            className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-linear-to-t from-background to-transparent transition-opacity duration-300",
-              offset < count - visible ? "opacity-100" : "opacity-0",
-            )}
-          />
+          </ol>
         </div>
+        {/* Fades hint at rows beyond the window. */}
+        <span
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 top-0 h-8 bg-linear-to-b from-background to-transparent transition-opacity duration-300",
+            edges.atTop ? "opacity-0" : "opacity-100",
+          )}
+        />
+        <span
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-background to-transparent transition-opacity duration-300",
+            edges.atBottom ? "opacity-0" : "opacity-100",
+          )}
+        />
+        {/* "More below" cue sitting on the window's bottom edge, so it takes no space. It steps to the next project
+            and disappears at the last one, which is when the page starts scrolling again. */}
+        {count > WINDOW && (
+          <button
+            type="button"
+            onClick={() => moveTo(Math.min(activeRef.current + 1, count - 1))}
+            aria-label={nextLabel}
+            title={nextLabel}
+            tabIndex={activeIndex < count - 1 ? 0 : -1}
+            className={cn(
+              "absolute -bottom-[1.125rem] left-1/2 z-10 grid size-9 -translate-x-1/2 place-items-center rounded-full bg-accent text-accent-foreground shadow-lift ring-4 ring-background transition-all duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-accent/40",
+              activeIndex < count - 1 ? "opacity-100" : "pointer-events-none scale-75 opacity-0",
+            )}
+          >
+            <ChevronDown aria-hidden className="size-5 motion-safe:animate-[bounce_1.6s_ease-in-out_infinite]" />
+          </button>
+        )}
+      </div>
 
-        {/* Same height as the list window beside it, so both columns line up. */}
-        <div className="relative hidden h-[min(70vh,44rem)] lg:block" style={rowHeight ? { height: visible * rowHeight } : undefined}>
-          <span aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-accent/60" />
-          {preview}
-        </div>
+      {/* Same height as the list window beside it, so both columns line up. */}
+      <div className="relative hidden h-96 lg:block" style={windowHeight}>
+        <span aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-accent/60" />
+        {preview}
       </div>
     </div>
   );
 }
 
-/** Index, monogram and name for one row; the active row shifts right and fills its index. */
+/**
+ * Index, monogram and name for one row (its row element carries `group`). Names are soft grey and turn black on
+ * hover; the active row also shifts right and fills its index.
+ */
 function RowContent({
   item,
   isActive,
   wrap = false,
-  softInactive = false,
 }: {
   item: ProjectShowcaseItem;
   isActive: boolean;
   wrap?: boolean;
-  /** Tint inactive names instead of fading the whole row, so they stay readable. */
-  softInactive?: boolean;
 }) {
   return (
     <>
@@ -189,7 +263,7 @@ function RowContent({
       <span
         aria-hidden
         className={cn(
-          "w-10 shrink-0 text-xl font-bold tabular-nums transition-all duration-500 ease-out-expo sm:w-14 sm:text-3xl",
+          "w-8 shrink-0 text-lg font-bold tabular-nums transition-all duration-500 ease-out-expo sm:w-11 sm:text-2xl",
           isActive ? "translate-x-4 text-accent" : "text-transparent [-webkit-text-stroke:1px_var(--muted)]",
         )}
       >
@@ -199,8 +273,8 @@ function RowContent({
         <ProjectMonogram name={item.monogramName} className="hidden sm:grid" />
         <span
           className={cn(
-            "min-w-0 flex-1 text-lg font-semibold tracking-tight transition-colors duration-500 sm:text-2xl",
-            softInactive && !isActive ? "text-foreground/70" : "text-foreground",
+            "min-w-0 flex-1 text-base font-semibold tracking-tight transition-colors duration-300 sm:text-lg",
+            isActive ? "text-foreground" : "text-foreground/70 group-hover:text-foreground",
             !wrap && "truncate",
           )}
         >
@@ -290,11 +364,11 @@ function CompactShowcase({ items, total, listLabel, previewLabel, className }: S
                 aria-current={isActive ? "true" : undefined}
                 onPointerEnter={(event) => event.pointerType === "mouse" && setActiveIndex(index)}
                 className={cn(
-                  "relative flex cursor-pointer items-center gap-4 border-b border-border px-2 py-3 transition-colors duration-300 sm:gap-6 sm:py-4",
-                  isActive ? "bg-surface-muted/50" : "hover:bg-surface-muted/40",
+                  "group relative flex cursor-pointer items-center gap-4 border-b border-border px-2 py-3 transition-colors duration-300 sm:gap-5",
+                  isActive ? "bg-surface-muted/50" : "hover:bg-surface-muted/70",
                 )}
               >
-                <RowContent item={item} isActive={isActive} wrap softInactive />
+                <RowContent item={item} isActive={isActive} wrap />
               </li>
             );
           })}

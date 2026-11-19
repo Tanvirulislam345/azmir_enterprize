@@ -15,4 +15,6 @@ export type Photo = {
   /** Short place/subject caption shown with the photo. Describes only what the photo shows. */
   caption: LocalizedText;
   credit: PhotoCredit;
+  /** The photo is already dark, so the home hero skips the extra wash it lays over brighter slides. */
+  dark?: boolean;
 };

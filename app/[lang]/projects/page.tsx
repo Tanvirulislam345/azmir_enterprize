@@ -5,6 +5,7 @@ import { projectRepository } from "@/lib/projects/project-repository";
 import { routes } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { EnquiryCta } from "@/components/home/enquiry-cta";
+import { ProjectsHeading } from "@/components/home/selected-projects";
 import { PageHero } from "@/components/layout/page-hero";
 import { formatNumber } from "@/components/products/catalogue/format";
 import { ProjectShowcase } from "@/components/projects/project-showcase";
@@ -42,18 +43,21 @@ export default async function ProjectsPage() {
         ]}
       />
 
-      <section className="py-16 sm:py-24">
-        <PageContainer>
+      {/* 56px above and below the list on desktop; the enquiry banner follows with no extra gap. */}
+      <section className="py-10 lg:py-14">
+        <PageContainer className="space-y-8 sm:space-y-10">
+          <ProjectsHeading total={projects.length} locale={locale} dictionary={dictionary} />
           <ProjectShowcase
             items={toShowcaseItems(projects, locale)}
-            total={formatNumber(projects.length, locale)}
+            total={`${formatNumber(projects.length, locale)}+`}
+            nextLabel={copy.scrollHint}
             listLabel={copy.listLabel}
             previewLabel={copy.previewLabel}
           />
         </PageContainer>
       </section>
 
-      <EnquiryCta locale={locale} dictionary={dictionary} />
+      <EnquiryCta locale={locale} dictionary={dictionary} className="pt-0 sm:pt-0" />
     </>
   );
 }

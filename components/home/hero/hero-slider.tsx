@@ -145,6 +145,9 @@ export function HeroSlider({ slides, locale, labels, children }: HeroSliderProps
                     className="object-cover"
                   />
                 </div>
+                {/* Brighter photos get a dark wash so every slide reads as dark as the brick kiln. It sits inside the
+                    slide, so it fades in and out with its own photo. */}
+                {!slide.dark && <div className="absolute inset-0 bg-[rgb(15_17_18/0.55)]" />}
               </motion.div>
             </AnimatePresence>
             {/* Warm the cache for the upcoming photo so the dissolve never waits on the network. */}

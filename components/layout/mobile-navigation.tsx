@@ -15,7 +15,7 @@ import { isActivePath } from "./desktop-navigation";
 import { useNavigationDispatch, useNavigationState } from "./navigation-context";
 
 type MobileNavigationProps = {
-  links: { home: NavLink; products: NavLink; transportation: NavLink; about: NavLink; contact: NavLink };
+  links: { home: NavLink; products: NavLink; transportation: NavLink; projects: NavLink; about: NavLink; contact: NavLink };
   categories: NavCategory[];
   aboutPages: NavAboutPage[];
   labels: Dictionary["nav"];
@@ -92,11 +92,25 @@ export function MobileNavigation({ links, categories, aboutPages, labels }: Mobi
                       firstLabel={labels.viewSection}
                     />
                   ))}
+                  {/* Same as the desktop Products menu: Transportation closes the list, with no sub-items. */}
+                  <li>
+                    <Link
+                      href={links.transportation.href}
+                      onClick={closeAll}
+                      aria-current={isActivePath(pathname, links.transportation.href) ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-11 items-center rounded-lg px-3 font-medium transition-colors hover:bg-surface-muted",
+                        isActivePath(pathname, links.transportation.href) && "text-accent",
+                      )}
+                    >
+                      {links.transportation.label}
+                    </Link>
+                  </li>
                 </ul>
               </DrawerItem>
 
               <DrawerItem>
-                <DrawerLink link={links.transportation} active={isActivePath(pathname, links.transportation.href)} onNavigate={closeAll} />
+                <DrawerLink link={links.projects} active={isActivePath(pathname, links.projects.href)} onNavigate={closeAll} />
               </DrawerItem>
 
               <DrawerItem>

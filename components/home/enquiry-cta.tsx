@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { routes } from "@/lib/routes";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { PageContainer } from "@/components/ui/page-container";
@@ -10,13 +11,15 @@ type EnquiryCtaProps = {
   dictionary: Dictionary;
   /** Overrides the default CTA title, e.g. "Enquire about this product". */
   title?: string;
+  /** Extra classes for the section, e.g. dropping its top padding when the section above already provides it. */
+  className?: string;
 };
 
-export function EnquiryCta({ locale, dictionary, title }: EnquiryCtaProps) {
+export function EnquiryCta({ locale, dictionary, title, className }: EnquiryCtaProps) {
   const { cta } = dictionary;
 
   return (
-    <section className="py-20 sm:py-24">
+    <section className={cn("py-20 sm:py-24", className)}>
       <PageContainer>
         <Reveal variant="scale">
           <div className="relative isolate overflow-hidden rounded-[2rem] bg-accent px-6 py-14 text-accent-foreground sm:px-12 sm:py-16">
