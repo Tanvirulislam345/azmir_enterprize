@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Flame, Layers, Mountain, Truck } from "lucide-react";
 import { getAboutIcon } from "@/lib/about/about-icons";
 import { aboutRepository } from "@/lib/about/about-repository";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -16,6 +16,11 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { PageContainer } from "@/components/ui/page-container";
 import { CaptionedPhoto } from "@/components/ui/captioned-photo";
 import { SectionHeading } from "@/components/ui/section-heading";
+
+/** Business focus: stone, coal, bricks and transport, each with an icon and a photo. */
+const focusIcons = { stone: Mountain, coal: Flame, bricks: Layers, transport: Truck };
+type FocusId = keyof typeof focusIcons;
+const focusPhotos = [photos.bholaganj, photos.brickKiln, photos.brickMoulding, photos.tipperTruck];
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveLocale();
@@ -43,15 +48,42 @@ export default async function AboutPage() {
 
       <section className="py-20 sm:py-28">
         <PageContainer className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <SectionHeading title={about.focusTitle} description={about.focusDescription} />
-          <Reveal variant="right">
-            <CaptionedPhoto
-              photo={photos.jaflong}
-              locale={locale}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-[5/4] rounded-[2rem]"
-            />
-          </Reveal>
+          <div className="space-y-8">
+            <SectionHeading title={about.focusTitle} description={about.focusDescription} />
+            <Reveal delay={0.1}>
+              <p className="max-w-2xl text-base text-muted sm:text-lg">{about.focusBody}</p>
+            </Reveal>
+            <RevealGroup stagger={0.08} className="grid gap-4 sm:grid-cols-2">
+              {about.focusPoints.map((point) => {
+                const Icon = focusIcons[point.id as FocusId] ?? Mountain;
+                return (
+                  <RevealItem key={point.id}>
+                    <div className="group flex h-full gap-4 rounded-[1.25rem] border border-border bg-surface p-4 shadow-soft transition-colors duration-500 hover:border-accent/50">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition-colors duration-500 group-hover:bg-accent group-hover:text-accent-foreground">
+                        <Icon aria-hidden className="size-5" />
+                      </span>
+                      <span className="min-w-0 space-y-1">
+                        <span className="block font-semibold tracking-tight">{point.title}</span>
+                        <span className="block text-sm text-muted">{point.description}</span>
+                      </span>
+                    </div>
+                  </RevealItem>
+                );
+              })}
+            </RevealGroup>
+          </div>
+          <RevealGroup stagger={0.1} className="grid grid-cols-2 gap-3 sm:gap-4">
+            {focusPhotos.map((photo) => (
+              <RevealItem key={photo.id}>
+                <CaptionedPhoto
+                  photo={photo}
+                  locale={locale}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  className="aspect-[4/5] rounded-[1.5rem] shadow-soft"
+                />
+              </RevealItem>
+            ))}
+          </RevealGroup>
         </PageContainer>
       </section>
 

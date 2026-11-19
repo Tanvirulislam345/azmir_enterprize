@@ -12,9 +12,28 @@ export function formatPhone(phone: PhoneNumber, locale: Locale) {
 
 export const telHref = (phone: PhoneNumber) => `tel:${phone.international}`;
 
-/** Opens a WhatsApp chat with the number, optionally with a pre-written first message. */
-export const whatsappHref = (phone: PhoneNumber, text?: string) =>
-  `https://wa.me/${phone.international.replace(/\D/g, "")}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
+/** A WhatsApp chat to open: the number in international digits only (e.g. "8801761116614") and an optional first message. */
+export type WhatsAppTarget = { number: string; text?: string };
+
+export const whatsappTarget = (phone: PhoneNumber, text?: string): WhatsAppTarget => ({
+  number: phone.international.replace(/\D/g, ""),
+  ...(text ? { text } : {}),
+});
+
+/**
+ * The ways to open a WhatsApp chat with a number:
+ * - `app`: the app's own scheme; opens the chat straight away on phones with WhatsApp installed.
+ * - `web`: WhatsApp Web, which goes straight to the chat on computers.
+ * - `universal`: WhatsApp's official send link, the fallback when neither of the above applies (no JS, app missing).
+ */
+export function whatsappLinks({ number, text }: WhatsAppTarget) {
+  const query = `phone=${number}${text ? `&text=${encodeURIComponent(text)}` : ""}`;
+  return {
+    app: `whatsapp://send?${query}`,
+    web: `https://web.whatsapp.com/send?${query}`,
+    universal: `https://api.whatsapp.com/send?${query}`,
+  };
+}
 
 export const mailtoHref = (email: string) => `mailto:${email}`;
 

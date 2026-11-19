@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Globe, Mail, Phone, Server, ShieldCheck, Sparkles } from "lucide-react";
 import { getAboutIcon } from "@/lib/about/about-icons";
-import { formatPhone, mailtoHref, telHref, whatsappHref } from "@/lib/contact";
+import { formatPhone, mailtoHref, telHref, whatsappTarget } from "@/lib/contact";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,7 @@ import type { Team } from "@/types/about";
 import type { NavLink } from "@/types/navigation";
 import { CopyButton } from "@/components/contact/copy-button";
 import { WhatsAppIcon } from "@/components/contact/whatsapp-icon";
+import { WhatsAppLink } from "@/components/contact/whatsapp-link";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { PageContainer } from "@/components/ui/page-container";
@@ -166,16 +167,14 @@ export function TeamView({ team, title, locale, dictionary, breadcrumbs, subNav 
                     <Phone aria-hidden className="size-4" />
                   </a>
                   {phone.channels.includes("whatsapp") && (
-                    <a
-                      href={whatsappHref(phone)}
-                      target="_blank"
-                      rel="noreferrer"
+                    <WhatsAppLink
+                      whatsapp={whatsappTarget(phone)}
                       aria-label={fill(contactCopy.whatsappValue, phoneDisplay)}
                       title={fill(contactCopy.whatsappValue, phoneDisplay)}
                       className={cn(ACTION, "border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white")}
                     >
                       <WhatsAppIcon className="size-4" />
-                    </a>
+                    </WhatsAppLink>
                   )}
                 </HelpRow>
                 <HelpRow icon={<Mail aria-hidden className="size-4" />} value={email}>

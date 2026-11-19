@@ -10,18 +10,19 @@ type AnimatedHeadingProps = {
   delay?: number;
 };
 
-/** Page-load headline: each word rises out of a mask in sequence. */
+/** Page-load headline: each word fades and rises into place in sequence. */
 export function AnimatedHeading({ text, className, delay = 0.1 }: AnimatedHeadingProps) {
   const words = text.split(" ");
 
   return (
     <h1 className={cn(className)}>
       {words.map((word, index) => (
-        <span key={`${word}-${index}`} className="inline-block overflow-hidden py-[0.12em] align-bottom">
+        <span key={`${word}-${index}`} className="inline-block align-bottom">
+          {/* No overflow mask: it clipped tall glyphs (Bangla vowel signs, descenders). Words fade and rise instead. */}
           <motion.span
             className="inline-block"
-            initial={{ y: "110%" }}
-            animate={{ y: 0 }}
+            initial={{ opacity: 0, y: "0.45em" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: delay + index * 0.06 }}
           >
             {word}

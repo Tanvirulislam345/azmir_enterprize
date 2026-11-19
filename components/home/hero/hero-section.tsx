@@ -19,7 +19,7 @@ export function HeroSection({ locale, dictionary }: { locale: Locale; dictionary
         </Reveal>
         <AnimatedHeading
           text={hero.title}
-          className="max-w-4xl text-4xl font-extrabold tracking-tight text-white [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-6xl lg:text-7xl"
+          className="max-w-4xl text-4xl leading-[1.15] font-extrabold tracking-tight text-white [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-6xl lg:text-7xl"
         />
         <Reveal delay={0.4}>
           <p className="max-w-xl text-base text-white/90 [text-shadow:0_1px_12px_rgb(0_0_0/0.6)] sm:text-lg">{hero.description}</p>

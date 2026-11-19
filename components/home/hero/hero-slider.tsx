@@ -114,7 +114,7 @@ export function HeroSlider({ slides, locale, labels, children }: HeroSliderProps
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       onKeyDown={onKeyDown}
-      className="relative isolate flex h-[calc(100svh-4.5rem)] max-h-[60rem] min-h-[36rem] flex-col justify-end overflow-hidden bg-inverse text-inverse-foreground lg:h-[calc(100svh-5rem)]"
+      className="relative isolate flex min-h-[clamp(36rem,calc(100svh-4.5rem),60rem)] flex-col justify-end overflow-hidden bg-inverse text-inverse-foreground lg:min-h-[clamp(36rem,calc(100svh-5rem),60rem)]"
     >
       {/* Photo stage */}
       <motion.div aria-hidden style={{ scale: stageScale, y: stageY, filter: stageFilter }} className="absolute inset-0 -z-20">
@@ -162,7 +162,7 @@ export function HeroSlider({ slides, locale, labels, children }: HeroSliderProps
         <div className="film-grain" />
       </div>
 
-      <motion.div style={{ y: contentY, opacity: contentOpacity, x: textX }} className="pb-10 sm:pb-14">
+      <motion.div style={{ y: contentY, opacity: contentOpacity, x: textX }} className="pt-16 pb-10 sm:pt-20 sm:pb-14">
         {children}
       </motion.div>
 

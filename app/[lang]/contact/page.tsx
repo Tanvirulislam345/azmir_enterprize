@@ -7,7 +7,7 @@ import {
   mailtoHref,
   mapEmbedSrc,
   telHref,
-  whatsappHref,
+  whatsappTarget,
 } from "@/lib/contact";
 import type { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -83,7 +83,7 @@ export default async function ContactPage() {
                     display: formatPhone(phone, locale),
                     copyValue: phone.number,
                     telHref: telHref(phone),
-                    whatsappHref: whatsappHref(phone, copy.whatsappGreeting),
+                    whatsapp: whatsappTarget(phone, copy.whatsappGreeting),
                   };
                 })(),
               }))}

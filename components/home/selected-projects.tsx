@@ -1,3 +1,4 @@
+import { Plus } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
 import { routes } from "@/lib/routes";
@@ -27,23 +28,25 @@ export function SelectedProjects({ projects, total, locale, dictionary }: Select
   return (
     // No bottom padding: the enquiry banner that follows brings its own spacing.
     <section className="overflow-x-clip pt-20 sm:pt-28">
-      <PageContainer className="space-y-12 sm:space-y-16">
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
+      <PageContainer className="space-y-8 sm:space-y-10">
+        <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto] lg:gap-10">
           <SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
           <Reveal variant="right">
             <p className="flex items-end gap-3 lg:flex-col lg:items-end lg:gap-1">
-              <span className="text-6xl leading-none font-bold tracking-tight text-accent tabular-nums sm:text-7xl">
+              <span className="flex items-start text-6xl leading-none font-bold tracking-tight text-accent tabular-nums sm:text-7xl">
                 {formatNumber(total, locale)}
+                <Plus aria-hidden strokeWidth={3.5} className="-ml-0.5 size-8 sm:size-10" />
+                <span className="sr-only">+</span>
               </span>
               <span className="max-w-32 pb-1 text-sm text-muted lg:max-w-none lg:text-right">{copy.countLabel}</span>
             </p>
           </Reveal>
         </div>
 
-        <div className="space-y-10">
+        <div className="space-y-8">
           <ProjectShowcase
             items={toShowcaseItems(projects, locale)}
-            total={formatNumber(total, locale)}
+            total={`${formatNumber(total, locale)}+`}
             listLabel={copy.listLabel}
             previewLabel={dictionary.projectsPage.previewLabel}
             variant="compact"

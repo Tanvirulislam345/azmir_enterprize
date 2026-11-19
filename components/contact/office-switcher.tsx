@@ -3,9 +3,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
+import type { WhatsAppTarget } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import { WhatsAppIcon } from "./whatsapp-icon";
+import { WhatsAppLink } from "./whatsapp-link";
 
 export type OfficePhone = {
   /** Localized display, e.g. "01761-116614". */
@@ -13,7 +15,7 @@ export type OfficePhone = {
   /** What the copy button puts on the clipboard, e.g. "01761116614". */
   copyValue: string;
   telHref: string;
-  whatsappHref: string;
+  whatsapp: WhatsAppTarget;
 };
 
 export type OfficeView = {
@@ -131,16 +133,14 @@ export function OfficeSwitcher({ offices, email, labels }: OfficeSwitcherProps) 
                   <a href={phone.telHref} aria-label={fill(labels.callValue, phone.display)} title={fill(labels.callValue, phone.display)} className={ACTION}>
                     <Phone aria-hidden className="size-4" />
                   </a>
-                  <a
-                    href={phone.whatsappHref}
-                    target="_blank"
-                    rel="noreferrer"
+                  <WhatsAppLink
+                    whatsapp={phone.whatsapp}
                     aria-label={fill(labels.whatsappValue, phone.display)}
                     title={fill(labels.whatsappValue, phone.display)}
                     className={cn(ACTION, WHATSAPP_ACTION)}
                   >
                     <WhatsAppIcon className="size-4" />
-                  </a>
+                  </WhatsAppLink>
                 </ContactRow>
                 <ContactRow icon={<Mail aria-hidden className="size-4" />} value={email.value} breakAll>
                   <CopyButton value={email.value} label={fill(labels.copyValue, email.value)} copiedLabel={labels.copied} className={ACTION} />

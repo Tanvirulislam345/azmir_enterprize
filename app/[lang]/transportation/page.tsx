@@ -92,7 +92,7 @@ export default async function TransportationPage() {
         <section className="bg-surface-muted/60 py-20 sm:py-28">
           <PageContainer className="space-y-12">
             <SectionHeading eyebrow={copy.carryEyebrow} title={copy.carryTitle} description={copy.carryDescription} />
-            <RevealGroup stagger={0.07} className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-4">
+            <RevealGroup stagger={0.07} className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
               {categories.map((category, index) => {
                 const Icon = getCategoryIcon(category);
                 const count = category.variants.length;
@@ -100,7 +100,7 @@ export default async function TransportationPage() {
                   <RevealItem key={category.id}>
                     <Link
                       href={routes.category(locale, category.slug)}
-                      className="group relative flex h-full flex-col gap-6 overflow-hidden rounded-[1.5rem] border border-border bg-surface p-6 shadow-soft transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-lift focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                      className="group relative flex h-full flex-col gap-5 overflow-hidden rounded-[1.5rem] border border-border bg-surface p-5 shadow-soft transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-lift focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
                     >
                       {/* Accent wash that rises from the bottom on hover. */}
                       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-accent transition-[height] duration-500 ease-out-expo group-hover:h-1.5" />
@@ -112,8 +112,8 @@ export default async function TransportationPage() {
                           {formatIndex(index + 1, locale)}
                         </span>
                       </span>
-                      <span className="mt-auto space-y-1">
-                        <span className="block text-lg font-semibold">{category.name[locale]}</span>
+                      <span className="mt-auto min-w-0 space-y-1">
+                        <span className="block text-base font-semibold break-words sm:text-lg">{category.name[locale]}</span>
                         <span className="flex items-center justify-between gap-2 text-sm text-muted">
                           {count === 1
                             ? dictionary.categories.variantsCountOne

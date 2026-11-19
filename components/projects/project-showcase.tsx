@@ -154,7 +154,8 @@ function PinnedShowcase({ items, total, listLabel, previewLabel, className }: Sh
           />
         </div>
 
-        <div className="relative hidden h-[min(70vh,44rem)] lg:block">
+        {/* Same height as the list window beside it, so both columns line up. */}
+        <div className="relative hidden h-[min(70vh,44rem)] lg:block" style={rowHeight ? { height: visible * rowHeight } : undefined}>
           <span aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-accent/60" />
           {preview}
         </div>
@@ -164,7 +165,18 @@ function PinnedShowcase({ items, total, listLabel, previewLabel, className }: Sh
 }
 
 /** Index, monogram and name for one row; the active row shifts right and fills its index. */
-function RowContent({ item, isActive, wrap = false }: { item: ProjectShowcaseItem; isActive: boolean; wrap?: boolean }) {
+function RowContent({
+  item,
+  isActive,
+  wrap = false,
+  softInactive = false,
+}: {
+  item: ProjectShowcaseItem;
+  isActive: boolean;
+  wrap?: boolean;
+  /** Tint inactive names instead of fading the whole row, so they stay readable. */
+  softInactive?: boolean;
+}) {
   return (
     <>
       <span
@@ -185,7 +197,15 @@ function RowContent({ item, isActive, wrap = false }: { item: ProjectShowcaseIte
       </span>
       <span className={cn("flex min-w-0 flex-1 items-center gap-4 transition-transform duration-500 ease-out-expo", isActive && "translate-x-4")}>
         <ProjectMonogram name={item.monogramName} className="hidden sm:grid" />
-        <span className={cn("min-w-0 flex-1 text-lg font-semibold tracking-tight text-foreground sm:text-2xl", !wrap && "truncate")}>{item.name}</span>
+        <span
+          className={cn(
+            "min-w-0 flex-1 text-lg font-semibold tracking-tight transition-colors duration-500 sm:text-2xl",
+            softInactive && !isActive ? "text-foreground/70" : "text-foreground",
+            !wrap && "truncate",
+          )}
+        >
+          {item.name}
+        </span>
       </span>
     </>
   );
@@ -270,12 +290,11 @@ function CompactShowcase({ items, total, listLabel, previewLabel, className }: S
                 aria-current={isActive ? "true" : undefined}
                 onPointerEnter={(event) => event.pointerType === "mouse" && setActiveIndex(index)}
                 className={cn(
-                  "relative flex items-center gap-4 border-b border-border transition-opacity duration-500 sm:gap-6",
-                  "py-4 sm:py-6",
-                  !isActive && "opacity-50",
+                  "relative flex cursor-pointer items-center gap-4 border-b border-border px-2 py-3 transition-colors duration-300 sm:gap-6 sm:py-4",
+                  isActive ? "bg-surface-muted/50" : "hover:bg-surface-muted/40",
                 )}
               >
-                <RowContent item={item} isActive={isActive} wrap />
+                <RowContent item={item} isActive={isActive} wrap softInactive />
               </li>
             );
           })}
@@ -283,7 +302,7 @@ function CompactShowcase({ items, total, listLabel, previewLabel, className }: S
       </div>
 
       <div className="hidden lg:block">
-        <div className="relative h-full min-h-[30rem]">
+        <div className="relative h-full min-h-[24rem]">
           <span aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-accent/60" />
           {preview}
         </div>

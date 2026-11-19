@@ -5,7 +5,9 @@ import { Phone, X } from "lucide-react";
 import { useCallback, useId, useRef, useState } from "react";
 import { useDismiss } from "@/lib/hooks/use-dismiss";
 import { cn } from "@/lib/utils";
+import type { WhatsAppTarget } from "@/lib/contact";
 import { WhatsAppIcon } from "@/components/contact/whatsapp-icon";
+import { WhatsAppLink } from "@/components/contact/whatsapp-link";
 import { FADE_START, SHOW_FROM } from "./back-to-top";
 
 export type FloatingContactNumber = {
@@ -15,7 +17,7 @@ export type FloatingContactNumber = {
   /** Localized display, e.g. "01761-116614". */
   display: string;
   telHref: string;
-  whatsappHref: string;
+  whatsapp: WhatsAppTarget;
 };
 
 type FloatingContactProps = {
@@ -68,16 +70,14 @@ export function FloatingContact({ numbers, labels }: FloatingContactProps) {
                     <span className="block text-base font-bold tracking-tight">{number.display}</span>
                   </p>
                   <div className="grid grid-cols-2 gap-2">
-                    <a
-                      href={number.whatsappHref}
-                      target="_blank"
-                      rel="noreferrer"
+                    <WhatsAppLink
+                      whatsapp={number.whatsapp}
                       onClick={() => setOpen(false)}
                       className="flex h-10 items-center justify-center gap-2 rounded-xl bg-[#25D366] text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5"
                     >
                       <WhatsAppIcon className="size-4" />
                       {labels.whatsapp}
-                    </a>
+                    </WhatsAppLink>
                     <a
                       href={number.telHref}
                       onClick={() => setOpen(false)}

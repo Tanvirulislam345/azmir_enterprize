@@ -169,7 +169,30 @@
     "title": "About M/S. AZMIR ENTERPRIZE",
     "description": "We supply stone, sand, bitumen, coal, iron rod and bricks to buyers across their projects, and arrange transportation to the site.",
     "focusTitle": "Our business focus",
-    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication."
+    "focusDescription": "Our focus is straightforward: help contractors, developers, engineers and procurement teams source the construction materials they need, with clear information and direct communication.",
+    "focusBody": "From the river beds of Sylhet to the brick kilns and construction sites across the country, we keep four things moving: stone, coal, bricks and the trucks that carry them. Buyers get honest specifications, fair quantities and one point of contact from the first enquiry to the final delivery.",
+    "focusPoints": [
+      {
+        "id": "stone",
+        "title": "Stone",
+        "description": "Boulder, single and crushed stone from Sylhet, Bholaganj and imported sources."
+      },
+      {
+        "id": "coal",
+        "title": "Coal",
+        "description": "Steady coal supply for brick kilns and industrial buyers."
+      },
+      {
+        "id": "bricks",
+        "title": "Bricks",
+        "description": "Auto and kiln bricks for structural and finishing work."
+      },
+      {
+        "id": "transport",
+        "title": "Transport",
+        "description": "Our own trucks deliver every order straight to your site."
+      }
+    ]
   },
   "contact": {
     "metaTitle": "Contact",

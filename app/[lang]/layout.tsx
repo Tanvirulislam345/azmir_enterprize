@@ -5,7 +5,7 @@ import { locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resolveLocale } from "@/lib/i18n/resolve-locale";
 import { buildMetadata, getBaseUrl } from "@/lib/seo/metadata";
-import { formatPhone, getOfficePhone, telHref, whatsappHref } from "@/lib/contact";
+import { formatPhone, getOfficePhone, telHref, whatsappTarget } from "@/lib/contact";
 import { BackToTop } from "@/components/layout/back-to-top";
 import { FloatingContact } from "@/components/layout/floating-contact";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -87,7 +87,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
                 office: office.name[locale],
                 display: formatPhone(phone, locale),
                 telHref: telHref(phone),
-                whatsappHref: whatsappHref(phone, dictionary.contact.whatsappGreeting),
+                whatsapp: whatsappTarget(phone, dictionary.contact.whatsappGreeting),
               };
             })}
             labels={{
