@@ -6,10 +6,14 @@ type ProductAttributesProps = {
   locale: Locale;
   title: string;
   emptyMessage: string;
+  /** The variant shows option chips; without attributes, nothing else is needed. */
+  hasOptions?: boolean;
 };
 
 /** Shows only confirmed attributes; never fills gaps with assumed values. */
-export function ProductAttributes({ attributes = [], locale, title, emptyMessage }: ProductAttributesProps) {
+export function ProductAttributes({ attributes = [], locale, title, emptyMessage, hasOptions = false }: ProductAttributesProps) {
+  if (attributes.length === 0 && hasOptions) return null;
+
   return (
     <section aria-labelledby="product-attributes" className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
       <h2 id="product-attributes" className="mb-5 text-xl font-bold">

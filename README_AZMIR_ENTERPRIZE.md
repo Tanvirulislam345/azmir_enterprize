@@ -27,25 +27,31 @@ Do not invent the company's history, years in business, office address, contact 
 
 The client confirmed the following catalogue. Data lives in `data/categories.ts`; names must still come from data, never hardcoded in UI components.
 
-| Category          | Products                                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------------- |
-| Stone Chips       | Pakur, Meghalaya, Dubai, Maddhapara, Bhutan Torsa stone chips; Boulder Stone; Singles Stone |
-| Sand              | Fine Aggregate (Sylhet, Durgapur, Panchagarh sand); Filling Sand                            |
-| Bitumen (বিটুমিন) | Irani, Dubai, Basundhara, Bangla, Liquid                                                    |
-| Coal (কয়লা)      | Bangla, Indonesian, Indian Super, High Super                                                |
-| Iron (রড)         | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur                                               |
-| Bricks (ইট)       | Auto Bricks, Deshi Bricks, Block Bricks                                                     |
+| Category         | Products                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| Stone Chips      | Indian Pakur, Dubai, Bhutan, Indian L/C, Stone Chips, Deshi Boulder, Deshi Butu, Single, Bojri |
+| Sand             | Fazilpur, Durgapur, Sunamganj, Chhatak, Sharighat, Perighat (ফেরিঘাট), Jaflong, Bholaganj      |
+| Bitumen (বিটুমিন) | Irani, Dubai, Basundhara, Bangla, Liquid                                                       |
+| Coal (কয়লা)      | Bangla, Indonesian, Indian Super, High Super                                                   |
+| Iron (রড)        | BSRM, CSRM, KSRM, AKS, GPH, Bangla, Bikrampur                                                  |
+| Bricks (ইট)      | Auto Bricks, Deshi Bricks, Block Bricks                                                        |
 
 Categories appear in the table's order (`sortOrder`).
 
 **Transportation** is a service, not a product category. It has its own page at `/[lang]/transportation`, linked from the header, the products dropdown, the footer and its own card in the home "Who we are" section. It is never numbered among the product categories.
 
-Product specifications, sizes, grades, prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only no manufacturer logos.
+**Client-provided details:** crushed stone sizes (3/4", 22, 20, 16, 12 and 6 mm), bitumen grade 60/70 and 150 kg / 180 kg drum packing. They appear as option chips on each product's details page (`options` in `data/categories.ts`).
+
+**Drafts awaiting client confirmation:** the descriptions, origins, sand grades (coarse/medium), common uses and the sizes for Boulder (6"–12"), Single (3/4"–1.5"), Bojri (6–12 mm) and Butu (mixed). Confirm or correct them before launch.
+
+Prices and stock still need client confirmation before they are published. Brand names (BSRM, KSRM, etc.) appear as text only no manufacturer logos.
 
 ### Temporary stand-in images
 
 Until real product photos arrive, these reuse existing images (listed at the top of `data/categories.ts`):
 
+- Indian L/C Stone → `stones/meghalaya-stone.jpg`; Stone Chips → `stones/maddhapara-stone.jpg`; Deshi Butu → `hero/bholaganj-river-stones.webp`; Bojri → `hero/jaflong-stone-processing.webp`
+- Sand: the four `sands/*.jpg` photos are shared across the eight sources; Jaflong and Bholaganj use the hero photos
 - Deshi Bricks → `hero/brick-moulding.webp`; Block Bricks → `hero/brick-kiln.webp`
 - Coal (category and all products) → `hero/brick-kiln.webp`
 - Iron and Bitumen (categories and all products) → `hero/tipper-truck.webp`

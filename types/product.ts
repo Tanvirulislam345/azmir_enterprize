@@ -13,6 +13,12 @@ export type ProductAttribute = {
   value: LocalizedText;
 };
 
+/** A choice the buyer picks from, e.g. "Available sizes" → 3/4", 20 mm, 12 mm. */
+export type ProductOptionGroup = {
+  label: LocalizedText;
+  values: LocalizedText[];
+};
+
 export type ProductVariant = {
   id: string;
   slug: string;
@@ -22,6 +28,8 @@ export type ProductVariant = {
   image?: string;
   gallery?: string[];
   attributes?: ProductAttribute[];
+  /** Sizes, grades, packing and other choices, shown as chips on the details page. */
+  options?: ProductOptionGroup[];
   isPublished: boolean;
   featured?: boolean;
   sortOrder: number;

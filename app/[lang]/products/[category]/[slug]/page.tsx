@@ -12,6 +12,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ProductAttributes } from "@/components/products/product-attributes";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { ProductMedia } from "@/components/products/product-media";
+import { ProductOptions } from "@/components/products/product-options";
 import { RelatedProducts } from "@/components/products/related-products";
 import { Badge } from "@/components/ui/badge";
 import { PageContainer } from "@/components/ui/page-container";
@@ -96,8 +97,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.description[locale]}
               </p>
             )}
+            <ProductOptions
+              options={product.options}
+              locale={locale}
+              title={dictionary.productPage.options}
+            />
             <ProductAttributes
               attributes={product.attributes}
+              hasOptions={(product.options?.length ?? 0) > 0}
               locale={locale}
               title={dictionary.productPage.specifications}
               emptyMessage={dictionary.productPage.detailsPending}
