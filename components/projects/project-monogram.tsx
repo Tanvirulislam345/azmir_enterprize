@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
-/** Up to two initials from a Latin name, skipping joiners like "&". */
+/** Up to two initials from a Latin name, skipping joiners like "&" and the "M/S." (Messrs) prefix. */
 export const projectInitials = (name: string) =>
   name
     .split(/\s+/)
-    .filter((word) => /^[A-Za-z]/.test(word))
+    .filter((word) => /^[A-Za-z]/.test(word) && !/^M\/S\.?$/i.test(word))
     .slice(0, 2)
     .map((word) => word[0].toUpperCase())
     .join("");

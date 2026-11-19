@@ -56,9 +56,13 @@ Until real product photos arrive, these reuse existing images (listed at the top
 - Coal (category and all products) → `hero/brick-kiln.webp`
 - Iron and Bitumen (categories and all products) → `hero/tipper-truck.webp`
 
-### Selected projects (placeholder)
+### Selected projects
 
-Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project beside a photo. The names there (e.g. "Mark Builders Limited") are **placeholders**, and each project's photo is a **temporary** generic site photo replace both with client-confirmed names and real project photos before launch.
+Projects live in `data/projects.ts` and are read through `lib/projects/project-repository.ts`. The home "Selected projects" section lists the first six with a "See all projects" link to `/[lang]/projects`, which shows every project in a six-row list that scrolls one project at a time, beside a photo.
+
+The names are the client's own list of companies they have supplied (29, transcribed from their handwritten notebook). Nine were hard to read and are marked `// unclear` in the data; confirm their spelling with the client: Meghna International Industries, Atanu Balli Industries, Ekota Balli Industries, Hi Dro Tech, Haben Construction, M/S. Madina Hi Enterprise, Way Front, Sanaullah Bricks, Suleman Bricks.
+
+Each project's photo is still a **temporary** generic site photo; replace them with real project photos before launch.
 
 ### Adding a category
 
